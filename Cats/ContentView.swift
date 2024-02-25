@@ -11,18 +11,13 @@ struct Cat: Codable, Identifiable {
     let id: String
     let size: Double
     let tags: [String]
-    let mimetype: MimeType
+    let mimetype: String // We don't use an enum as there is no certainty we know all the posibilities
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case size
         case tags
         case mimetype
-    }
-    
-    enum MimeType: String, Codable {
-        case jpeg = "image/jpeg"
-        case png = "image/png"
     }
     
     var imageURL: URL? {
@@ -68,6 +63,8 @@ extension Cat {
 struct ContentView: View {
     
     @State var cats: [Cat] = []
+    @State var requestSkip: Int = 0
+    let requestLimit: Int = 10
     @State var selectedTag: String? {
         didSet {
             showTagSearch = selectedTag != nil
@@ -76,39 +73,52 @@ struct ContentView: View {
     
     @State private var showTagSearch: Bool = false
     
-    let requestUrl: URL? = URL(string: "https://cataas.com/api/cats?skip=0&limit=10")
-    
     private let adaptiveColumns = [
         GridItem(.flexible())
     ]
     
-    private let numberOfColumns = [
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: 2),
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: 2),
-        GridItem(.flexible(minimum: 100, maximum: 200), spacing: 2),
-    ]
-    
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: adaptiveColumns, spacing: 2) {
+            VStack(spacing: 2) {
                 ForEach(cats) { cat in
                     CatCard(cat: cat) { tag in
                         selectedTag = tag
                     }
                 }
             }
-        }
-        .task {
-            do {
-                cats = try await getCats()
-            } catch CatError.invalidURL {
-                print("invalid URL")
-            } catch CatError.invalidResponse {
-                print("invalid Error")
-            } catch {
-                print("Unexpected error: ", error)
+            
+            LazyVStack {
+                Image(systemName: "arrow.circlepath")
+                    .fontWeight(.black)
+                    .padding(8)
+                    .foregroundStyle(Color(UIColor.label))
+                    .background(Circle().fill(.ultraThinMaterial))
+                    .onAppear(perform: {
+                        Task {
+                            do {
+                                try await getCats()
+                            } catch CatError.invalidURL {
+                                print("invalid URL")
+                            } catch CatError.invalidResponse {
+                                print("invalid Error")
+                            } catch {
+                                print("Unexpected error: ", error)
+                            }
+                        }
+                    })
             }
         }
+//        .task {
+//            do {
+//                try await getCats()
+//            } catch CatError.invalidURL {
+//                print("invalid URL")
+//            } catch CatError.invalidResponse {
+//                print("invalid Error")
+//            } catch {
+//                print("Unexpected error: ", error)
+//            }
+//        }
         .sheet(isPresented: $showTagSearch) {
             if let selectedTag = selectedTag {
                 Text(selectedTag)
@@ -116,8 +126,19 @@ struct ContentView: View {
         }
     }
     
-    func getCats() async throws -> [Cat] {
-        guard let url = requestUrl else {
+    func getCats() async throws {
+        
+        print("skip: \(requestSkip)")
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "cataas.com"
+        components.path = "/api/cats"
+        components.queryItems = [
+            URLQueryItem(name: "skip", value: "\(requestSkip)"),
+            URLQueryItem(name: "limit", value: "\(requestLimit)")
+        ]
+        
+        guard let url = components.url else {
             throw CatError.invalidURL
         }
         
@@ -130,15 +151,13 @@ struct ContentView: View {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             
-            let catJson = try JSONSerialization.jsonObject(with: data)
-            print("catJson: ", catJson)
-            
-            let cat = try decoder.decode([Cat].self, from: data)
-            return cat
+            let loadedCats = try decoder.decode([Cat].self, from: data)
+            print("loaded count: \(loadedCats.count)")
+            self.cats.append(contentsOf: loadedCats)
+            requestSkip += requestLimit
         } catch {
             throw error
         }
-        
     }
 }
 
@@ -153,6 +172,7 @@ enum CatError: Error {
 
 struct CatCard: View {
     @State var trigger = 0
+    @State var imageIsLoaded = false
     
     let cat: Cat
     
@@ -164,12 +184,13 @@ struct CatCard: View {
                 CachedAsyncImage(url: cat.imageURL) { phase in
                     switch phase {
                     case .success(let image):
+//                        let _ = print("success")
                         image
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity)
-                        
-                    case .failure(_):
+                    case .failure(let error):
+//                        let _ = print("error: ", error)
                         placeholderImage
                             .overlay(
                                 Image(systemName: "arrow.circlepath")
@@ -178,6 +199,7 @@ struct CatCard: View {
                             )
                         
                     case .empty:
+//                        let _ = print("empty")
                         placeholderImage
                             .overlay(
                                 ProgressView()
@@ -186,6 +208,7 @@ struct CatCard: View {
                             )
                         
                     @unknown default:
+//                        let _ = print("default")
                         EmptyView()
                     }
                 }
@@ -250,3 +273,4 @@ struct CatCard: View {
             .opacity(0.8)
     }
 }
+
