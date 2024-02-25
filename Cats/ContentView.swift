@@ -38,26 +38,26 @@ struct Cat: Codable, Identifiable {
 extension Cat {
     
     private static let likedCatsKey = "catsLiked" // Use a static constant for UserDefaults key
-
+    
     private static func updateLikedCats(updateHandler: (inout [String: Bool]) -> Void) {
         var likedCats = UserDefaults.standard.dictionary(forKey: likedCatsKey) as? [String: Bool] ?? [:]
         updateHandler(&likedCats)
         UserDefaults.standard.set(likedCats, forKey: likedCatsKey)
     }
-
+    
     func isLiked() -> Bool {
         guard let likedCats = UserDefaults.standard.dictionary(forKey: Self.likedCatsKey) as? [String: Bool] else {
             return false
         }
         return likedCats[id] == true
     }
-
+    
     func like() {
         Self.updateLikedCats { likedCats in
             likedCats[id] = true
         }
     }
-
+    
     func dislike() {
         Self.updateLikedCats { likedCats in
             likedCats.removeValue(forKey: id)
@@ -83,11 +83,11 @@ struct ContentView: View {
     
     var body: some View {
         ScrollView {
-                LazyVGrid(columns: adaptiveColumns, spacing: 2) {
-                    ForEach(cats) { cat in
-                        CatCard(cat: cat)
-                    }
+            LazyVGrid(columns: adaptiveColumns, spacing: 2) {
+                ForEach(cats) { cat in
+                    CatCard(cat: cat)
                 }
+            }
         }
         .task {
             do {
@@ -141,30 +141,44 @@ struct CatCard: View {
     let cat: Cat
     @State var trigger = 0
     
+    @ViewBuilder
+    var placeholderImage: some View {
+        Image(systemName: "cat.fill")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100, height: 100)
+            .opacity(0.8)
+    }
+    
     var body: some View {
         VStack(spacing: 2) {
             ZStack(alignment: .topTrailing) {
-                AsyncImage(url: cat.imageURL) { phase in
-                    if let image = phase.image {
+                CachedAsyncImage(url: cat.imageURL) { phase in
+                    switch phase {
+                    case .success(let image):
                         image
                             .resizable()
                             .scaledToFit()
-                    } else {
-                        Image(systemName: "cat.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100, height: 100)
-                            .opacity(0.8)
-                            .overlay {
-                                if phase.error != nil {
-                                    Image(systemName: "exclamationmark.triangle").padding()
-                                        .foregroundStyle(Color.red)
-                                } else {
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle())
-                                        .tint(.white)
-                                }
-                            }
+                            .frame(maxWidth: .infinity)
+                        
+                    case .failure(_):
+                        placeholderImage
+                            .overlay(
+                                Image(systemName: "exclamationmark.triangle")
+                                    .padding()
+                                    .foregroundStyle(Color.red)
+                            )
+                        
+                    case .empty:
+                        placeholderImage
+                            .overlay(
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle())
+                                    .tint(.white)
+                            )
+                        
+                    @unknown default:
+                        EmptyView()
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -188,7 +202,7 @@ struct CatCard: View {
                 .padding(.vertical, cat.isLiked() ? 6 : 4)
             }
             
-            HStack() {
+            HStack {
                 ForEach(cat.tags, id: \.self) { tag in
                     Text(tag)
                         .foregroundStyle(Color.accentColor)
@@ -203,16 +217,13 @@ struct CatCard: View {
             .frame(maxWidth: .infinity)
             .background(Color.accentColor.gradient)
         }
-        .frame(maxWidth: .infinity) // Ensure VStack fills the available width
+        .frame(maxWidth: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: 15) // Use rounded rectangle as background
+            RoundedRectangle(cornerRadius: 15)
                 .fill(Color.white)
         )
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(radius: 3)
         .padding()
-
-
-
     }
 }
