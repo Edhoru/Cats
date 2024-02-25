@@ -68,6 +68,13 @@ extension Cat {
 struct ContentView: View {
     
     @State var cats: [Cat] = []
+    @State var selectedTag: String? {
+        didSet {
+            showTagSearch = selectedTag != nil
+        }
+    }
+    
+    @State private var showTagSearch: Bool = false
     
     let requestUrl: URL? = URL(string: "https://cataas.com/api/cats?skip=0&limit=10")
     
@@ -85,7 +92,9 @@ struct ContentView: View {
         ScrollView {
             LazyVGrid(columns: adaptiveColumns, spacing: 2) {
                 ForEach(cats) { cat in
-                    CatCard(cat: cat)
+                    CatCard(cat: cat) { tag in
+                        selectedTag = tag
+                    }
                 }
             }
         }
@@ -98,6 +107,11 @@ struct ContentView: View {
                 print("invalid Error")
             } catch {
                 print("Unexpected error: ", error)
+            }
+        }
+        .sheet(isPresented: $showTagSearch) {
+            if let selectedTag = selectedTag {
+                Text(selectedTag)
             }
         }
     }
@@ -138,17 +152,11 @@ enum CatError: Error {
 }
 
 struct CatCard: View {
-    let cat: Cat
     @State var trigger = 0
     
-    @ViewBuilder
-    var placeholderImage: some View {
-        Image(systemName: "cat.fill")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 100, height: 100)
-            .opacity(0.8)
-    }
+    let cat: Cat
+    
+    var onTagSelected: (String) -> Void
     
     var body: some View {
         VStack(spacing: 2) {
@@ -164,9 +172,9 @@ struct CatCard: View {
                     case .failure(_):
                         placeholderImage
                             .overlay(
-                                Image(systemName: "exclamationmark.triangle")
+                                Image(systemName: "arrow.circlepath")
                                     .padding()
-                                    .foregroundStyle(Color.red)
+                                    .foregroundStyle(Color(UIColor.systemBackground))
                             )
                         
                     case .empty:
@@ -174,7 +182,7 @@ struct CatCard: View {
                             .overlay(
                                 ProgressView()
                                     .progressViewStyle(CircularProgressViewStyle())
-                                    .tint(.white)
+                                    .tint(Color(UIColor.systemBackground))
                             )
                         
                     @unknown default:
@@ -204,13 +212,17 @@ struct CatCard: View {
             
             HStack {
                 ForEach(cat.tags, id: \.self) { tag in
-                    Text(tag)
-                        .foregroundStyle(Color.accentColor)
-                        .lineLimit(1)
-                        .font(.caption.bold())
-                        .padding(.vertical, 10)
-                        .padding(.horizontal)
-                        .background(Capsule().fill(Color.white.gradient))
+                    Button {
+                        onTagSelected(tag)
+                    } label: {
+                        Text(tag)
+                            .foregroundStyle(Color.accentColor)
+                            .lineLimit(1)
+                            .font(.caption.bold())
+                            .padding(.vertical, 10)
+                            .padding(.horizontal)
+                            .background(Capsule().fill(Color.white.gradient))
+                    }
                 }
             }
             .padding(.vertical, 10)
@@ -220,10 +232,21 @@ struct CatCard: View {
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 15)
-                .fill(Color.white)
+                .fill(Color(UIColor.secondarySystemBackground))
         )
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(radius: 3)
         .padding()
+    }
+    
+    // MARK: Subviews
+    @ViewBuilder
+    var placeholderImage: some View {
+        Image(systemName: "cat.fill")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 100, height: 100)
+            .foregroundStyle(Color(UIColor.label))
+            .opacity(0.8)
     }
 }
