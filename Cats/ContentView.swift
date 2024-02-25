@@ -37,33 +37,32 @@ struct Cat: Codable, Identifiable {
 
 extension Cat {
     
+    private static let likedCatsKey = "catsLiked" // Use a static constant for UserDefaults key
+
+    private static func updateLikedCats(updateHandler: (inout [String: Bool]) -> Void) {
+        var likedCats = UserDefaults.standard.dictionary(forKey: likedCatsKey) as? [String: Bool] ?? [:]
+        updateHandler(&likedCats)
+        UserDefaults.standard.set(likedCats, forKey: likedCatsKey)
+    }
+
     func isLiked() -> Bool {
-        guard let likedCats = UserDefaults.standard.dictionary(forKey: "catsLiked") as? [String : Bool], let isLiked = likedCats[id] else {
+        guard let likedCats = UserDefaults.standard.dictionary(forKey: Self.likedCatsKey) as? [String: Bool] else {
             return false
         }
-        
-        return isLiked
+        return likedCats[id] == true
     }
-    
+
     func like() {
-        if var likedCats = UserDefaults.standard.dictionary(forKey: "catsLiked") as? [String : Bool] {
+        Self.updateLikedCats { likedCats in
             likedCats[id] = true
-            UserDefaults.standard.setValue(likedCats, forKey: "catsLiked")
-        } else {
-            let newLikedCats = [id : true]
-            UserDefaults.standard.setValue(newLikedCats, forKey: "catsLiked")
         }
     }
-    
+
     func dislike() {
-        guard var likedCats = UserDefaults.standard.dictionary(forKey: "catsLiked") as? [String : Bool], likedCats[id] != nil else {
-            return
+        Self.updateLikedCats { likedCats in
+            likedCats.removeValue(forKey: id)
         }
-        
-        likedCats.removeValue(forKey: id)
-        UserDefaults.standard.setValue(likedCats, forKey: "catsLiked")
     }
-    
 }
 
 struct ContentView: View {
@@ -183,6 +182,7 @@ struct CatCard: View {
                         .symbolVariant(cat.isLiked() ? .fill : .circle)
                         .symbolEffect(.bounce, value: trigger)
                         .tint(cat.isLiked() ? .red : .white)
+                        .shadow(radius: 2)
                 })
                 .padding(.horizontal, cat.isLiked() ? 3 : 4)
                 .padding(.vertical, cat.isLiked() ? 6 : 4)
