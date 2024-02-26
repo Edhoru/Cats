@@ -71,6 +71,7 @@ struct ContentView: View {
         }
     }
     
+    @State private var selectedCat: Cat?
     @State private var showTagSearch: Bool = false
     
     private let adaptiveColumns = [
@@ -78,57 +79,55 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 2) {
-                ForEach(cats) { cat in
-                    CatCard(cat: cat) { tag in
-                        selectedTag = tag
-                    }
-                }
-            }
-            
-            LazyVStack {
-                Image(systemName: "arrow.circlepath")
-                    .fontWeight(.black)
-                    .padding(8)
-                    .foregroundStyle(Color(UIColor.label))
-                    .background(Circle().fill(.ultraThinMaterial))
-                    .onAppear(perform: {
-                        Task {
-                            do {
-                                try await getCats()
-                            } catch CatError.invalidURL {
-                                print("invalid URL")
-                            } catch CatError.invalidResponse {
-                                print("invalid Error")
-                            } catch {
-                                print("Unexpected error: ", error)
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 2) {
+                    ForEach(cats) { cat in
+                        NavigationLink {
+                            Text("cat")
+                        } label: {
+                            CatCard(cat: cat) { tag in
+                                selectedTag = tag
                             }
                         }
-                    })
+                    }
+                }
+                
+                LazyVStack {
+                    Image(systemName: "arrow.circlepath")
+                        .fontWeight(.black)
+                        .padding(8)
+                        .foregroundStyle(Color(UIColor.label))
+                        .background(Circle().fill(.ultraThinMaterial))
+                        .onAppear(perform: fetchCats)
+                }
             }
+            .sheet(isPresented: $showTagSearch) {
+                if let selectedTag = selectedTag {
+                    Text(selectedTag)
+                }
+            }
+            .navigationTitle("Cats")
+            .navigationBarTitleDisplayMode(.inline)
+            
         }
-//        .task {
-//            do {
-//                try await getCats()
-//            } catch CatError.invalidURL {
-//                print("invalid URL")
-//            } catch CatError.invalidResponse {
-//                print("invalid Error")
-//            } catch {
-//                print("Unexpected error: ", error)
-//            }
-//        }
-        .sheet(isPresented: $showTagSearch) {
-            if let selectedTag = selectedTag {
-                Text(selectedTag)
+    }
+    
+    private func fetchCats() {
+        Task {
+            do {
+                try await getCats()
+            } catch CatError.invalidURL {
+                print("invalid URL")
+            } catch CatError.invalidResponse {
+                print("invalid Error")
+            } catch {
+                print("Unexpected error: ", error)
             }
         }
     }
     
     func getCats() async throws {
-        
-        print("skip: \(requestSkip)")
         var components = URLComponents()
         components.scheme = "https"
         components.host = "cataas.com"
@@ -152,7 +151,6 @@ struct ContentView: View {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             
             let loadedCats = try decoder.decode([Cat].self, from: data)
-            print("loaded count: \(loadedCats.count)")
             self.cats.append(contentsOf: loadedCats)
             requestSkip += requestLimit
         } catch {
@@ -184,13 +182,11 @@ struct CatCard: View {
                 CachedAsyncImage(url: cat.imageURL) { phase in
                     switch phase {
                     case .success(let image):
-//                        let _ = print("success")
                         image
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: .infinity)
                     case .failure(let error):
-//                        let _ = print("error: ", error)
                         placeholderImage
                             .overlay(
                                 Image(systemName: "arrow.circlepath")
@@ -199,7 +195,6 @@ struct CatCard: View {
                             )
                         
                     case .empty:
-//                        let _ = print("empty")
                         placeholderImage
                             .overlay(
                                 ProgressView()
@@ -208,7 +203,6 @@ struct CatCard: View {
                             )
                         
                     @unknown default:
-//                        let _ = print("default")
                         EmptyView()
                     }
                 }
@@ -233,19 +227,12 @@ struct CatCard: View {
                 .padding(.vertical, cat.isLiked() ? 6 : 4)
             }
             
-            HStack {
+            TagLayout(alignment: .center, spacing: 10) {
                 ForEach(cat.tags, id: \.self) { tag in
-                    Button {
-                        onTagSelected(tag)
-                    } label: {
-                        Text(tag)
-                            .foregroundStyle(Color.accentColor)
-                            .lineLimit(1)
-                            .font(.caption.bold())
-                            .padding(.vertical, 10)
-                            .padding(.horizontal)
-                            .background(Capsule().fill(Color.white.gradient))
-                    }
+                    TagView(tag: tag)
+                        .onTapGesture {
+                            onTagSelected(tag)
+                        }
                 }
             }
             .padding(.vertical, 10)
@@ -274,3 +261,126 @@ struct CatCard: View {
     }
 }
 
+struct TagView: View {
+    let tag: String
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "tag")
+            Text(tag)
+        }
+        .foregroundStyle(Color.accentColor)
+        .lineLimit(1)
+        .font(.caption.bold())
+        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
+        .background(Capsule().fill(Color.white.gradient))
+    }
+}
+
+
+struct TagLayout: Layout {
+    /// Layout Properties
+    var alignment: Alignment = .center
+    /// Both Horizontal & Vertical
+    var spacing: CGFloat = 10
+    
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let maxWidth = (proposal.width ?? 0)
+        var height: CGFloat = 0
+        let rows = generateRows(maxWidth, proposal, subviews)
+        
+        for (index, row) in rows.enumerated() {
+            if index == (rows.count - 1) {
+                height += row.maxHeight(proposal)
+            } else {
+                height += row.maxHeight(proposal) + spacing
+            }
+        }
+        
+        return .init(width: maxWidth, height: height)
+    }
+    
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var origin = bounds.origin
+        let maxWidth = bounds.width
+        let rows = generateRows(maxWidth, proposal, subviews)
+        
+        for row in rows {
+            /// Changing origin X based on Alignments
+            let leading: CGFloat = bounds.maxX - maxWidth
+            let trailing = bounds.maxX - (row.reduce(CGFloat.zero) { partialResult, view in
+                let width = view.sizeThatFits(proposal).width
+                
+                if view == row.last {
+                    /// No Spacing
+                    return partialResult + width
+                }
+                /// With Spacing
+                return partialResult + width + spacing
+            })
+            
+            let center = (trailing + leading) / 2
+            
+            /// Resetting Origin X to zero for Each row
+            origin.x = (alignment == .leading ? leading :
+                        alignment == .trailing ? trailing : center)
+            
+            for view in row {
+                let viewSize = view.sizeThatFits(proposal)
+                view.place(at: origin, proposal: proposal)
+                /// Update Origin
+                origin.x += (viewSize.width + spacing)
+            }
+            
+            /// Updating Origin Y
+            origin.y += (row.maxHeight(proposal) + spacing)
+        }
+    }
+    
+    /// Generate Rows based on Available size
+    func generateRows(_ maxWidth: CGFloat, _ proposal: ProposedViewSize, _ subviews: Subviews) -> [[LayoutSubviews.Element]] {
+        var row: [LayoutSubviews.Element] = []
+        var rows: [[LayoutSubviews.Element]] = []
+        
+        /// Origin
+        var origin = CGRect.zero.origin
+        
+        for view in subviews {
+            let viewSize = view.sizeThatFits(proposal)
+            
+            if (origin.x + viewSize.width + spacing) > maxWidth {
+                rows.append(row)
+                row.removeAll()
+                /// Resetting X Origin since it needs to start from left to right
+                origin.x = 0
+                row.append(view)
+                /// Update Origin X
+                origin.x += (viewSize.width + spacing)
+            } else {
+                /// Adding item to same row
+                row.append(view)
+                /// Update Origin X
+                origin.x += (viewSize.width + spacing)
+            }
+        }
+        
+        /// Checking for any exhaust row
+        if !row.isEmpty {
+            rows.append(row)
+            row.removeAll()
+        }
+        
+        return rows
+    }
+    
+}
+
+
+extension [LayoutSubviews.Element] {
+    func maxHeight(_ proposal: ProposedViewSize) -> CGFloat {
+        return self.compactMap { view in
+            return view.sizeThatFits(proposal).height
+        }.max() ?? 0
+    }
+}
