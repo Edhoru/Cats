@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var allTags: [String] = []
     @State private var selectedTags: [String] = []
+    @State private var isLoadingCats = true
     @State private var isLoadingTags = true
     @State private var showingTagsSheet = false
     @State private var cats: [Cat] = []
@@ -31,10 +32,10 @@ struct ContentView: View {
                                 CatView(cat: cat, catImage: nil)
                             } label: {
                                 CatCard(cat: cat) { tag in
-                                    if selectedTags.contains(tag) {
-                                        selectedTags = selectedTags.filter({ $0 != tag })
-                                    } else {
-                                        selectedTags.append(tag)
+                                    selectedTags = [tag]
+                                    Task {
+                                        isLoadingCats = true
+                                        await loadCats(replace: true)
                                     }
                                 }
                             }
@@ -60,7 +61,7 @@ struct ContentView: View {
                     }
                 }
                 
-                if isLoadingTags {
+                if isLoadingCats || isLoadingTags {
                     ProgressView()
                 }
             }
@@ -105,6 +106,8 @@ struct ContentView: View {
                 let currentSkip = replace ? 0 : skip
                 let loadedCats = try await Cat.fetch(tags: selectedTags, skip: currentSkip, limit: limit)
                 DispatchQueue.main.async {
+                    isLoadingCats = false
+                    
                     if replace {
                         cats = loadedCats
                     } else {
@@ -115,10 +118,13 @@ struct ContentView: View {
                 }
             } catch RequestError.invalidURL {
                 print("invalid URL")
+                isLoadingCats = false
             } catch RequestError.invalidResponse {
                 print("invalid Error")
+                isLoadingCats = false
             } catch {
                 print("Unexpected error: ", error)
+                isLoadingCats = false
             }
         }
     }
