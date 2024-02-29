@@ -18,7 +18,7 @@ struct CatCard: View {
     var body: some View {
         VStack(spacing: 2) {
             ZStack(alignment: .topTrailing) {
-                CachedAsyncImage(url: cat.imageURL) { phase in
+                CachedAsyncImage(url: cat.imageURL(width: 100)) { phase in
                     switch phase {
                     case .success(let image):
                         image

@@ -27,7 +27,7 @@ struct CatView: View {
                             .frame(maxHeight: 300)
                             .clipped()
                     } else {
-                        CachedAsyncImage(url: cat.imageURL) { phase in
+                        CachedAsyncImage(url: cat.imageURL()) { phase in
                             switch phase {
                             case .success(let image):
                                 image
@@ -127,7 +127,7 @@ struct CatView: View {
                             NavigationLink {
                                 CatView(cat: cat, catImage: nil)
                             } label: {
-                                CachedAsyncImage(url: cat.imageURL) { phase in
+                                CachedAsyncImage(url: cat.imageURL()) { phase in
                                     switch phase {
                                     case .success(let image):
                                         image

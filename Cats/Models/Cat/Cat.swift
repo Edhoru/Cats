@@ -20,12 +20,30 @@ struct Cat: Codable, Identifiable, Hashable {
         case mimetype
     }
     
-    var imageURL: URL? {
-        return URL(string: "https://cataas.com/cat/\(id)")
-    }
-    
     var multipleTags: [String] {
         return tags + tags + tags
+    }
+    
+    /// All images reduce to fit the screen
+    func imageURL(width: CGFloat? = 300, height: CGFloat? = 300) -> URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "cataas.com"
+        components.path = "/cat/\(id)"
+        
+        var queryItems: [URLQueryItem] = []
+        
+        if let width = width {
+            queryItems.append(URLQueryItem(name: "width", value: "\(width)"))
+        }
+        
+        if let height = height {
+            queryItems.append(URLQueryItem(name: "height", value: "\(height)"))
+        }
+        
+        components.queryItems = queryItems
+        
+        return components.url
     }
     
 }
