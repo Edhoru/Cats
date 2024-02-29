@@ -13,9 +13,13 @@ struct ContentView: View {
     @State private var isLoadingTags = true
     @State private var showingTagsSheet = false
     @State private var cats: [Cat] = []
+    @State private var skip: Int = 0
+    @State private var noMoreResults = false
+    @State private var shouldLoadMoreCats = true
     
     private let tagsLastFetchKey = "TagsLastFetchTime"
     private let tagsKey = "CachedTags"
+    private let limit: Int = 10
     
     var body: some View {
         NavigationStack {
@@ -37,17 +41,22 @@ struct ContentView: View {
                         }
                     }
                     
-                    LazyVStack {
-                        Image(systemName: "arrow.circlepath")
-                            .fontWeight(.black)
-                            .padding(8)
-                            .foregroundStyle(Color(UIColor.label))
-                            .background(Circle().fill(.ultraThinMaterial))
-                            .onAppear {
-                                Task {
-                                    await loadCats()
+                    if !noMoreResults {
+                        LazyVStack {
+                            Image(systemName: "arrow.circlepath")
+                                .fontWeight(.black)
+                                .padding(8)
+                                .foregroundStyle(Color(UIColor.label))
+                                .background(Circle().fill(.ultraThinMaterial))
+                                .onAppear {
+                                    if shouldLoadMoreCats {
+                                        Task {
+                                            await loadCats(replace: false)
+                                        }
+                                    }
+                                    shouldLoadMoreCats = false
                                 }
-                            }
+                        }
                     }
                 }
                 
@@ -73,10 +82,15 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showingTagsSheet, onDismiss: {
-            // reload cats
+            shouldLoadMoreCats = true
         }, content: {
-            TagsView(tags: allTags, selectedTags: $selectedTags)
-                .presentationDetents([.medium, .large])
+            TagsView(tags: allTags, selectedTags: $selectedTags) {
+                print("Date: ", Date())
+                Task {
+                    await loadCats(replace: true)
+                }
+            }
+            .presentationDetents([.medium, .large])
         })
         .onAppear {
             Task {
@@ -85,10 +99,20 @@ struct ContentView: View {
         }
     }
     
-    private func loadCats() async {
+    private func loadCats(replace: Bool) async {
         Task {
             do {
-                cats = try await Cat.fetch(skip: 0, limit: 10)
+                let currentSkip = replace ? 0 : skip
+                let loadedCats = try await Cat.fetch(tags: selectedTags, skip: currentSkip, limit: limit)
+                DispatchQueue.main.async {
+                    if replace {
+                        cats = loadedCats
+                    } else {
+                        cats.append(contentsOf: loadedCats)
+                    }
+                    self.noMoreResults = loadedCats.count < limit
+                    self.skip += loadedCats.count
+                }
             } catch RequestError.invalidURL {
                 print("invalid URL")
             } catch RequestError.invalidResponse {

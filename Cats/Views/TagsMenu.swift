@@ -15,16 +15,17 @@ struct TagsMenu: View {
         case showTagsSheet
     }
     
+    
     var tags: [String]
-    var action: (Action) -> Void // This closure is triggered when the user taps the menu
-
+    var action: (Action) -> Void
+    
     var body: some View {
         Menu {
             if (tags.count > 1) {
                 Button{
                     action(.removeAll)
                 } label: {
-                    Label("Remove All Tags", systemImage: "xmark")
+                    Label("Remove All Tags", systemImage: "trash.fill")
                 }
             }
             
@@ -40,7 +41,7 @@ struct TagsMenu: View {
                 Button{
                     action(.remove(tag))
                 } label: {
-                    Label(tag, systemImage: "tag")
+                    Label(tag, systemImage: "trash")
                 }
             }
         } label: {

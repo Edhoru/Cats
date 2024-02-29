@@ -9,15 +9,23 @@ import Foundation
 
 extension Cat {
     
-    static func fetch(skip: Int, limit: Int) async throws -> [Cat] {
+    static func fetch(tags: [String], skip: Int, limit: Int) async throws -> [Cat] {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "cataas.com"
         components.path = "/api/cats"
-        components.queryItems = [
+        
+        var queryItems: [URLQueryItem] = [
             URLQueryItem(name: "skip", value: "\(skip)"),
             URLQueryItem(name: "limit", value: "\(limit)")
         ]
+        
+        if !tags.isEmpty {
+            let tagsString = tags.joined(separator: ",")
+            queryItems.append(URLQueryItem(name: "tags", value: tagsString))
+        }
+        
+        components.queryItems = queryItems
         
         guard let url = components.url else {
             throw RequestError.invalidURL
@@ -27,6 +35,9 @@ extension Cat {
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
             throw RequestError.invalidResponse
         }
+        
+        print("url: ", url)
+        print("response: ", response)
         
         do {
             let decoder = JSONDecoder()
