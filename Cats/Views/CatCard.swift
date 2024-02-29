@@ -23,8 +23,9 @@ struct CatCard: View {
                     case .success(let image):
                         image
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .frame(maxWidth: .infinity)
+                            .frame(maxHeight: 400)
                     case .failure(_):
                         placeholderImage
                             .overlay(

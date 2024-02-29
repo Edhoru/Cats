@@ -28,7 +28,7 @@ struct ContentView: View {
                     VStack(spacing: 2) {
                         ForEach(cats) { cat in
                             NavigationLink {
-                                Text("cat")
+                                CatView(cat: cat, catImage: nil)
                             } label: {
                                 CatCard(cat: cat) { tag in
                                     if selectedTags.contains(tag) {

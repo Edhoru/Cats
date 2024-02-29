@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Cat: Codable, Identifiable {
+struct Cat: Codable, Identifiable, Hashable {
     let id: String
     let size: Double
     let tags: [String]
