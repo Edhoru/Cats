@@ -25,7 +25,7 @@ struct Cat: Codable, Identifiable, Hashable {
     }
     
     /// All images reduce to fit the screen
-    func imageURL(width: CGFloat? = 300, height: CGFloat? = 300) -> URL? {
+    func imageURL(width: CGFloat? = nil, height: CGFloat? = nil) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "cataas.com"

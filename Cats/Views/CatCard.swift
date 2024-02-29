@@ -18,7 +18,7 @@ struct CatCard: View {
     var body: some View {
         VStack(spacing: 2) {
             ZStack(alignment: .topTrailing) {
-                CachedAsyncImage(url: cat.imageURL(width: 100)) { phase in
+                CachedAsyncImage(url: cat.imageURL(width: UIScreen.main.bounds.width)) { phase in
                     switch phase {
                     case .success(let image):
                         image
@@ -92,7 +92,7 @@ struct CatCard: View {
     // MARK: Subviews
     @ViewBuilder
     var placeholderImage: some View {
-        Image(systemName: "cat.fill")
+        Image("waiting")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 100, height: 100)

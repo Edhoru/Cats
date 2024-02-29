@@ -195,7 +195,7 @@ struct CatView: View {
     // MARK: Subviews
     @ViewBuilder
     var placeholderImage: some View {
-        Image(systemName: "cat.fill")
+        Image("waiting")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 100, height: 100)
@@ -208,6 +208,6 @@ struct CatView: View {
 #Preview {
     NavigationStack {
         CatView(cat: Cat(id: "a", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif"),
-                catImage: Image(systemName: "cat"))
+                catImage: Image("waiting"))
     }
 }

@@ -42,7 +42,7 @@ struct ContentView: View {
                         }
                     }
                     
-                    if !noMoreResults {
+                    if !isLoadingCats && !noMoreResults {
                         LazyVStack {
                             Image(systemName: "arrow.circlepath")
                                 .fontWeight(.black)
@@ -58,6 +58,13 @@ struct ContentView: View {
                                     shouldLoadMoreCats = false
                                 }
                         }
+                    } else {
+                        Color.clear
+                            .onAppear {
+                                Task {
+                                    await loadCats(replace: false)
+                                }
+                            }
                     }
                 }
                 
