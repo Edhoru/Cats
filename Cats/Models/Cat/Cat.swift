@@ -12,12 +12,16 @@ struct Cat: Codable, Identifiable, Hashable {
     let size: Double
     let tags: [String]
     let mimetype: String // We don't use an enum as there is no certainty we know all the posibilities
+    let createdAt: Date?
+    let editedAt: Date?
     
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case size
         case tags
         case mimetype
+        case createdAt
+        case editedAt
     }
     
     var multipleTags: [String] {
@@ -44,6 +48,26 @@ struct Cat: Codable, Identifiable, Hashable {
         components.queryItems = queryItems
         
         return components.url
+    }
+    
+    var createdAtString: String? {
+        guard let createdAt = createdAt else {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        return dateFormatter.string(from: createdAt)
+    }
+    
+    var editedAtString: String? {
+        guard let editedAt = editedAt else {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        return dateFormatter.string(from: editedAt)
     }
     
 }

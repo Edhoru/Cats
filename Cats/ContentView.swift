@@ -29,8 +29,9 @@ struct ContentView: View {
                     VStack(spacing: 2) {
                         ForEach(cats) { cat in
                             NavigationLink {
-                                CatView(cat: cat, catImage: nil)
+                                CatDetailView(cat: cat, catImage: nil)
                             } label: {
+                                #if os(iOS)
                                 CatCard(cat: cat) { tag in
                                     selectedTags = [tag]
                                     Task {
@@ -38,6 +39,9 @@ struct ContentView: View {
                                         await loadCats(replace: true)
                                     }
                                 }
+                                #else
+                                Text("vision")
+                                #endif
                             }
                         }
                     }

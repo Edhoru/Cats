@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct CatView: View {
+struct CatDetailView: View {
     @State var trigger = 0
     @State var imageIsLoaded = false
     @State private var catsByTag = [String: [Cat]]()
     
-    let cat: Cat
+    @State var cat: Cat
     let catImage: Image?
     
     var body: some View {
@@ -77,6 +77,14 @@ struct CatView: View {
                 }
                 .listRowInsets(EdgeInsets())
                 
+                if let createdAt = cat.createdAtString {
+                    Text("Created at: ") + Text(createdAt).bold()
+                }
+                
+                if let editedAt = cat.editedAtString {
+                    Text("Updated at: ") + Text(editedAt).bold()
+                }
+                
                 ForEach(cat.tags, id: \.self) { tag in
                     Section {
                         section(for: tag)
@@ -110,6 +118,17 @@ struct CatView: View {
                 .fill(Color(UIColor.systemBackground))
         )
         .listStyle(.plain)
+        .onAppear {
+            Task {
+                do {
+                    if let loaded = try await Cat.fetch(id: cat.id) {
+                        cat = loaded
+                    }
+                } catch {
+                    print("error: ", error)
+                }
+            }
+        }
     }
     
     @ViewBuilder
@@ -125,7 +144,7 @@ struct CatView: View {
                     HStack {
                         ForEach(catsByTag[tag] ?? [], id: \.self) { cat in
                             NavigationLink {
-                                CatView(cat: cat, catImage: nil)
+                                CatDetailView(cat: cat, catImage: nil)
                             } label: {
                                 CachedAsyncImage(url: cat.imageURL()) { phase in
                                     switch phase {
@@ -207,7 +226,7 @@ struct CatView: View {
 
 #Preview {
     NavigationStack {
-        CatView(cat: Cat(id: "a", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif"),
+        CatDetailView(cat: Cat(id: "5llbIzGS52clSUik", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
                 catImage: Image("waiting"))
     }
 }

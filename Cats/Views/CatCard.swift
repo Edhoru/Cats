@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(iOS)
 struct CatCard: View {
     @State var trigger = 0
     @State var imageIsLoaded = false
@@ -102,5 +103,6 @@ struct CatCard: View {
 }
 
 #Preview {
-    CatCard(cat: Cat(id: "a", size: 1.0, tags: ["tag1", "tag2"], mimetype: "image/gif")) { _ in }
+    CatCard(cat: Cat(id: "a", size: 1.0, tags: ["tag1", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil)) { _ in }
 }
+#endif

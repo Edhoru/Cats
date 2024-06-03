@@ -7,8 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84C7ECD62B90ACFB002A8834 /* CatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7ECD52B90ACFB002A8834 /* CatView.swift */; };
+		844FFA6C2C06A31600988F9E /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA6B2C06A31600988F9E /* APIManager.swift */; };
+		844FFA6E2C06A34500988F9E /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA6D2C06A34400988F9E /* ErrorManager.swift */; };
+		844FFA702C06A60500988F9E /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA6F2C06A60400988F9E /* MainView.swift */; };
+		844FFA782C06A97400988F9E /* CatsWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA772C06A97400988F9E /* CatsWatchApp.swift */; };
+		844FFA7A2C06A97400988F9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA792C06A97400988F9E /* ContentView.swift */; };
+		844FFA7C2C06A97500988F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844FFA7B2C06A97500988F9E /* Assets.xcassets */; };
+		844FFA7F2C06A97500988F9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844FFA7E2C06A97500988F9E /* Preview Assets.xcassets */; };
+		844FFA892C06A97500988F9E /* CatsWatch_Watch_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA882C06A97500988F9E /* CatsWatch_Watch_AppTests.swift */; };
+		844FFA932C06A97500988F9E /* CatsWatch_Watch_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA922C06A97500988F9E /* CatsWatch_Watch_AppUITests.swift */; };
+		844FFA952C06A97500988F9E /* CatsWatch_Watch_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFA942C06A97500988F9E /* CatsWatch_Watch_AppUITestsLaunchTests.swift */; };
+		844FFA982C06A97500988F9E /* CatsWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 844FFA752C06A97400988F9E /* CatsWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		844FFAAC2C06AA9700988F9E /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 844FFAAB2C06AA9700988F9E /* RealityKitContent */; };
+		844FFAAE2C06AA9700988F9E /* CatsVisionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFAAD2C06AA9700988F9E /* CatsVisionApp.swift */; };
+		844FFAB02C06AA9700988F9E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFAAF2C06AA9700988F9E /* ContentView.swift */; };
+		844FFAB22C06AA9700988F9E /* ImmersiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFAB12C06AA9700988F9E /* ImmersiveView.swift */; };
+		844FFAB42C06AA9700988F9E /* ImageBasedLighting.skybox in Resources */ = {isa = PBXBuildFile; fileRef = 844FFAB32C06AA9700988F9E /* ImageBasedLighting.skybox */; };
+		844FFAB62C06AA9900988F9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844FFAB52C06AA9900988F9E /* Assets.xcassets */; };
+		844FFAB92C06AA9900988F9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 844FFAB82C06AA9900988F9E /* Preview Assets.xcassets */; };
+		844FFAC42C06AA9900988F9E /* CatsVisionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844FFAC32C06AA9900988F9E /* CatsVisionTests.swift */; };
+		84C7ECD62B90ACFB002A8834 /* CatDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */; };
 		84C7ECDB2B910705002A8834 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84C7ECDA2B910705002A8834 /* Launch Screen.storyboard */; };
+		84C7ECE32B910EC2002A8834 /* CatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7ECE22B910EC2002A8834 /* CatsTests.swift */; };
+		84C7ECE92B910EFC002A8834 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42F2B8F3E3B00A24ABF /* Cat.swift */; };
+		84C7ECEA2B910EFF002A8834 /* Cat+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */; };
+		84C7ECEB2B910F01002A8834 /* Cat+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* Cat+Data.swift */; };
+		84C7ECEC2B910F10002A8834 /* RequestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42C2B8F344700A24ABF /* RequestErrors.swift */; };
 		84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4182B89891100A24ABF /* CatsApp.swift */; };
 		84E5D41B2B89891100A24ABF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D41A2B89891100A24ABF /* ContentView.swift */; };
 		84E5D41D2B89891200A24ABF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E5D41C2B89891200A24ABF /* Assets.xcassets */; };
@@ -25,10 +49,88 @@
 		84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		844FFA852C06A97500988F9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E5D40D2B89891100A24ABF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844FFA742C06A97400988F9E;
+			remoteInfo = "CatsWatch Watch App";
+		};
+		844FFA8F2C06A97500988F9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E5D40D2B89891100A24ABF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844FFA742C06A97400988F9E;
+			remoteInfo = "CatsWatch Watch App";
+		};
+		844FFA962C06A97500988F9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E5D40D2B89891100A24ABF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844FFA742C06A97400988F9E;
+			remoteInfo = "CatsWatch Watch App";
+		};
+		844FFAC02C06AA9900988F9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E5D40D2B89891100A24ABF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 844FFAA62C06AA9600988F9E;
+			remoteInfo = CatsVision;
+		};
+		84C7ECE42B910EC2002A8834 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E5D40D2B89891100A24ABF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E5D4142B89891100A24ABF;
+			remoteInfo = Cats;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		844FFA9C2C06A97500988F9E /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				844FFA982C06A97500988F9E /* CatsWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		84C7ECD52B90ACFB002A8834 /* CatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatView.swift; sourceTree = "<group>"; };
+		844FFA6B2C06A31600988F9E /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		844FFA6D2C06A34400988F9E /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
+		844FFA6F2C06A60400988F9E /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		844FFA752C06A97400988F9E /* CatsWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CatsWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		844FFA772C06A97400988F9E /* CatsWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsWatchApp.swift; sourceTree = "<group>"; };
+		844FFA792C06A97400988F9E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		844FFA7B2C06A97500988F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		844FFA7E2C06A97500988F9E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		844FFA842C06A97500988F9E /* CatsWatch Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CatsWatch Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		844FFA882C06A97500988F9E /* CatsWatch_Watch_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsWatch_Watch_AppTests.swift; sourceTree = "<group>"; };
+		844FFA8E2C06A97500988F9E /* CatsWatch Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CatsWatch Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		844FFA922C06A97500988F9E /* CatsWatch_Watch_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsWatch_Watch_AppUITests.swift; sourceTree = "<group>"; };
+		844FFA942C06A97500988F9E /* CatsWatch_Watch_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsWatch_Watch_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		844FFAA72C06AA9600988F9E /* CatsVision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CatsVision.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		844FFAAA2C06AA9600988F9E /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
+		844FFAAD2C06AA9700988F9E /* CatsVisionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsVisionApp.swift; sourceTree = "<group>"; };
+		844FFAAF2C06AA9700988F9E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		844FFAB12C06AA9700988F9E /* ImmersiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveView.swift; sourceTree = "<group>"; };
+		844FFAB32C06AA9700988F9E /* ImageBasedLighting.skybox */ = {isa = PBXFileReference; lastKnownFileType = file.skybox; path = ImageBasedLighting.skybox; sourceTree = "<group>"; };
+		844FFAB52C06AA9900988F9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		844FFAB82C06AA9900988F9E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		844FFABA2C06AA9900988F9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		844FFABF2C06AA9900988F9E /* CatsVisionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsVisionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		844FFAC32C06AA9900988F9E /* CatsVisionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsVisionTests.swift; sourceTree = "<group>"; };
+		84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatDetailView.swift; sourceTree = "<group>"; };
 		84C7ECD92B91030F002A8834 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		84C7ECDA2B910705002A8834 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		84C7ECE02B910EC2002A8834 /* CatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C7ECE22B910EC2002A8834 /* CatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsTests.swift; sourceTree = "<group>"; };
 		84E5D4152B89891100A24ABF /* Cats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E5D4182B89891100A24ABF /* CatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsApp.swift; sourceTree = "<group>"; };
 		84E5D41A2B89891100A24ABF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,6 +150,49 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		844FFA722C06A97400988F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA812C06A97500988F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA8B2C06A97500988F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFAA42C06AA9600988F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFAAC2C06AA9700988F9E /* RealityKitContent in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFABC2C06AA9900988F9E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84C7ECDD2B910EC2002A8834 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E5D4122B89891100A24ABF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -58,10 +203,138 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		844FFA662C06A10100988F9E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA692C06A13B00988F9E /* API */,
+				844FFA682C06A13200988F9E /* Errors */,
+				844FFA6D2C06A34400988F9E /* ErrorManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		844FFA672C06A10A00988F9E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		844FFA682C06A13200988F9E /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		844FFA692C06A13B00988F9E /* API */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA6B2C06A31600988F9E /* APIManager.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		844FFA6A2C06A14500988F9E /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		844FFA762C06A97400988F9E /* CatsWatch Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA772C06A97400988F9E /* CatsWatchApp.swift */,
+				844FFA792C06A97400988F9E /* ContentView.swift */,
+				844FFA7B2C06A97500988F9E /* Assets.xcassets */,
+				844FFA7D2C06A97500988F9E /* Preview Content */,
+			);
+			path = "CatsWatch Watch App";
+			sourceTree = "<group>";
+		};
+		844FFA7D2C06A97500988F9E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA7E2C06A97500988F9E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		844FFA872C06A97500988F9E /* CatsWatch Watch AppTests */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA882C06A97500988F9E /* CatsWatch_Watch_AppTests.swift */,
+			);
+			path = "CatsWatch Watch AppTests";
+			sourceTree = "<group>";
+		};
+		844FFA912C06A97500988F9E /* CatsWatch Watch AppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				844FFA922C06A97500988F9E /* CatsWatch_Watch_AppUITests.swift */,
+				844FFA942C06A97500988F9E /* CatsWatch_Watch_AppUITestsLaunchTests.swift */,
+			);
+			path = "CatsWatch Watch AppUITests";
+			sourceTree = "<group>";
+		};
+		844FFAA82C06AA9600988F9E /* CatsVision */ = {
+			isa = PBXGroup;
+			children = (
+				844FFAAD2C06AA9700988F9E /* CatsVisionApp.swift */,
+				844FFAAF2C06AA9700988F9E /* ContentView.swift */,
+				844FFAB12C06AA9700988F9E /* ImmersiveView.swift */,
+				844FFAB32C06AA9700988F9E /* ImageBasedLighting.skybox */,
+				844FFAB52C06AA9900988F9E /* Assets.xcassets */,
+				844FFABA2C06AA9900988F9E /* Info.plist */,
+				844FFAB72C06AA9900988F9E /* Preview Content */,
+			);
+			path = CatsVision;
+			sourceTree = "<group>";
+		};
+		844FFAA92C06AA9600988F9E /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				844FFAAA2C06AA9600988F9E /* RealityKitContent */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		844FFAB72C06AA9900988F9E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				844FFAB82C06AA9900988F9E /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		844FFAC22C06AA9900988F9E /* CatsVisionTests */ = {
+			isa = PBXGroup;
+			children = (
+				844FFAC32C06AA9900988F9E /* CatsVisionTests.swift */,
+			);
+			path = CatsVisionTests;
+			sourceTree = "<group>";
+		};
+		84C7ECE12B910EC2002A8834 /* CatsTests */ = {
+			isa = PBXGroup;
+			children = (
+				84C7ECE22B910EC2002A8834 /* CatsTests.swift */,
+			);
+			path = CatsTests;
+			sourceTree = "<group>";
+		};
 		84E5D40C2B89891100A24ABF = {
 			isa = PBXGroup;
 			children = (
 				84E5D4172B89891100A24ABF /* Cats */,
+				84C7ECE12B910EC2002A8834 /* CatsTests */,
+				844FFA762C06A97400988F9E /* CatsWatch Watch App */,
+				844FFA872C06A97500988F9E /* CatsWatch Watch AppTests */,
+				844FFA912C06A97500988F9E /* CatsWatch Watch AppUITests */,
+				844FFAA82C06AA9600988F9E /* CatsVision */,
+				844FFAA92C06AA9600988F9E /* Packages */,
+				844FFAC22C06AA9900988F9E /* CatsVisionTests */,
 				84E5D4162B89891100A24ABF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,6 +343,12 @@
 			isa = PBXGroup;
 			children = (
 				84E5D4152B89891100A24ABF /* Cats.app */,
+				84C7ECE02B910EC2002A8834 /* CatsTests.xctest */,
+				844FFA752C06A97400988F9E /* CatsWatch Watch App.app */,
+				844FFA842C06A97500988F9E /* CatsWatch Watch AppTests.xctest */,
+				844FFA8E2C06A97500988F9E /* CatsWatch Watch AppUITests.xctest */,
+				844FFAA72C06AA9600988F9E /* CatsVision.app */,
+				844FFABF2C06AA9900988F9E /* CatsVisionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -79,7 +358,11 @@
 			children = (
 				84C7ECD92B91030F002A8834 /* Info.plist */,
 				84E5D4182B89891100A24ABF /* CatsApp.swift */,
+				844FFA6F2C06A60400988F9E /* MainView.swift */,
 				84E5D41A2B89891100A24ABF /* ContentView.swift */,
+				844FFA6A2C06A14500988F9E /* Theme */,
+				844FFA672C06A10A00988F9E /* ViewModels */,
+				844FFA662C06A10100988F9E /* Managers */,
 				84E5D4362B8F403D00A24ABF /* Views */,
 				84E5D42E2B8F3E2E00A24ABF /* Models */,
 				84E5D4272B8AC37F00A24ABF /* Helpers */,
@@ -131,7 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				84E5D4372B8F406B00A24ABF /* CatCard.swift */,
-				84C7ECD52B90ACFB002A8834 /* CatView.swift */,
+				84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */,
 				84E5D43B2B8F413300A24ABF /* TagView.swift */,
 				84E5D42A2B8CF94C00A24ABF /* TagsView.swift */,
 				84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */,
@@ -142,6 +425,115 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		844FFA742C06A97400988F9E /* CatsWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844FFA992C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch App" */;
+			buildPhases = (
+				844FFA712C06A97400988F9E /* Sources */,
+				844FFA722C06A97400988F9E /* Frameworks */,
+				844FFA732C06A97400988F9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CatsWatch Watch App";
+			productName = "CatsWatch Watch App";
+			productReference = 844FFA752C06A97400988F9E /* CatsWatch Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		844FFA832C06A97500988F9E /* CatsWatch Watch AppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844FFA9D2C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch AppTests" */;
+			buildPhases = (
+				844FFA802C06A97500988F9E /* Sources */,
+				844FFA812C06A97500988F9E /* Frameworks */,
+				844FFA822C06A97500988F9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844FFA862C06A97500988F9E /* PBXTargetDependency */,
+			);
+			name = "CatsWatch Watch AppTests";
+			productName = "CatsWatch Watch AppTests";
+			productReference = 844FFA842C06A97500988F9E /* CatsWatch Watch AppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		844FFA8D2C06A97500988F9E /* CatsWatch Watch AppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844FFAA02C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch AppUITests" */;
+			buildPhases = (
+				844FFA8A2C06A97500988F9E /* Sources */,
+				844FFA8B2C06A97500988F9E /* Frameworks */,
+				844FFA8C2C06A97500988F9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844FFA902C06A97500988F9E /* PBXTargetDependency */,
+			);
+			name = "CatsWatch Watch AppUITests";
+			productName = "CatsWatch Watch AppUITests";
+			productReference = 844FFA8E2C06A97500988F9E /* CatsWatch Watch AppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		844FFAA62C06AA9600988F9E /* CatsVision */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844FFAC52C06AA9900988F9E /* Build configuration list for PBXNativeTarget "CatsVision" */;
+			buildPhases = (
+				844FFAA32C06AA9600988F9E /* Sources */,
+				844FFAA42C06AA9600988F9E /* Frameworks */,
+				844FFAA52C06AA9600988F9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CatsVision;
+			packageProductDependencies = (
+				844FFAAB2C06AA9700988F9E /* RealityKitContent */,
+			);
+			productName = CatsVision;
+			productReference = 844FFAA72C06AA9600988F9E /* CatsVision.app */;
+			productType = "com.apple.product-type.application";
+		};
+		844FFABE2C06AA9900988F9E /* CatsVisionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844FFAC82C06AA9900988F9E /* Build configuration list for PBXNativeTarget "CatsVisionTests" */;
+			buildPhases = (
+				844FFABB2C06AA9900988F9E /* Sources */,
+				844FFABC2C06AA9900988F9E /* Frameworks */,
+				844FFABD2C06AA9900988F9E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				844FFAC12C06AA9900988F9E /* PBXTargetDependency */,
+			);
+			name = CatsVisionTests;
+			productName = CatsVisionTests;
+			productReference = 844FFABF2C06AA9900988F9E /* CatsVisionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		84C7ECDF2B910EC2002A8834 /* CatsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84C7ECE62B910EC2002A8834 /* Build configuration list for PBXNativeTarget "CatsTests" */;
+			buildPhases = (
+				84C7ECDC2B910EC2002A8834 /* Sources */,
+				84C7ECDD2B910EC2002A8834 /* Frameworks */,
+				84C7ECDE2B910EC2002A8834 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84C7ECE52B910EC2002A8834 /* PBXTargetDependency */,
+			);
+			name = CatsTests;
+			productName = CatsTests;
+			productReference = 84C7ECE02B910EC2002A8834 /* CatsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84E5D4142B89891100A24ABF /* Cats */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84E5D4242B89891200A24ABF /* Build configuration list for PBXNativeTarget "Cats" */;
@@ -149,10 +541,12 @@
 				84E5D4112B89891100A24ABF /* Sources */,
 				84E5D4122B89891100A24ABF /* Frameworks */,
 				84E5D4132B89891100A24ABF /* Resources */,
+				844FFA9C2C06A97500988F9E /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				844FFA972C06A97500988F9E /* PBXTargetDependency */,
 			);
 			name = Cats;
 			productName = Cats;
@@ -166,9 +560,31 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					844FFA742C06A97400988F9E = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					844FFA832C06A97500988F9E = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 844FFA742C06A97400988F9E;
+					};
+					844FFA8D2C06A97500988F9E = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 844FFA742C06A97400988F9E;
+					};
+					844FFAA62C06AA9600988F9E = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					844FFABE2C06AA9900988F9E = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 844FFAA62C06AA9600988F9E;
+					};
+					84C7ECDF2B910EC2002A8834 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 84E5D4142B89891100A24ABF;
+					};
 					84E5D4142B89891100A24ABF = {
 						CreatedOnToolsVersion = 15.2;
 					};
@@ -188,11 +604,64 @@
 			projectRoot = "";
 			targets = (
 				84E5D4142B89891100A24ABF /* Cats */,
+				84C7ECDF2B910EC2002A8834 /* CatsTests */,
+				844FFA742C06A97400988F9E /* CatsWatch Watch App */,
+				844FFA832C06A97500988F9E /* CatsWatch Watch AppTests */,
+				844FFA8D2C06A97500988F9E /* CatsWatch Watch AppUITests */,
+				844FFAA62C06AA9600988F9E /* CatsVision */,
+				844FFABE2C06AA9900988F9E /* CatsVisionTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		844FFA732C06A97400988F9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFA7F2C06A97500988F9E /* Preview Assets.xcassets in Resources */,
+				844FFA7C2C06A97500988F9E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA822C06A97500988F9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA8C2C06A97500988F9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFAA52C06AA9600988F9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFAB62C06AA9900988F9E /* Assets.xcassets in Resources */,
+				844FFAB92C06AA9900988F9E /* Preview Assets.xcassets in Resources */,
+				844FFAB42C06AA9700988F9E /* ImageBasedLighting.skybox in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFABD2C06AA9900988F9E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84C7ECDE2B910EC2002A8834 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E5D4132B89891100A24ABF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -206,6 +675,62 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		844FFA712C06A97400988F9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFA7A2C06A97400988F9E /* ContentView.swift in Sources */,
+				844FFA782C06A97400988F9E /* CatsWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA802C06A97500988F9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFA892C06A97500988F9E /* CatsWatch_Watch_AppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFA8A2C06A97500988F9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFA932C06A97500988F9E /* CatsWatch_Watch_AppUITests.swift in Sources */,
+				844FFA952C06A97500988F9E /* CatsWatch_Watch_AppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFAA32C06AA9600988F9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFAB02C06AA9700988F9E /* ContentView.swift in Sources */,
+				844FFAAE2C06AA9700988F9E /* CatsVisionApp.swift in Sources */,
+				844FFAB22C06AA9700988F9E /* ImmersiveView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		844FFABB2C06AA9900988F9E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				844FFAC42C06AA9900988F9E /* CatsVisionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84C7ECDC2B910EC2002A8834 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84C7ECEA2B910EFF002A8834 /* Cat+Likes.swift in Sources */,
+				84C7ECEC2B910F10002A8834 /* RequestErrors.swift in Sources */,
+				84C7ECE92B910EFC002A8834 /* Cat.swift in Sources */,
+				84C7ECEB2B910F01002A8834 /* Cat+Data.swift in Sources */,
+				84C7ECE32B910EC2002A8834 /* CatsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E5D4112B89891100A24ABF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,19 +741,345 @@
 				84E5D4382B8F406B00A24ABF /* CatCard.swift in Sources */,
 				84E5D42D2B8F344700A24ABF /* RequestErrors.swift in Sources */,
 				84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */,
+				844FFA6C2C06A31600988F9E /* APIManager.swift in Sources */,
 				84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */,
 				84E5D41B2B89891100A24ABF /* ContentView.swift in Sources */,
+				844FFA702C06A60500988F9E /* MainView.swift in Sources */,
+				844FFA6E2C06A34500988F9E /* ErrorManager.swift in Sources */,
 				84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */,
 				84E5D42B2B8CF94C00A24ABF /* TagsView.swift in Sources */,
 				84E5D4352B8F3E9000A24ABF /* Cat+Data.swift in Sources */,
-				84C7ECD62B90ACFB002A8834 /* CatView.swift in Sources */,
+				84C7ECD62B90ACFB002A8834 /* CatDetailView.swift in Sources */,
 				84E5D4322B8F3E5600A24ABF /* Cat+Likes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		844FFA862C06A97500988F9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844FFA742C06A97400988F9E /* CatsWatch Watch App */;
+			targetProxy = 844FFA852C06A97500988F9E /* PBXContainerItemProxy */;
+		};
+		844FFA902C06A97500988F9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844FFA742C06A97400988F9E /* CatsWatch Watch App */;
+			targetProxy = 844FFA8F2C06A97500988F9E /* PBXContainerItemProxy */;
+		};
+		844FFA972C06A97500988F9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844FFA742C06A97400988F9E /* CatsWatch Watch App */;
+			targetProxy = 844FFA962C06A97500988F9E /* PBXContainerItemProxy */;
+		};
+		844FFAC12C06AA9900988F9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 844FFAA62C06AA9600988F9E /* CatsVision */;
+			targetProxy = 844FFAC02C06AA9900988F9E /* PBXContainerItemProxy */;
+		};
+		84C7ECE52B910EC2002A8834 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 84E5D4142B89891100A24ABF /* Cats */;
+			targetProxy = 84C7ECE42B910EC2002A8834 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		844FFA9A2C06A97500988F9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CatsWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CatsWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.edhoru.Cats;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		844FFA9B2C06A97500988F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CatsWatch Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CatsWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.edhoru.Cats;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
+		844FFA9E2C06A97500988F9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.edhoru.Cats.CatsWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CatsWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CatsWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		844FFA9F2C06A97500988F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.edhoru.Cats.CatsWatch-Watch-AppTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CatsWatch Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CatsWatch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
+		844FFAA12C06A97500988F9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.edhoru.Cats.CatsWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "CatsWatch Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		844FFAA22C06A97500988F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.edhoru.Cats.CatsWatch-Watch-AppUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = "CatsWatch Watch App";
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
+		844FFAC62C06AA9900988F9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CatsVision/Preview Content\"";
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.CatsVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Debug;
+		};
+		844FFAC72C06AA9900988F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"CatsVision/Preview Content\"";
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "$(TARGET_NAME)/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.CatsVision;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Release;
+		};
+		844FFAC92C06AA9900988F9E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.CatsVisionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CatsVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CatsVision";
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Debug;
+		};
+		844FFACA2C06AA9900988F9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.Cats.CatsVisionTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CatsVision.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CatsVision";
+				VALIDATE_PRODUCT = YES;
+				XROS_DEPLOYMENT_TARGET = 1.2;
+			};
+			name = Release;
+		};
+		84C7ECE72B910EC2002A8834 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.CatsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,4,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cats";
+			};
+			name = Debug;
+		};
+		84C7ECE82B910EC2002A8834 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = W7764ZQNWC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.edhoru.CatsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator watchos watchsimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,4,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cats.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Cats";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		84E5D4222B89891200A24ABF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -263,6 +1114,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -324,6 +1176,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -346,11 +1199,13 @@
 		84E5D4252B89891200A24ABF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Cats/Cats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cats/Preview Content\"";
 				DEVELOPMENT_TEAM = W7764ZQNWC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -376,6 +1231,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -385,11 +1241,13 @@
 		84E5D4262B89891200A24ABF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Cats/Cats.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Cats/Preview Content\"";
 				DEVELOPMENT_TEAM = W7764ZQNWC;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -415,6 +1273,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -424,6 +1283,60 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		844FFA992C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844FFA9A2C06A97500988F9E /* Debug */,
+				844FFA9B2C06A97500988F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844FFA9D2C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch AppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844FFA9E2C06A97500988F9E /* Debug */,
+				844FFA9F2C06A97500988F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844FFAA02C06A97500988F9E /* Build configuration list for PBXNativeTarget "CatsWatch Watch AppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844FFAA12C06A97500988F9E /* Debug */,
+				844FFAA22C06A97500988F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844FFAC52C06AA9900988F9E /* Build configuration list for PBXNativeTarget "CatsVision" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844FFAC62C06AA9900988F9E /* Debug */,
+				844FFAC72C06AA9900988F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		844FFAC82C06AA9900988F9E /* Build configuration list for PBXNativeTarget "CatsVisionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844FFAC92C06AA9900988F9E /* Debug */,
+				844FFACA2C06AA9900988F9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84C7ECE62B910EC2002A8834 /* Build configuration list for PBXNativeTarget "CatsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84C7ECE72B910EC2002A8834 /* Debug */,
+				84C7ECE82B910EC2002A8834 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84E5D4102B89891100A24ABF /* Build configuration list for PBXProject "Cats" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -443,6 +1356,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		844FFAAB2C06AA9700988F9E /* RealityKitContent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RealityKitContent;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 84E5D40D2B89891100A24ABF /* Project object */;
 }
