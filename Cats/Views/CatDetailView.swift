@@ -98,7 +98,7 @@ struct CatDetailView: View {
                             
                             if !(catsByTag[tag]?.isEmpty ?? true) {
                                 NavigationLink {
-                                    ContentView()
+                                    FeedView()
                                 } label: {
                                     Text("Show more")
                                 }

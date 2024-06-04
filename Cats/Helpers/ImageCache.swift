@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// Define CachedAsyncImage without specifying default content type in extension
 struct CachedAsyncImage<Content>: View where Content: View {
     private var url: URL?
     private var scale: CGFloat
