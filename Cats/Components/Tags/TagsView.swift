@@ -25,7 +25,7 @@ struct TagsView: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(selectedTags, id: \.self) { tag in
-                        TagView(tag: tag, foregroundColor: .white, backgroundColor: .red)
+                        TagView(tag: tag, foregroundColor: .white, backgroundColor: .accentColor)
                             .matchedGeometryEffect(id: tag, in: animation)
                             .onTapGesture {
                                 withAnimation {

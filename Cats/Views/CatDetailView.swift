@@ -65,21 +65,21 @@ struct CatDetailView: View {
                         
                         Button(action: {
                             trigger += 1
-                            if cat.isLiked() {
-                                cat.dislike()
+                            if cat.isFavorited() {
+                                cat.unfavorite()
                             } else {
-                                cat.like()
+                                cat.favorite()
                             }
                         }, label: {
                             Image(systemName: "heart")
                                 .font(.title)
-                                .symbolVariant(cat.isLiked() ? .fill : .circle)
+                                .symbolVariant(cat.isFavorited() ? .fill : .circle)
                                 .symbolEffect(.bounce, value: trigger)
-                                .foregroundStyle(cat.isLiked() ? .red : .white)
+                                .foregroundStyle(cat.isFavorited() ? .red : .white)
                                 .shadow(radius: 2)
                         })
-                        .padding(.horizontal, cat.isLiked() ? 3 : 4)
-                        .padding(.vertical, cat.isLiked() ? 6 : 4)
+                        .padding(.horizontal, cat.isFavorited() ? 3 : 4)
+                        .padding(.vertical, cat.isFavorited() ? 6 : 4)
                     }
                     .listRowInsets(EdgeInsets())
                     

@@ -48,6 +48,8 @@
 		84E5D43A2B8F410200A24ABF /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4392B8F410200A24ABF /* TagLayout.swift */; };
 		84E5D43C2B8F413300A24ABF /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D43B2B8F413300A24ABF /* TagView.swift */; };
 		84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */; };
+		84F405BD2C109283006E69DD /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F405BC2C109283006E69DD /* FavoritesView.swift */; };
+		84F405BF2C1096F2006E69DD /* FavoriteCatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F405BE2C1096F2006E69DD /* FavoriteCatCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +151,8 @@
 		84E5D4392B8F410200A24ABF /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
 		84E5D43B2B8F413300A24ABF /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMenu.swift; sourceTree = "<group>"; };
+		84F405BC2C109283006E69DD /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		84F405BE2C1096F2006E69DD /* FavoriteCatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCatCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,6 +377,8 @@
 		84E011052C0F380300C08090 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
+				84F405BC2C109283006E69DD /* FavoritesView.swift */,
+				84F405BE2C1096F2006E69DD /* FavoriteCatCard.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -788,12 +794,14 @@
 			files = (
 				84E5D43A2B8F410200A24ABF /* TagLayout.swift in Sources */,
 				84E5D4292B8AC38D00A24ABF /* ImageCache.swift in Sources */,
+				84F405BF2C1096F2006E69DD /* FavoriteCatCard.swift in Sources */,
 				84E5D43C2B8F413300A24ABF /* TagView.swift in Sources */,
 				84E5D4382B8F406B00A24ABF /* CatCard.swift in Sources */,
 				84E5D42D2B8F344700A24ABF /* RequestErrors.swift in Sources */,
 				84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */,
 				844FFA6C2C06A31600988F9E /* APIManager.swift in Sources */,
 				84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */,
+				84F405BD2C109283006E69DD /* FavoritesView.swift in Sources */,
 				84E011022C0F371000C08090 /* FeedViewModel.swift in Sources */,
 				84E5D41B2B89891100A24ABF /* FeedView.swift in Sources */,
 				844FFA702C06A60500988F9E /* MainView.swift in Sources */,

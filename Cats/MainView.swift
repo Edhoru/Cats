@@ -34,7 +34,7 @@ struct MainView: View {
             case .feed:
                 FeedView()
             case .favorites:
-                Text("fav")
+                FavoritesView()
             case .settings:
                 Text("s")
             }
