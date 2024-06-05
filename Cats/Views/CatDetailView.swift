@@ -8,135 +8,123 @@
 import SwiftUI
 
 struct CatDetailView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
     @State var trigger = 0
     @State var imageIsLoaded = false
     @State private var catsByTag = [String: [Cat]]()
-    
     @State var cat: Cat
+    
     let catImage: Image?
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 0) {
-                ZStack(alignment: .topTrailing) {
-                    if let image = catImage {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(maxWidth: .infinity)
-                            .frame(maxHeight: 300)
-                            .clipped()
-                    } else {
-                        CachedAsyncImage(url: cat.imageURL()) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(maxWidth: .infinity)
-                            case .failure(_):
-                                placeholderImage
-                                    .overlay(
-                                        Image(systemName: "arrow.circlepath")
-                                            .padding()
-                                            .foregroundStyle(Color(UIColor.systemBackground))
-                                    )
-                                
-                            case .empty:
-                                placeholderImage
-                                    .overlay(
-                                        ProgressView()
-                                            .progressViewStyle(CircularProgressViewStyle())
-                                            .tint(Color(UIColor.systemBackground))
-                                    )
-                                
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    
-                    Button(action: {
-                        trigger += 1
-                        if cat.isLiked() {
-                            cat.dislike()
+        ZStack {
+            Rectangle()
+                .fill(Color.background.gradient)
+            
+            ScrollView {
+                VStack(spacing: 0) {
+                    ZStack(alignment: .topTrailing) {
+                        if let image = catImage {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(maxWidth: .infinity)
+                                .frame(maxHeight: 300)
+                                .clipped()
                         } else {
-                            cat.like()
-                        }
-                    }, label: {
-                        Image(systemName: "heart")
-                            .font(.title)
-                            .symbolVariant(cat.isLiked() ? .fill : .circle)
-                            .symbolEffect(.bounce, value: trigger)
-                            .foregroundStyle(cat.isLiked() ? .red : .white)
-                            .shadow(radius: 2)
-                    })
-                    .padding(.horizontal, cat.isLiked() ? 3 : 4)
-                    .padding(.vertical, cat.isLiked() ? 6 : 4)
-                }
-                .listRowInsets(EdgeInsets())
-                
-                HStack {
-                    if let createdAt = cat.createdAtString {
-                        Group {
-                            Text("Created at: ") + Text(createdAt).bold()
-                        }
-                            .frame(maxWidth: .infinity)
-                    }
-                    
-                    if let editedAt = cat.editedAtString {
-                        Group {
-                            Text("Updated at: ") + Text(editedAt).bold()
-                        }
-                            .frame(maxWidth: .infinity)
-                    }
-                }
-                .padding()
-                
-                ForEach(cat.tags, id: \.self) { tag in
-                    Section {
-                        section(for: tag)
-                    } header: {
-                        HStack {
-                            Text(tag)
-                                .font(.title.bold())
-                                .textCase(.uppercase)
-                            
-                            Spacer()
-                            
-                            if !(catsByTag[tag]?.isEmpty ?? true) {
-                                NavigationLink {
-                                    FeedView()
-                                } label: {
-                                    Text("Show more")
+                            CachedAsyncImage(url: cat.imageURL()) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(maxWidth: .infinity)
+                                case .failure(_):
+                                    placeholderImage
+                                        .overlay(
+                                            Image(systemName: "arrow.circlepath")
+                                                .padding()
+                                                .foregroundStyle(Color(UIColor.systemBackground))
+                                        )
+                                    
+                                case .empty:
+                                    placeholderImage
+                                        .overlay(
+                                            ProgressView()
+                                                .progressViewStyle(CircularProgressViewStyle())
+                                                .tint(Color(UIColor.systemBackground))
+                                        )
+                                    
+                                @unknown default:
+                                    EmptyView()
                                 }
                             }
+                            .frame(maxWidth: .infinity)
                         }
-                        .padding(.horizontal)
-                        .padding(.top)
+                        
+                        Button(action: {
+                            trigger += 1
+                            if cat.isLiked() {
+                                cat.dislike()
+                            } else {
+                                cat.like()
+                            }
+                        }, label: {
+                            Image(systemName: "heart")
+                                .font(.title)
+                                .symbolVariant(cat.isLiked() ? .fill : .circle)
+                                .symbolEffect(.bounce, value: trigger)
+                                .foregroundStyle(cat.isLiked() ? .red : .white)
+                                .shadow(radius: 2)
+                        })
+                        .padding(.horizontal, cat.isLiked() ? 3 : 4)
+                        .padding(.vertical, cat.isLiked() ? 6 : 4)
                     }
-                    .onAppear {
-                        loadCats(tag: tag)
+                    .listRowInsets(EdgeInsets())
+                    
+                    datesContainerView
+                    
+                    ForEach(cat.tags, id: \.self) { tag in
+                        Section {
+                            section(for: tag)
+                        } header: {
+                            HStack {
+                                Text(tag)
+                                    .font(.title.bold())
+                                    .textCase(.uppercase)
+                                
+                                Spacer()
+                                
+                                if !(catsByTag[tag]?.isEmpty ?? true) {
+                                    NavigationLink {
+                                        FeedView()
+                                    } label: {
+                                        Text("Show more")
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                            .padding(.top)
+                        }
+                        .onAppear {
+                            loadCats(tag: tag)
+                        }
+                    }
+                }}
+            .frame(maxWidth: .infinity)
+            .listStyle(.plain)
+            .onAppear {
+                Task {
+                    do {
+                        if let loaded = try await Cat.fetch(id: cat.id) {
+                            cat = loaded
+                        }
+                    } catch {
+                        print("error: ", error)
                     }
                 }
-            }}
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color(UIColor.systemBackground))
-        )
-        .listStyle(.plain)
-        .onAppear {
-            Task {
-                do {
-                    if let loaded = try await Cat.fetch(id: cat.id) {
-                        cat = loaded
-                    }
-                } catch {
-                    print("error: ", error)
-                }
-            }
+        }
         }
     }
     
@@ -200,6 +188,38 @@ struct CatDetailView: View {
         } else {
             ProgressView()
         }
+    }
+    
+    @ViewBuilder
+    var datesContainerView: some View {
+        if horizontalSizeClass == .compact {
+            VStack(spacing: 12) {
+                datesView
+            }
+            .padding()
+        } else {
+            HStack {
+                datesView
+            }
+            .padding()
+        }
+    }
+    
+    @ViewBuilder
+    var datesView: some View {
+            if let createdAt = cat.createdAtString {
+                Group {
+                    Text("Created at: ") + Text(createdAt).bold()
+                }
+                .frame(maxWidth: .infinity)
+            }
+            
+            if let editedAt = cat.editedAtString {
+                Group {
+                    Text("Updated at: ") + Text(editedAt).bold()
+                }
+                .frame(maxWidth: .infinity)
+            }
     }
     
     private func loadCats(tag: String) {

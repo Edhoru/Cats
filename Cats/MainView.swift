@@ -50,7 +50,7 @@ struct MainView: View {
         if horizontalSizeClass == .compact {
             TabView(selection: $selectedTab) {
                 ForEach(Tab.allCases, id: \.self) { tab in
-                    Text("algo")
+                    tab.view
                         .tabItem { Label(tab.rawValue.capitalized,
                                          systemImage: tab.icon) }
                 }

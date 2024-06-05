@@ -56,6 +56,11 @@ struct FeedView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                Rectangle()
+                    .fill(Color.background.gradient)
+                    .ignoresSafeArea()
+                    .padding(.horizontal, -horizontalPadding)
+                
                 ScrollView {
                     VStack(spacing: 2) {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
