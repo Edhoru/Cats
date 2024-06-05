@@ -18,6 +18,9 @@ class FeedViewModel: ObservableObject {
     @Published var noMoreResults = false
     @Published var shouldLoadMoreCats = true
     
+    
+    @Published var horizontalSafeArea: CGFloat = 0
+    
     private let tagsLastFetchKey = "TagsLastFetchTime"
     private let tagsKey = "CachedTags"
     private let limit: Int = 10

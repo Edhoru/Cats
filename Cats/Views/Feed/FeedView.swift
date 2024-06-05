@@ -8,31 +8,66 @@
 import SwiftUI
 
 struct FeedView: View {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject private var viewModel = FeedViewModel()
+    @State private var selectedCat: Cat?
+
+    @State var safeAreaInsets: EdgeInsets = .init()
+    
+    var numberOfColumns: Int {
+        switch horizontalSizeClass {
+        case .compact:
+            switch verticalSizeClass {
+            case .compact:
+                return 2
+            case .regular:
+                return 1
+            default:
+                return 1
+            }
+        case .regular:
+            return 3
+        default:
+            return 1
+        }
+    }
+    
+    var columnSpacing: CGFloat {
+        return 10
+    }
+    
+    var columns: [GridItem] {
+        return [GridItem](repeating: GridItem(.flexible(), spacing: columnSpacing), count: numberOfColumns)
+    }
+    
+    private func gridItemWidth(horizontalSafeArea: CGFloat) -> CGFloat {
+        return (UIScreen.main.bounds.width - horizontalSafeArea - columnSpacing * CGFloat(numberOfColumns - 1)) / CGFloat(numberOfColumns)
+    }
+    
+    var horizontalSafeArea: CGFloat {
+        safeAreaInsets.leading +
+        safeAreaInsets.trailing +
+        (horizontalPadding * 2)
+    }
+    
+    var horizontalPadding: CGFloat = 8
     
     var body: some View {
         NavigationStack {
             ZStack {
                 ScrollView {
                     VStack(spacing: 2) {
-                        ForEach(viewModel.cats) { cat in
-                            NavigationLink {
-                                CatDetailView(cat: cat, catImage: nil)
-                            } label: {
-                                #if os(iOS)
-                                CatCard(cat: cat) { tag in
-                                    viewModel.selectedTags = [tag]
-                                    Task {
-                                        viewModel.isLoadingCats = true
-                                        await viewModel.loadCats(replace: true)
+                        LazyVGrid(columns: columns, spacing: columnSpacing) {
+                            ForEach(viewModel.cats) { cat in
+                                Button {
+                                    selectedCat = cat
+                                } label: {
+                                    CatCard(itemWidth: gridItemWidth(horizontalSafeArea: horizontalSafeArea),
+                                            cat: cat) { tag in
+                                        print(tag)
                                     }
                                 }
-                                .anchorPreference(key: MAnchorKey.self, value: .bounds, transform: { anchor in
-                                    return [cat.id: anchor]
-                                })
-                                #else
-                                Text("vision")
-                                #endif
                             }
                         }
                     }
@@ -67,6 +102,9 @@ struct FeedView: View {
                     ProgressView()
                 }
             }
+            .padding(.horizontal, horizontalPadding)
+            .getSafeAreaInsets($safeAreaInsets)
+            .printSafeAreaInsets(id: "Text")
             .navigationTitle("Cats")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -95,51 +133,14 @@ struct FeedView: View {
             }
             .presentationDetents([.medium, .large])
         })
+        .sheet(item: $selectedCat, content: { cat in
+            CatDetailView(cat: cat, catImage: nil)
+        })
         .onAppear {
             Task {
                 await viewModel.loadTags()
             }
         }
-        .overlayPreferenceValue(MAnchorKey.self, { value in
-            GeometryReader(content: { geometry in
-                ForEach(viewModel.cats) { cat in
-                    if let anchor = value[cat.id] {
-                        let rect = geometry[anchor]
-                        CachedAsyncImage(url: cat.imageURL(width: UIScreen.main.bounds.width)) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(maxHeight: 400)
-                            case .failure(_):
-                                placeholderImage
-                                    .overlay(
-                                        Image(systemName: "arrow.circlepath")
-                                            .padding()
-                                            .foregroundStyle(Color(UIColor.systemBackground))
-                                    )
-                                
-                            case .empty:
-                                placeholderImage
-                                    .overlay(
-                                        ProgressView()
-                                            .progressViewStyle(CircularProgressViewStyle())
-                                            .tint(Color(UIColor.systemBackground))
-                                    )
-                                
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .offset(x: rect.minX, y: rect.minY)
-                        .opacity(0.0)
-                    }
-                }
-            })
-        })
     }
     
     @ViewBuilder
@@ -155,4 +156,37 @@ struct FeedView: View {
 
 #Preview {
     FeedView()
+}
+struct SafeAreaInsetsKey: PreferenceKey {
+    static var defaultValue = EdgeInsets()
+    static func reduce(value: inout EdgeInsets, nextValue: () -> EdgeInsets) {
+        value = nextValue()
+    }
+}
+
+extension View {
+    func getSafeAreaInsets(_ safeInsets: Binding<EdgeInsets>) -> some View {
+        background(
+            GeometryReader { proxy in
+                Color.clear
+                    .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
+            }
+            .onPreferenceChange(SafeAreaInsetsKey.self) { value in
+                safeInsets.wrappedValue = value
+            }
+        )
+    }
+}
+extension View {
+    func printSafeAreaInsets(id: String) -> some View {
+        background(
+            GeometryReader { proxy in
+                Color.clear
+                    .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
+            }
+            .onPreferenceChange(SafeAreaInsetsKey.self) { value in
+                print("\(id) insets:\(value)")
+            }
+        )
+    }
 }

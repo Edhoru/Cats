@@ -77,13 +77,22 @@ struct CatDetailView: View {
                 }
                 .listRowInsets(EdgeInsets())
                 
-                if let createdAt = cat.createdAtString {
-                    Text("Created at: ") + Text(createdAt).bold()
+                HStack {
+                    if let createdAt = cat.createdAtString {
+                        Group {
+                            Text("Created at: ") + Text(createdAt).bold()
+                        }
+                            .frame(maxWidth: .infinity)
+                    }
+                    
+                    if let editedAt = cat.editedAtString {
+                        Group {
+                            Text("Updated at: ") + Text(editedAt).bold()
+                        }
+                            .frame(maxWidth: .infinity)
+                    }
                 }
-                
-                if let editedAt = cat.editedAtString {
-                    Text("Updated at: ") + Text(editedAt).bold()
-                }
+                .padding()
                 
                 ForEach(cat.tags, id: \.self) { tag in
                     Section {
@@ -141,7 +150,7 @@ struct CatDetailView: View {
                     .frame(height: 50)
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
+                    HStack(spacing: 24) {
                         ForEach(catsByTag[tag] ?? [], id: \.self) { cat in
                             NavigationLink {
                                 CatDetailView(cat: cat, catImage: nil)
@@ -152,9 +161,11 @@ struct CatDetailView: View {
                                         image
                                             .resizable()
                                             .scaledToFill()
-                                            .frame(height: 200)
+                                            .frame(width: 200, height: 200)
                                             .containerRelativeFrame(.horizontal)
                                             .clipShape(.rect(cornerRadius: 16))
+                                            .background(Color.secondary)
+                                            .clipShape(Circle())
                                     case .failure(_):
                                         placeholderImage
                                             .overlay(
@@ -162,7 +173,7 @@ struct CatDetailView: View {
                                                     .padding()
                                                     .foregroundStyle(Color(UIColor.systemBackground))
                                             )
-                                        
+                                            .frame(width: 200, height: 200)
                                     case .empty:
                                         placeholderImage
                                             .overlay(
@@ -170,13 +181,14 @@ struct CatDetailView: View {
                                                     .progressViewStyle(CircularProgressViewStyle())
                                                     .tint(Color(UIColor.systemBackground))
                                             )
+                                            .frame(width: 200, height: 200)
                                         
                                     @unknown default:
                                         EmptyView()
                                     }
                                 }
-                                .frame(maxWidth: .infinity)
                             }
+                            .frame(width: 200, height: 200)
                         }
                     }
                     .scrollTargetLayout()
