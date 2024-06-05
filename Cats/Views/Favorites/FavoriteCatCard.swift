@@ -10,7 +10,8 @@ import SwiftUI
 struct FavoriteCatCard: View {
     @State var trigger = 0
     @State var imageIsLoaded = false
-    private let itemWidth: CGFloat = 150
+    
+    let itemWidth: CGFloat
     
     let cat: Cat
     var onUnfavorite: (() -> Void)?
@@ -87,5 +88,5 @@ struct FavoriteCatCard: View {
 }
 
 #Preview {
-    FavoriteCatCard(cat: Cat(id: "5llbIzGS52clSUik", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil))
+    FavoriteCatCard(itemWidth: 150, cat: Cat(id: "5llbIzGS52clSUik", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil))
 }

@@ -23,6 +23,8 @@ struct FavoritesView: View {
     @State var safeAreaInsets: EdgeInsets = .init()
     @State private var filterOption: TagFilterOption = .anyTag
     
+    let cardWidth: CGFloat = 150
+    
     var numberOfColumns: Int {
         switch horizontalSizeClass {
         case .compact:
@@ -104,17 +106,20 @@ struct FavoritesView: View {
                         .padding(.vertical, 12)
                     }
                     
-                    
-                    
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
                             ForEach(filter(cats: favoritedCats)) { cat in
-                                FavoriteCatCard(cat: cat) {
-                                    withAnimation {
-                                        self.favoritedCats?.removeAll(where: { $0.id == cat.id })
-                                        unfavoritedCats.append(cat)
+                                Button {
+                                    selectedCat = cat
+                                } label: {
+                                    FavoriteCatCard(itemWidth: cardWidth, cat: cat) {
+                                        withAnimation {
+                                            self.favoritedCats?.removeAll(where: { $0.id == cat.id })
+                                            unfavoritedCats.append(cat)
+                                        }
                                     }
                                 }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -124,20 +129,37 @@ struct FavoritesView: View {
             
             if !unfavoritedCats.isEmpty {
                 VStack {
-                Spacer()
-                Button {
-                    if let lastCat = unfavoritedCats.last {
-                        withAnimation {
-                            favoritedCats?.append(lastCat)
-                            unfavoritedCats.removeLast()
+                    Spacer()
+                    Button {
+                        if let lastCat = unfavoritedCats.last {
+                            withAnimation {
+                                favoritedCats?.append(lastCat)
+                                unfavoritedCats.removeLast()
+                            }
                         }
+                    } label: {
+                        Label("Undo", systemImage: "arrow.uturn.backward")
                     }
-                } label: {
-                    Label("Undo", systemImage: "arrow.uturn.backward")
+                    .buttonStyle(.borderedProminent)
                 }
-                .buttonStyle(.borderedProminent)
             }
-        }
+            
+            if let selectedCat = selectedCat {
+                GeometryReader { geometry in
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            self.selectedCat = nil
+                        }
+                    VStack {
+                        Spacer()
+                        FavoriteCatCard(itemWidth: geometry.size.width - 20, cat: selectedCat)
+                            .padding(10)
+                        Spacer()
+                    }
+                }
+            }
         }
         .onAppear {
             if favoritedCats == nil {

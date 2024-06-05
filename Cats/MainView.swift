@@ -15,7 +15,7 @@ struct MainView: View {
         
         case feed
         case favorites
-        case settings
+//        case settings
         
         var icon: String {
             switch self {
@@ -23,8 +23,8 @@ struct MainView: View {
                 "cat"
             case .favorites:
                 "star"
-            case .settings:
-                "gear"
+//            case .settings:
+//                "gear"
             }
         }
         
@@ -35,8 +35,8 @@ struct MainView: View {
                 FeedView()
             case .favorites:
                 FavoritesView()
-            case .settings:
-                Text("s")
+//            case .settings:
+//                Text("s")
             }
         
         }
