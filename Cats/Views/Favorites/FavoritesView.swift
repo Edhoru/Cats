@@ -17,6 +17,7 @@ struct FavoritesView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
     @State var favoritedCats: [Cat]?
+    @State private var unfavoritedCats = [Cat]()
     @State private var selectedCat: Cat?
     @State private var selectedTags = [String]()
     @State var safeAreaInsets: EdgeInsets = .init()
@@ -75,10 +76,12 @@ struct FavoritesView: View {
                                 HStack {
                                     ForEach(tags, id: \.self) { tag in
                                         Button {
-                                            if selectedTags.contains(tag) {
-                                                selectedTags.removeAll(where: { $0 == tag })
-                                            } else {
-                                                selectedTags.append(tag)
+                                            withAnimation {
+                                                if selectedTags.contains(tag) {
+                                                    selectedTags.removeAll(where: { $0 == tag })
+                                                } else {
+                                                    selectedTags.append(tag)
+                                                }
                                             }
                                         } label: {
                                             let tagForeground: Color = selectedTags.contains(tag) ? .white : .accent
@@ -106,7 +109,12 @@ struct FavoritesView: View {
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
                             ForEach(filter(cats: favoritedCats)) { cat in
-                                FavoriteCatCard(cat: cat)
+                                FavoriteCatCard(cat: cat) {
+                                    withAnimation {
+                                        self.favoritedCats?.removeAll(where: { $0.id == cat.id })
+                                        unfavoritedCats.append(cat)
+                                    }
+                                }
                             }
                         }
                     }
@@ -114,14 +122,22 @@ struct FavoritesView: View {
                 }
             }
             
-            VStack {
+            if !unfavoritedCats.isEmpty {
+                VStack {
                 Spacer()
                 Button {
-                    
+                    if let lastCat = unfavoritedCats.last {
+                        withAnimation {
+                            favoritedCats?.append(lastCat)
+                            unfavoritedCats.removeLast()
+                        }
+                    }
                 } label: {
                     Label("Undo", systemImage: "arrow.uturn.backward")
                 }
+                .buttonStyle(.borderedProminent)
             }
+        }
         }
         .onAppear {
             if favoritedCats == nil {

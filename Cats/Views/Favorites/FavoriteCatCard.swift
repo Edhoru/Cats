@@ -13,6 +13,7 @@ struct FavoriteCatCard: View {
     private let itemWidth: CGFloat = 150
     
     let cat: Cat
+    var onUnfavorite: (() -> Void)?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -50,6 +51,7 @@ struct FavoriteCatCard: View {
                     trigger += 1
                     if cat.isFavorited() {
                         cat.unfavorite()
+                        onUnfavorite?()
                     } else {
                         cat.favorite()
                     }
@@ -83,7 +85,6 @@ struct FavoriteCatCard: View {
             .opacity(0.8)
     }
 }
-
 
 #Preview {
     FavoriteCatCard(cat: Cat(id: "5llbIzGS52clSUik", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil))
