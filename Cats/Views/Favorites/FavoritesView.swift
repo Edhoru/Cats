@@ -16,6 +16,8 @@ struct FavoritesView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
+    @Namespace private var animation
+    
     @State var favoritedCats: [Cat]?
     @State private var unfavoritedCats = [Cat]()
     @State private var selectedCat: Cat?
@@ -110,7 +112,9 @@ struct FavoritesView: View {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
                             ForEach(filter(cats: favoritedCats)) { cat in
                                 Button {
-                                    selectedCat = cat
+                                    withAnimation(.spring()) {
+                                        selectedCat = cat
+                                    }
                                 } label: {
                                     FavoriteCatCard(itemWidth: cardWidth, cat: cat) {
                                         withAnimation {
@@ -119,6 +123,7 @@ struct FavoritesView: View {
                                         }
                                     }
                                 }
+//                                .matchedGeometryEffect(id: cat.id, in: animation)
                                 .buttonStyle(.plain)
                             }
                         }
@@ -150,12 +155,15 @@ struct FavoritesView: View {
                         .fill(.ultraThinMaterial)
                         .ignoresSafeArea()
                         .onTapGesture {
-                            self.selectedCat = nil
+                            withAnimation(.spring()) {
+                                self.selectedCat = nil
+                            }
                         }
                     VStack {
                         Spacer()
                         FavoriteCatCard(itemWidth: geometry.size.width - 20, cat: selectedCat)
                             .padding(10)
+//                            .matchedGeometryEffect(id: selectedCat.id, in: animation)
                         Spacer()
                     }
                 }
