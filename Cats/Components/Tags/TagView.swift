@@ -9,8 +9,16 @@ import SwiftUI
 
 struct TagView: View {
     let tag: String
-    var foregroundColor: Color = .accentColor
-    var backgroundColor: Color = .white
+    var foregroundColor: Color
+    var backgroundColor: Color
+    
+    @EnvironmentObject var colorsManager: ColorsManager
+
+    init(tag: String, foregroundColor: Color? = nil, backgroundColor: Color? = nil) {
+        self.tag = tag
+        self.foregroundColor = foregroundColor ?? ColorsManager().selectedColor(for: .accent)
+        self.backgroundColor = backgroundColor ?? ColorsManager().selectedColor(for: .background)
+    }
     
     var body: some View {
         HStack(spacing: 4) {
@@ -28,8 +36,10 @@ struct TagView: View {
 
 #Preview {
     TagView(tag: "Tag 1")
+        .environmentObject(ColorsManager())
 }
 
 #Preview {
     TagView(tag: "Tag Colored", foregroundColor: .white, backgroundColor: .accentColor)
+        .environmentObject(ColorsManager())
 }

@@ -22,16 +22,16 @@ class FontManager: ObservableObject {
         }
     }
     
+    init() {
+        self.selectedFontName = UserDefaults.standard.string(forKey: fontKey)
+    }
+    
     func selectedFont(_ customSize: CGFloat) -> Font {
         if let fontName = selectedFontName, !fontName.isEmpty {
             return .custom(fontName, size: customSize)
         } else {
             return Font(UIFont.systemFont(ofSize: customSize, weight: .regular))
         }
-    }
-    
-    init() {
-        self.selectedFontName = UserDefaults.standard.string(forKey: fontKey)
     }
     
     func updateFont(to fontName: String) {

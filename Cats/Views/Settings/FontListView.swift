@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FontListView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
     @EnvironmentObject var fontManager: FontManager
     
     let fonts = getAllFonts()

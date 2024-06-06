@@ -45,6 +45,8 @@ struct MainView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     @StateObject private var fontManager = FontManager()
+    @StateObject private var colorsManager = ColorsManager()
+    
     @State private var selectedTab: Tab = .feed
     
     var body: some View {
@@ -55,6 +57,7 @@ struct MainView: View {
                         .tabItem { Label(tab.rawValue.capitalized,
                                          systemImage: tab.icon) }
                         .environmentObject(fontManager)
+                        .environmentObject(colorsManager)
                 }
             }
         } else {
@@ -62,6 +65,8 @@ struct MainView: View {
                 SidebarView(selectedTab: $selectedTab)
             } detail: {
                 selectedTab.view
+                    .environmentObject(colorsManager)
+                    .environmentObject(fontManager)
             }
         }
     }
@@ -73,6 +78,9 @@ struct MainView: View {
 
 
 struct SidebarView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @Binding var selectedTab: MainView.Tab
     
     var body: some View {

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FavoriteCatCard: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @State var trigger = 0
     @State var imageIsLoaded = false
     

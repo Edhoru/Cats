@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct TagsView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @Environment(\.dismiss) var dismiss
+    
     @Namespace private var animation
     
     var tags: [String]

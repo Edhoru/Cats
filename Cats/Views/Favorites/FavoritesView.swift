@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct FavoritesView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     enum TagFilterOption: String, CaseIterable {
         case anyTag = "Any Tag"
         case allTags = "All Tags"

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TagsMenu: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
     
     enum Action {
         case removeAll

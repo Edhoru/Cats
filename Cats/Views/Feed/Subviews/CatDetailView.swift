@@ -8,11 +8,16 @@
 import SwiftUI
 
 struct CatDetailView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @StateObject private var viewModel: CatDetailViewModel
-    let catImage: Image?
+    
     @State var selectedCat: Cat?
+    
+    let catImage: Image?
 
     init(cat: Cat, catImage: Image?) {
         self._viewModel = StateObject(wrappedValue: CatDetailViewModel(cat: cat))
@@ -122,6 +127,8 @@ struct CatDetailView: View {
             }
             .sheet(item: $selectedCat) { cat in
                 CatDetailView(cat: cat, catImage: nil)
+                    .environmentObject(colorsManager)
+                    .environmentObject(fontManager)
             }
         }
         .customFont()
@@ -248,4 +255,6 @@ struct CatDetailView: View {
             catImage: Image("waiting")
         )
     }
+    .environmentObject(ColorsManager())
+    .environmentObject(FontManager())
 }

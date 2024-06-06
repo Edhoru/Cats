@@ -9,8 +9,12 @@ import SwiftUI
 
 #if os(iOS)
 struct CatCard: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @State var trigger = 0
     @State var imageIsLoaded = false
+    
     let itemWidth: CGFloat
     
     let cat: Cat
@@ -78,6 +82,8 @@ struct CatCard: View {
             }
             .padding(.vertical, 10)
             .background(Color.accentColor.gradient)
+            .environmentObject(colorsManager)
+            .environmentObject(fontManager)
             
         }
         .background(
@@ -101,5 +107,7 @@ struct CatCard: View {
 
 #Preview {
     CatCard(itemWidth: 300, cat: Cat(id: "a", size: 1.0, tags: ["tag1", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil)) { _ in }
+        .environmentObject(ColorsManager())
+        .environmentObject(FontManager())
 }
 #endif

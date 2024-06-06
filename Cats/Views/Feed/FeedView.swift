@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct FeedView: View {
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    @StateObject private var viewModel = FeedViewModel()
-    @State private var selectedCat: Cat?
     
+    @StateObject private var viewModel = FeedViewModel()
+    
+    @State private var selectedCat: Cat?
     @State var safeAreaInsets: EdgeInsets = .init()
     
     var numberOfColumns: Int {
@@ -73,6 +77,8 @@ struct FeedView: View {
                                         viewModel.selectedTags.append(tag)
                                         viewModel.loadCats(replace: true)
                                     }
+                                            .environmentObject(colorsManager)
+                                            .environmentObject(fontManager)
                                 }
                             }
                         }
@@ -140,10 +146,14 @@ struct FeedView: View {
             TagsView(tags: viewModel.allTags, selectedTags: $viewModel.selectedTags) {
                 viewModel.loadCats(replace: true)
             }
+            .environmentObject(colorsManager)
+            .environmentObject(fontManager)
             .presentationDetents([.medium, .large])
         })
         .sheet(item: $selectedCat, content: { cat in
             CatDetailView(cat: cat, catImage: nil)
+                .environmentObject(colorsManager)
+                .environmentObject(fontManager)
         })
         .onAppear {
             Task {
@@ -165,7 +175,10 @@ struct FeedView: View {
 
 #Preview {
     FeedView()
+        .environmentObject(ColorsManager())
+        .environmentObject(FontManager())
 }
+
 struct SafeAreaInsetsKey: PreferenceKey {
     static var defaultValue = EdgeInsets()
     static func reduce(value: inout EdgeInsets, nextValue: () -> EdgeInsets) {
