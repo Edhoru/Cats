@@ -94,7 +94,7 @@ struct CatDetailView: View {
                         } header: {
                             HStack {
                                 Text(tag)
-                                    .font(.title.bold())
+                                    .customFont(.title)
                                     .textCase(.uppercase)
                                 
                                 Spacer()
@@ -124,6 +124,7 @@ struct CatDetailView: View {
                 CatDetailView(cat: cat, catImage: nil)
             }
         }
+        .customFont()
     }
     
     @ViewBuilder

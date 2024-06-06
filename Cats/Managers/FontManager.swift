@@ -22,11 +22,11 @@ class FontManager: ObservableObject {
         }
     }
     
-    var selectedFont: Font {
+    func selectedFont(_ customSize: CGFloat) -> Font {
         if let fontName = selectedFontName, !fontName.isEmpty {
-            return .custom(fontName, size: UIFont.systemFontSize)
+            return .custom(fontName, size: customSize)
         } else {
-            return Font(UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular))
+            return Font(UIFont.systemFont(ofSize: customSize, weight: .regular))
         }
     }
     

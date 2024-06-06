@@ -13,16 +13,20 @@ struct FontListView: View {
     let fonts = getAllFonts()
     
     var body: some View {
-        List(fonts, id: \.self) { font in
-            Button {
-                withAnimation {
-                    fontManager.updateFont(to: font)
+        VStack {
+            Text("Custom font: \(fontManager.selectedFontName ?? "")")
+                .customFont()
+            List(fonts, id: \.self) { font in
+                Button {
+                    withAnimation {
+                        fontManager.updateFont(to: font)
+                    }
+                } label: {
+                    Text(font)
+                        .font(.custom(font, size: 16))
                 }
-            } label: {
-                Text(font)
-                    .font(.custom(font, size: 16))
+                .buttonStyle(.plain)
             }
-            .buttonStyle(.plain)
         }
         .navigationTitle("Available Fonts")
     }
@@ -39,5 +43,7 @@ struct FontListView: View {
 }
 
 #Preview {
-    FontListView()
+    let fontManager = FontManager()
+    return FontListView()
+        .environmentObject(fontManager)
 }

@@ -51,7 +51,7 @@ struct TagsMenu: View {
                         let count = tags.count < 10 ? "\(tags.count)" : "+"
                         Text(count)
                             .frame(width: 8, height: 8)
-                            .font(.caption2.bold())
+                            .customFont(.caption2)
                             .padding(6)
                             .background(
                                 Circle()

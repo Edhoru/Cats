@@ -107,7 +107,8 @@ struct FeedView: View {
                 if viewModel.isLoadingCats || viewModel.isLoadingTags {
                     ProgressView()
                 } else if viewModel.cats.isEmpty {
-                    ContentUnavailableView("There are no cats here", systemImage: "cat", description: Text("Try to use different tags."))
+                    ContentUnavailableView("There are no cats here", systemImage: "cat", description: Text("Try to use different tags.")
+                        .font(.custom(FontManager().selectedFontName ?? "", size: UIFont.systemFontSize)))
                 }
             }
             .padding(.horizontal, horizontalPadding)
@@ -132,6 +133,7 @@ struct FeedView: View {
                 }
             }
         }
+        .customFont()
         .sheet(isPresented: $viewModel.showingTagsSheet, onDismiss: {
             viewModel.shouldLoadMoreCats = true
         }, content: {

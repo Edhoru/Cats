@@ -36,11 +36,7 @@ struct MainView: View {
             case .favorites:
                 FavoritesView()
             case .settings:
-                VStack {
-                    Text("Prueba")
-                        .customFont()
-                    FontListView()
-                }
+                SettingsView()
             }
         
         }

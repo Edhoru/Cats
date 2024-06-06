@@ -19,7 +19,7 @@ struct TagView: View {
         }
         .foregroundStyle(foregroundColor)
         .lineLimit(1)
-        .font(.caption.bold())
+        .customFont(.caption)
         .padding(.vertical, 8)
         .padding(.horizontal, 8)
         .background(Capsule().fill(backgroundColor.gradient))

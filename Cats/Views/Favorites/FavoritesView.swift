@@ -102,6 +102,7 @@ struct FavoritesView: View {
                                     Text(option.rawValue).tag(option)
                                 }
                             }
+                            .customFont()
                             .pickerStyle(SegmentedPickerStyle())
                             .padding(.horizontal, 12)
                         }
@@ -128,7 +129,9 @@ struct FavoritesView: View {
                     }
                     .padding(.horizontal)
                 } else {
-                    ContentUnavailableView("No favorites yet", systemImage: "cat", description: Text("Yo don't have any favorites yet, go to the feed and pick your favorites"))
+                    ContentUnavailableView("No favorites yet", systemImage: "cat", description: Text("Yo don't have any favorites yet, go to the feed and pick your favorites")
+                        .font(.custom(FontManager().selectedFontName ?? "", size: UIFont.systemFontSize))
+                    )
                 }
             }
             
@@ -171,6 +174,7 @@ struct FavoritesView: View {
                 }
             }
         }
+        .customFont()
         .onReceive(NotificationCenter.default.publisher(for: Cat.favoritesUpdatedNotification)) { _ in
             favoritedCats = Cat.getFavoritedCats()
         }

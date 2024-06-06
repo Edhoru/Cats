@@ -29,6 +29,7 @@
 		84640BA12C11DE0E00DD382A /* FontListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84640BA02C11DE0E00DD382A /* FontListView.swift */; };
 		84640BA32C11DE9200DD382A /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84640BA22C11DE9200DD382A /* FontManager.swift */; };
 		84640BA52C11DEEE00DD382A /* CustomFontModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84640BA42C11DEEE00DD382A /* CustomFontModifier.swift */; };
+		84640BA72C11FB1100DD382A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84640BA62C11FB1100DD382A /* SettingsView.swift */; };
 		8478B3752C11792D001ED1C7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478B3742C11792D001ED1C7 /* APIManager.swift */; };
 		8478B3762C11795A001ED1C7 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478B3742C11792D001ED1C7 /* APIManager.swift */; };
 		8478B3782C11844D001ED1C7 /* DefaultFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8478B3772C11844D001ED1C7 /* DefaultFont.swift */; };
@@ -136,6 +137,7 @@
 		84640BA02C11DE0E00DD382A /* FontListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontListView.swift; sourceTree = "<group>"; };
 		84640BA22C11DE9200DD382A /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		84640BA42C11DEEE00DD382A /* CustomFontModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFontModifier.swift; sourceTree = "<group>"; };
+		84640BA62C11FB1100DD382A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8478B3742C11792D001ED1C7 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		8478B3772C11844D001ED1C7 /* DefaultFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultFont.swift; sourceTree = "<group>"; };
 		84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatDetailView.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 			isa = PBXGroup;
 			children = (
 				84640BA02C11DE0E00DD382A /* FontListView.swift */,
+				84640BA62C11FB1100DD382A /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -831,6 +834,7 @@
 				84640BA32C11DE9200DD382A /* FontManager.swift in Sources */,
 				84640BA52C11DEEE00DD382A /* CustomFontModifier.swift in Sources */,
 				84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */,
+				84640BA72C11FB1100DD382A /* SettingsView.swift in Sources */,
 				84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */,
 				84F405BD2C109283006E69DD /* FavoritesView.swift in Sources */,
 				84E011022C0F371000C08090 /* FeedViewModel.swift in Sources */,

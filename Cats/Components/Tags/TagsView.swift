@@ -65,6 +65,7 @@ struct TagsView: View {
                 dismiss()
             } label: {
                 Text("Update Search")
+                    .customFont()
                     .frame(height: 40)
             }
             .buttonStyle(.borderedProminent)
