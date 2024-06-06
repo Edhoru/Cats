@@ -24,6 +24,7 @@ struct FavoritesView: View {
     @State private var selectedTags = [String]()
     @State var safeAreaInsets: EdgeInsets = .init()
     @State private var filterOption: TagFilterOption = .anyTag
+    @State private var showDetailView: Bool = false
     
     let cardWidth: CGFloat = 150
     
@@ -163,7 +164,9 @@ struct FavoritesView: View {
                         Spacer()
                         FavoriteCatCard(itemWidth: geometry.size.width - 20, cat: selectedCat)
                             .padding(10)
-//                            .matchedGeometryEffect(id: selectedCat.id, in: animation)
+                        Button("Open Detail View") {
+                            showDetailView.toggle()
+                        }
                         Spacer()
                     }
                 }
@@ -172,6 +175,11 @@ struct FavoritesView: View {
         .onAppear {
             if favoritedCats == nil {
                 favoritedCats = Cat.getFavoritedCats()
+            }
+        }
+        .sheet(isPresented: $showDetailView) {
+            if let selectedCat = selectedCat {
+                CatDetailView(cat: selectedCat, catImage: nil)
             }
         }
     }

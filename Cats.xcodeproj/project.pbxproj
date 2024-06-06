@@ -31,8 +31,7 @@
 		84C7ECE32B910EC2002A8834 /* CatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C7ECE22B910EC2002A8834 /* CatsTests.swift */; };
 		84C7ECE92B910EFC002A8834 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42F2B8F3E3B00A24ABF /* Cat.swift */; };
 		84C7ECEA2B910EFF002A8834 /* Cat+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */; };
-		84C7ECEB2B910F01002A8834 /* Cat+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* Cat+Data.swift */; };
-		84C7ECEC2B910F10002A8834 /* RequestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42C2B8F344700A24ABF /* RequestErrors.swift */; };
+		84C7ECEB2B910F01002A8834 /* CatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* CatService.swift */; };
 		84E011022C0F371000C08090 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E011012C0F371000C08090 /* FeedViewModel.swift */; };
 		84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4182B89891100A24ABF /* CatsApp.swift */; };
 		84E5D41B2B89891100A24ABF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D41A2B89891100A24ABF /* FeedView.swift */; };
@@ -40,16 +39,16 @@
 		84E5D4212B89891200A24ABF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84E5D4202B89891200A24ABF /* Preview Assets.xcassets */; };
 		84E5D4292B8AC38D00A24ABF /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4282B8AC38D00A24ABF /* ImageCache.swift */; };
 		84E5D42B2B8CF94C00A24ABF /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42A2B8CF94C00A24ABF /* TagsView.swift */; };
-		84E5D42D2B8F344700A24ABF /* RequestErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42C2B8F344700A24ABF /* RequestErrors.swift */; };
 		84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42F2B8F3E3B00A24ABF /* Cat.swift */; };
 		84E5D4322B8F3E5600A24ABF /* Cat+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */; };
-		84E5D4352B8F3E9000A24ABF /* Cat+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* Cat+Data.swift */; };
+		84E5D4352B8F3E9000A24ABF /* CatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* CatService.swift */; };
 		84E5D4382B8F406B00A24ABF /* CatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4372B8F406B00A24ABF /* CatCard.swift */; };
 		84E5D43A2B8F410200A24ABF /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4392B8F410200A24ABF /* TagLayout.swift */; };
 		84E5D43C2B8F413300A24ABF /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D43B2B8F413300A24ABF /* TagView.swift */; };
 		84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */; };
 		84F405BD2C109283006E69DD /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F405BC2C109283006E69DD /* FavoritesView.swift */; };
 		84F405BF2C1096F2006E69DD /* FavoriteCatCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F405BE2C1096F2006E69DD /* FavoriteCatCard.swift */; };
+		84F405C12C10B467006E69DD /* CatDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F405C02C10B467006E69DD /* CatDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,16 +142,16 @@
 		84E5D4202B89891200A24ABF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84E5D4282B8AC38D00A24ABF /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		84E5D42A2B8CF94C00A24ABF /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
-		84E5D42C2B8F344700A24ABF /* RequestErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestErrors.swift; sourceTree = "<group>"; };
 		84E5D42F2B8F3E3B00A24ABF /* Cat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cat.swift; sourceTree = "<group>"; };
 		84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cat+Likes.swift"; sourceTree = "<group>"; };
-		84E5D4342B8F3E9000A24ABF /* Cat+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cat+Data.swift"; sourceTree = "<group>"; };
+		84E5D4342B8F3E9000A24ABF /* CatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatService.swift; sourceTree = "<group>"; };
 		84E5D4372B8F406B00A24ABF /* CatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatCard.swift; sourceTree = "<group>"; };
 		84E5D4392B8F410200A24ABF /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
 		84E5D43B2B8F413300A24ABF /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		84E5D43D2B8F423F00A24ABF /* TagsMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsMenu.swift; sourceTree = "<group>"; };
 		84F405BC2C109283006E69DD /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		84F405BE2C1096F2006E69DD /* FavoriteCatCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCatCard.swift; sourceTree = "<group>"; };
+		84F405C02C10B467006E69DD /* CatDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				84E011012C0F371000C08090 /* FeedViewModel.swift */,
+				84F405C02C10B467006E69DD /* CatDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -353,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				84E5D4372B8F406B00A24ABF /* CatCard.swift */,
+				84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -444,7 +445,6 @@
 			isa = PBXGroup;
 			children = (
 				84E5D4282B8AC38D00A24ABF /* ImageCache.swift */,
-				84E5D42C2B8F344700A24ABF /* RequestErrors.swift */,
 				84E5D4392B8F410200A24ABF /* TagLayout.swift */,
 			);
 			path = Helpers;
@@ -463,7 +463,7 @@
 			children = (
 				84E5D42F2B8F3E3B00A24ABF /* Cat.swift */,
 				84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */,
-				84E5D4342B8F3E9000A24ABF /* Cat+Data.swift */,
+				84E5D4342B8F3E9000A24ABF /* CatService.swift */,
 			);
 			path = Cat;
 			sourceTree = "<group>";
@@ -474,7 +474,6 @@
 				84E011052C0F380300C08090 /* Favorites */,
 				84E011042C0F37FC00C08090 /* Settings */,
 				84E010FE2C0F36ED00C08090 /* Feed */,
-				84C7ECD52B90ACFB002A8834 /* CatDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -781,9 +780,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C7ECEA2B910EFF002A8834 /* Cat+Likes.swift in Sources */,
-				84C7ECEC2B910F10002A8834 /* RequestErrors.swift in Sources */,
 				84C7ECE92B910EFC002A8834 /* Cat.swift in Sources */,
-				84C7ECEB2B910F01002A8834 /* Cat+Data.swift in Sources */,
+				84C7ECEB2B910F01002A8834 /* CatService.swift in Sources */,
 				84C7ECE32B910EC2002A8834 /* CatsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,7 +795,6 @@
 				84F405BF2C1096F2006E69DD /* FavoriteCatCard.swift in Sources */,
 				84E5D43C2B8F413300A24ABF /* TagView.swift in Sources */,
 				84E5D4382B8F406B00A24ABF /* CatCard.swift in Sources */,
-				84E5D42D2B8F344700A24ABF /* RequestErrors.swift in Sources */,
 				84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */,
 				844FFA6C2C06A31600988F9E /* APIManager.swift in Sources */,
 				84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */,
@@ -806,9 +803,10 @@
 				84E5D41B2B89891100A24ABF /* FeedView.swift in Sources */,
 				844FFA702C06A60500988F9E /* MainView.swift in Sources */,
 				844FFA6E2C06A34500988F9E /* ErrorManager.swift in Sources */,
+				84F405C12C10B467006E69DD /* CatDetailViewModel.swift in Sources */,
 				84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */,
 				84E5D42B2B8CF94C00A24ABF /* TagsView.swift in Sources */,
-				84E5D4352B8F3E9000A24ABF /* Cat+Data.swift in Sources */,
+				84E5D4352B8F3E9000A24ABF /* CatService.swift in Sources */,
 				84C7ECD62B90ACFB002A8834 /* CatDetailView.swift in Sources */,
 				84E5D4322B8F3E5600A24ABF /* Cat+Likes.swift in Sources */,
 			);

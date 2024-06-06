@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class ErrorManager: ObservableObject {
     static let shared = ErrorManager()

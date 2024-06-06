@@ -12,26 +12,24 @@ class APIManager {
     
     private init() {}
     
-    func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, APIError>) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                completion(.failure(.networkError(error.localizedDescription)))
-                return
-            }
-            
-            guard let data = data else {
-                completion(.failure(.dataNotFound))
-                return
-            }
-            
-            do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(.decodingError(error.localizedDescription)))
-            }
+    func fetchData<T: Decodable>(with request: URLRequest) async throws -> T {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw APIError.invalidResponse
         }
-        task.resume()
+        
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+            decoder.dateDecodingStrategy = .formatted(formatter)
+            let decodedData = try decoder.decode(T.self, from: data)
+            return decodedData
+        } catch {
+            throw APIError.decodingError(error.localizedDescription)
+        }
     }
 }
 
@@ -39,6 +37,7 @@ enum APIError: Error, LocalizedError {
     case networkError(String)
     case dataNotFound
     case decodingError(String)
+    case invalidResponse
     
     var errorDescription: String? {
         switch self {
@@ -48,6 +47,8 @@ enum APIError: Error, LocalizedError {
             return "Data not found."
         case .decodingError(let message):
             return "Decoding Error: \(message)"
+        case .invalidResponse:
+            return "Invalid response from server."
         }
     }
 }

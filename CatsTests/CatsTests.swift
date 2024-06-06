@@ -19,7 +19,7 @@ final class CatsTests: XCTestCase {
     
     func testFetchingCatsSuccess() async {
         do {
-            let cats = try await Cat.fetch(tags: [], skip: 0, limit: 10)
+            let cats = try await CatService.fetchCats(tags: [], skip: 0, limit: 10)
             XCTAssertTrue(cats.count > 0)
         } catch {
             XCTFail("Fetching cats failed: \(error)")
@@ -28,7 +28,7 @@ final class CatsTests: XCTestCase {
     
     func testFetchingCatsWithTagSuccess() async {
         do {
-            let cats = try await Cat.fetch(tags: ["white"], skip: 0, limit: 10)
+            let cats = try await CatService.fetchCats(tags: ["white"], skip: 0, limit: 10)
             XCTAssertTrue(cats.count > 0)
         } catch {
             XCTFail("Fetching cats failed: \(error)")

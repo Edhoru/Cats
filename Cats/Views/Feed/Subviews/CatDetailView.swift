@@ -10,12 +10,13 @@ import SwiftUI
 struct CatDetailView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
-    @State var trigger = 0
-    @State var imageIsLoaded = false
-    @State private var catsByTag = [String: [Cat]]()
-    @State var cat: Cat
-    
+    @StateObject private var viewModel: CatDetailViewModel
     let catImage: Image?
+
+    init(cat: Cat, catImage: Image?) {
+        self._viewModel = StateObject(wrappedValue: CatDetailViewModel(cat: cat))
+        self.catImage = catImage
+    }
     
     var body: some View {
         ZStack {
@@ -33,7 +34,7 @@ struct CatDetailView: View {
                                 .frame(maxHeight: 300)
                                 .clipped()
                         } else {
-                            CachedAsyncImage(url: cat.imageURL()) { phase in
+                            CachedAsyncImage(url: viewModel.cat.imageURL()) { phase in
                                 switch phase {
                                 case .success(let image):
                                     image
@@ -64,28 +65,28 @@ struct CatDetailView: View {
                         }
                         
                         Button(action: {
-                            trigger += 1
-                            if cat.isFavorited() {
-                                cat.unfavorite()
+                            viewModel.trigger += 1
+                            if viewModel.cat.isFavorited() {
+                                viewModel.cat.unfavorite()
                             } else {
-                                cat.favorite()
+                                viewModel.cat.favorite()
                             }
                         }, label: {
                             Image(systemName: "heart")
                                 .font(.title)
-                                .symbolVariant(cat.isFavorited() ? .fill : .circle)
-                                .symbolEffect(.bounce, value: trigger)
-                                .foregroundStyle(cat.isFavorited() ? .red : .white)
+                                .symbolVariant(viewModel.cat.isFavorited() ? .fill : .circle)
+                                .symbolEffect(.bounce, value: viewModel.trigger)
+                                .foregroundStyle(viewModel.cat.isFavorited() ? .red : .white)
                                 .shadow(radius: 2)
                         })
-                        .padding(.horizontal, cat.isFavorited() ? 3 : 4)
-                        .padding(.vertical, cat.isFavorited() ? 6 : 4)
+                        .padding(.horizontal, viewModel.cat.isFavorited() ? 3 : 4)
+                        .padding(.vertical, viewModel.cat.isFavorited() ? 6 : 4)
                     }
                     .listRowInsets(EdgeInsets())
                     
                     datesContainerView
                     
-                    ForEach(cat.tags, id: \.self) { tag in
+                    ForEach(viewModel.cat.tags, id: \.self) { tag in
                         Section {
                             section(for: tag)
                         } header: {
@@ -96,7 +97,7 @@ struct CatDetailView: View {
                                 
                                 Spacer()
                                 
-                                if !(catsByTag[tag]?.isEmpty ?? true) {
+                                if !(viewModel.catsByTag[tag]?.isEmpty ?? true) {
                                     NavigationLink {
                                         FeedView()
                                     } label: {
@@ -108,29 +109,21 @@ struct CatDetailView: View {
                             .padding(.top)
                         }
                         .onAppear {
-                            loadCats(tag: tag)
+                            viewModel.loadCats(tag: tag)
                         }
                     }
                 }}
             .frame(maxWidth: .infinity)
             .listStyle(.plain)
             .onAppear {
-                Task {
-                    do {
-                        if let loaded = try await Cat.fetch(id: cat.id) {
-                            cat = loaded
-                        }
-                    } catch {
-                        print("error: ", error)
-                    }
-                }
-        }
+                viewModel.fetchCatDetails()
+            }
         }
     }
     
     @ViewBuilder
     private func section(for tag: String) -> some View {
-        if let cats = catsByTag[tag] {
+        if let cats = viewModel.catsByTag[tag] {
             if cats.isEmpty {
                 Text("There are no more results for \"\(tag)\"")
                     .font(.subheadline)
@@ -139,7 +132,7 @@ struct CatDetailView: View {
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 24) {
-                        ForEach(catsByTag[tag] ?? [], id: \.self) { cat in
+                        ForEach(cats, id: \.self) { cat in
                             NavigationLink {
                                 CatDetailView(cat: cat, catImage: nil)
                             } label: {
@@ -207,39 +200,18 @@ struct CatDetailView: View {
     
     @ViewBuilder
     var datesView: some View {
-            if let createdAt = cat.createdAtString {
-                Group {
-                    Text("Created at: ") + Text(createdAt).bold()
-                }
-                .frame(maxWidth: .infinity)
+        if let createdAt = viewModel.cat.createdAtString {
+            Group {
+                Text("Created at: ") + Text(createdAt).bold()
             }
-            
-            if let editedAt = cat.editedAtString {
-                Group {
-                    Text("Updated at: ") + Text(editedAt).bold()
-                }
-                .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity)
+        }
+        
+        if let editedAt = viewModel.cat.editedAtString {
+            Group {
+                Text("Updated at: ") + Text(editedAt).bold()
             }
-    }
-    
-    private func loadCats(tag: String) {
-        Task {
-            do {
-                let skip = 0
-                let limit = 5 /// We only want 4 but need an extra one if the profile is duplicated
-                var loadedCats = try await Cat.fetch(tags: [tag],
-                                                     skip: skip,
-                                                     limit: limit)
-                /// Remove the cat from the profile
-                loadedCats = loadedCats.filter({ $0 != cat })
-                self.catsByTag[tag] = Array(loadedCats.prefix(9))
-            } catch RequestError.invalidURL {
-                print("invalid URL")
-            } catch RequestError.invalidResponse {
-                print("invalid Error")
-            } catch {
-                print("Unexpected error: ", error)
-            }
+            .frame(maxWidth: .infinity)
         }
     }
     
@@ -258,7 +230,16 @@ struct CatDetailView: View {
 
 #Preview {
     NavigationStack {
-        CatDetailView(cat: Cat(id: "5llbIzGS52clSUik", size: 1.0, tags: ["white", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
-                catImage: Image("waiting"))
+        CatDetailView(
+            cat: Cat(
+                id: "5llbIzGS52clSUik",
+                size: 1.0,
+                tags: ["white", "tag2"],
+                mimetype: "image/gif",
+                createdAt: nil,
+                editedAt: nil
+            ),
+            catImage: Image("waiting")
+        )
     }
 }

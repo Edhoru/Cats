@@ -6,99 +6,96 @@
 //
 
 import Foundation
+import Combine
 
 class FeedViewModel: ObservableObject {
     @Published var allTags: [String] = []
     @Published var selectedTags: [String] = []
-    @Published var isLoadingCats = true
-    @Published var isLoadingTags = true
+    @Published var isLoadingCats = false
+    @Published var isLoadingTags = false
     @Published var showingTagsSheet = false
     @Published var cats: [Cat] = []
     @Published var skip: Int = 0
     @Published var noMoreResults = false
     @Published var shouldLoadMoreCats = true
-    
-    
     @Published var horizontalSafeArea: CGFloat = 0
     
     private let tagsLastFetchKey = "TagsLastFetchTime"
     private let tagsKey = "CachedTags"
     private let limit: Int = 10
+    private var cancellables: Set<AnyCancellable> = []
     
-    func loadCats(replace: Bool) async {
-        do {
-            let currentSkip = replace ? 0 : skip
-            let loadedCats = try await Cat.fetch(tags: selectedTags, skip: currentSkip, limit: limit)
-            DispatchQueue.main.async {
-                self.isLoadingCats = false
-                
-                if replace {
-                    self.cats = loadedCats
-                } else {
-                    self.cats.append(contentsOf: loadedCats)
-                }
-                self.noMoreResults = loadedCats.count < self.limit
-                self.skip += loadedCats.count
-            }
-        } catch RequestError.invalidURL {
-            print("invalid URL")
-            isLoadingCats = false
-        } catch RequestError.invalidResponse {
-            print("invalid Error")
-            isLoadingCats = false
-        } catch {
-            print("Unexpected error: ", error)
-            isLoadingCats = false
-        }
-    }
-    
-    func loadTags() async {
-        let defaults = UserDefaults.standard
-        if let savedTags = defaults.object(forKey: tagsKey) as? [String],
-           let lastFetch = defaults.object(forKey: tagsLastFetchKey) as? Date,
-           Date().timeIntervalSince(lastFetch) < 86400 {
-            self.allTags = savedTags
-            self.isLoadingTags = false
-        } else {
+    func loadCats(replace: Bool) {
+        isLoadingCats = true
+        let currentSkip = replace ? 0 : skip
+        
+        Task {
             do {
-                try await fetchTags()
-            } catch RequestError.invalidURL {
-                print("invalid URL")
-            } catch RequestError.invalidResponse {
-                print("invalid Error")
+                let loadedCats = try await CatService.fetchCats(tags: selectedTags, skip: currentSkip, limit: limit)
+                DispatchQueue.main.async {
+                    self.isLoadingCats = false
+                    if replace {
+                        self.cats = loadedCats
+                    } else {
+                        self.cats.append(contentsOf: loadedCats)
+                    }
+                    self.noMoreResults = loadedCats.count < self.limit
+                    self.skip += loadedCats.count
+                }
             } catch {
-                print("Unexpected error: ", error)
+                DispatchQueue.main.async {
+                    self.isLoadingCats = false
+                    print("Error loading cats: \(error.localizedDescription)")
+                }
             }
         }
     }
     
-    private func fetchTags() async throws {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "cataas.com"
-        components.path = "/api/tags"
+    func loadTags() {
+        isLoadingTags = true
         
-        guard let url = components.url else {
-            throw RequestError.invalidURL
+        Task {
+            if let savedTags = await getSavedTags() {
+                DispatchQueue.main.async {
+                    self.allTags = savedTags
+                    self.isLoadingTags = false
+                }
+            } else {
+                do {
+                    let loadedTags = try await CatService.fetchTags()
+                    let validTags = Array(Set(loadedTags)).filter { !$0.isEmpty }.sorted()
+                    DispatchQueue.main.async {
+                        self.allTags = validTags
+                        self.isLoadingTags = false
+                        self.saveTags(validTags)
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.isLoadingTags = false
+                        print("Error loading tags: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw RequestError.invalidResponse
+    }
+    
+    private func getSavedTags() async -> [String]? {
+        await MainActor.run {
+            let defaults = UserDefaults.standard
+            if let savedTags = defaults.array(forKey: tagsKey) as? [String],
+               let lastFetch = defaults.object(forKey: tagsLastFetchKey) as? Date,
+               Date().timeIntervalSince(lastFetch) < 86400 {
+                return savedTags
             }
-            
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let loadedTags = try decoder.decode([String].self, from: data)
-            let validTags = Array(Set(loadedTags)).filter({ !$0.isEmpty }).sorted()
-            
-            DispatchQueue.main.async {
-                self.allTags = validTags
-                self.isLoadingTags = false
-            }
-        } catch {
-            throw error
+            return nil
+        }
+    }
+    
+    private func saveTags(_ tags: [String]) {
+        DispatchQueue.main.async {
+            let defaults = UserDefaults.standard
+            defaults.set(tags, forKey: self.tagsKey)
+            defaults.set(Date(), forKey: self.tagsLastFetchKey)
         }
     }
 }
