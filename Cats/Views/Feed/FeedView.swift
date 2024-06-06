@@ -12,7 +12,7 @@ struct FeedView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject private var viewModel = FeedViewModel()
     @State private var selectedCat: Cat?
-
+    
     @State var safeAreaInsets: EdgeInsets = .init()
     
     var numberOfColumns: Int {
@@ -87,7 +87,7 @@ struct FeedView: View {
                                 .onAppear {
                                     if viewModel.shouldLoadMoreCats {
                                         Task {
-                                            await viewModel.loadCats(replace: false)
+                                            viewModel.loadCats(replace: false)
                                         }
                                     }
                                     viewModel.shouldLoadMoreCats = false
@@ -97,7 +97,7 @@ struct FeedView: View {
                         Color.clear
                             .onAppear {
                                 Task {
-                                    await viewModel.loadCats(replace: false)
+                                    viewModel.loadCats(replace: false)
                                 }
                             }
                     }
@@ -105,6 +105,8 @@ struct FeedView: View {
                 
                 if viewModel.isLoadingCats || viewModel.isLoadingTags {
                     ProgressView()
+                } else if viewModel.cats.isEmpty {
+                    ContentUnavailableView("There are no cats here", systemImage: "cat", description: Text("Try to use different tags."))
                 }
             }
             .padding(.horizontal, horizontalPadding)
@@ -120,6 +122,7 @@ struct FeedView: View {
                             viewModel.selectedTags = []
                         case .remove(let tag):
                             viewModel.selectedTags = viewModel.selectedTags.filter({ $0 != tag})
+                            viewModel.loadCats(replace: true)
                         case .showTagsSheet:
                             viewModel.showingTagsSheet = true
                         }
@@ -131,10 +134,7 @@ struct FeedView: View {
             viewModel.shouldLoadMoreCats = true
         }, content: {
             TagsView(tags: viewModel.allTags, selectedTags: $viewModel.selectedTags) {
-                print("Date: ", Date())
-                Task {
-                    await viewModel.loadCats(replace: true)
-                }
+                viewModel.loadCats(replace: true)
             }
             .presentationDetents([.medium, .large])
         })
@@ -143,7 +143,7 @@ struct FeedView: View {
         })
         .onAppear {
             Task {
-                await viewModel.loadTags()
+                viewModel.loadTags()
             }
         }
     }
@@ -176,9 +176,9 @@ extension View {
                 Color.clear
                     .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
             }
-            .onPreferenceChange(SafeAreaInsetsKey.self) { value in
-                safeInsets.wrappedValue = value
-            }
+                .onPreferenceChange(SafeAreaInsetsKey.self) { value in
+                    safeInsets.wrappedValue = value
+                }
         )
     }
 }
@@ -189,9 +189,9 @@ extension View {
                 Color.clear
                     .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
             }
-            .onPreferenceChange(SafeAreaInsetsKey.self) { value in
-                print("\(id) insets:\(value)")
-            }
+                .onPreferenceChange(SafeAreaInsetsKey.self) { value in
+                    print("\(id) insets:\(value)")
+                }
         )
     }
 }

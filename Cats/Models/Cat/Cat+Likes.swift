@@ -9,7 +9,8 @@ import Foundation
 
 extension Cat {
     
-    private static let favoritedCatsKey = "catsFavorited" // Use a static constant for UserDefaults key
+    private static let favoritedCatsKey = "catsFavorited"
+    public static let favoritesUpdatedNotification = Notification.Name("favoritesUpdated")
     
     private static func updateFavoritedCats(updateHandler: (inout [Cat]) -> Void) {
         var favoritedCats = getFavoritedCats()
@@ -18,6 +19,8 @@ extension Cat {
         if let encoded = try? JSONEncoder().encode(favoritedCats) {
             UserDefaults.standard.set(encoded, forKey: favoritedCatsKey)
         }
+        
+        NotificationCenter.default.post(name: favoritesUpdatedNotification, object: nil)
     }
     
     func isFavorited() -> Bool {
@@ -45,3 +48,4 @@ extension Cat {
     }
     
 }
+

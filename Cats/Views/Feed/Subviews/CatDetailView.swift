@@ -12,6 +12,7 @@ struct CatDetailView: View {
     
     @StateObject private var viewModel: CatDetailViewModel
     let catImage: Image?
+    @State var selectedCat: Cat?
 
     init(cat: Cat, catImage: Image?) {
         self._viewModel = StateObject(wrappedValue: CatDetailViewModel(cat: cat))
@@ -22,6 +23,7 @@ struct CatDetailView: View {
         ZStack {
             Rectangle()
                 .fill(Color.background.gradient)
+                .ignoresSafeArea()
             
             ScrollView {
                 VStack(spacing: 0) {
@@ -118,6 +120,9 @@ struct CatDetailView: View {
             .onAppear {
                 viewModel.fetchCatDetails()
             }
+            .sheet(item: $selectedCat) { cat in
+                CatDetailView(cat: cat, catImage: nil)
+            }
         }
     }
     
@@ -133,8 +138,8 @@ struct CatDetailView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 24) {
                         ForEach(cats, id: \.self) { cat in
-                            NavigationLink {
-                                CatDetailView(cat: cat, catImage: nil)
+                            Button {
+                                selectedCat = cat
                             } label: {
                                 CachedAsyncImage(url: cat.imageURL()) { phase in
                                     switch phase {

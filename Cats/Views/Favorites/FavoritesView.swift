@@ -73,8 +73,7 @@ struct FavoritesView: View {
                 .ignoresSafeArea()
             
             VStack {
-                if let favoritedCats = favoritedCats {
-                    if !favoritedCats.isEmpty {
+                if let favoritedCats = favoritedCats, !favoritedCats.isEmpty {
                         VStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 let tags = Array(Set(favoritedCats.flatMap({ $0.tags }))).sorted()
@@ -107,7 +106,6 @@ struct FavoritesView: View {
                             .padding(.horizontal, 12)
                         }
                         .padding(.vertical, 12)
-                    }
                     
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
@@ -124,12 +122,13 @@ struct FavoritesView: View {
                                         }
                                     }
                                 }
-//                                .matchedGeometryEffect(id: cat.id, in: animation)
                                 .buttonStyle(.plain)
                             }
                         }
                     }
                     .padding(.horizontal)
+                } else {
+                    ContentUnavailableView("No favorites yet", systemImage: "cat", description: Text("Yo don't have any favorites yet, go to the feed and pick your favorites"))
                 }
             }
             
@@ -172,6 +171,9 @@ struct FavoritesView: View {
                 }
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: Cat.favoritesUpdatedNotification)) { _ in
+            favoritedCats = Cat.getFavoritedCats()
+        }
         .onAppear {
             if favoritedCats == nil {
                 favoritedCats = Cat.getFavoritedCats()
@@ -200,9 +202,9 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    let cats = [Cat(id: "a", size: 1.0, tags: ["tag1", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
+    let cats: [Cat] = [/*Cat(id: "a", size: 1.0, tags: ["tag1", "tag2"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
                 Cat(id: "b", size: 1.0, tags: ["tag3", "tag6"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
                 Cat(id: "c", size: 1.0, tags: ["tag4", "tag7"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
-                Cat(id: "d", size: 1.0, tags: ["tag5", "tag8"], mimetype: "image/gif", createdAt: nil, editedAt: nil)]
+                Cat(id: "d", size: 1.0, tags: ["tag5", "tag8"], mimetype: "image/gif", createdAt: nil, editedAt: nil)*/]
     return FavoritesView(favoritedCats: cats)
 }
