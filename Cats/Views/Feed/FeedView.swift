@@ -61,7 +61,7 @@ struct FeedView: View {
         NavigationStack {
             ZStack {
                 Rectangle()
-                    .fill(Color.background.gradient)
+                    .fill(Color.customBackground.gradient)
                     .ignoresSafeArea()
                     .padding(.horizontal, -horizontalPadding)
                 

@@ -15,8 +15,8 @@ struct SettingsView: View {
     @State private var selectedBackgroundColor: Color
     
     init() {
-        _selectedAccentColor = State(initialValue: ColorsManager().selectedColor(for: .accent))
-        _selectedBackgroundColor = State(initialValue: ColorsManager().selectedColor(for: .background))
+        _selectedAccentColor = State(initialValue: Color.customForeground)
+        _selectedBackgroundColor = State(initialValue: Color.customBackground)
     }
     
     var body: some View {
@@ -49,13 +49,17 @@ struct SettingsView: View {
             .background(selectedBackgroundColor)
         }
         .customFont()
-        .onChange(of: selectedAccentColor, { oldValue, newValue in
+        .onChange(of: selectedAccentColor) { oldValue, newValue in
             colorsManager.updateColor(to: newValue, usage: .accent)
-        })
-        .onChange(of: selectedBackgroundColor, { oldValue, newValue in
+        }
+        .onChange(of: selectedBackgroundColor) { oldValue, newValue in
             colorsManager.updateColor(to: newValue, usage: .background)
-        })
+        }
         .onAppear {
+            selectedAccentColor = colorsManager.selectedColor(for: .accent)
+            selectedBackgroundColor = colorsManager.selectedColor(for: .background)
+        }
+        .onReceive(colorsManager.objectWillChange) {
             selectedAccentColor = colorsManager.selectedColor(for: .accent)
             selectedBackgroundColor = colorsManager.selectedColor(for: .background)
         }
@@ -64,8 +68,9 @@ struct SettingsView: View {
 
 #Preview {
     let fontManager = FontManager()
-    let colorManager = ColorsManager()
+    let colorsManager = ColorsManager()
     return SettingsView()
         .environmentObject(fontManager)
-        .environmentObject(colorManager)
+        .environmentObject(colorsManager)
 }
+

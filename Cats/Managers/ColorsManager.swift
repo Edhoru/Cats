@@ -77,14 +77,14 @@ class ColorsManager: ObservableObject {
                 let colorObject = ColorObject(dictionary: values)
                 return Color(red: colorObject.red, green: colorObject.green, blue: colorObject.blue, opacity: colorObject.alpha)
             } else {
-                return Color.accentColor
+                return Color.customForeground
             }
         case .background:
             if let values = selectedBackgroundColorValues {
                 let colorObject = ColorObject(dictionary: values)
                 return Color(red: colorObject.red, green: colorObject.green, blue: colorObject.blue, opacity: colorObject.alpha)
             } else {
-                return Color.background
+                return Color.customBackground
             }
         }
     }
