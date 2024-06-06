@@ -7,17 +7,14 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct SettingsView: View {
     @EnvironmentObject var colorsManager: ColorsManager
     @EnvironmentObject var fontManager: FontManager
     
-    @State private var selectedAccentColor: Color
-    @State private var selectedBackgroundColor: Color
-    
-    init() {
-        _selectedAccentColor = State(initialValue: Color.customForeground)
-        _selectedBackgroundColor = State(initialValue: Color.customBackground)
-    }
+    @State private var selectedAccentColor: Color = .customForeground
+    @State private var selectedBackgroundColor: Color = .customBackground
     
     var body: some View {
         NavigationStack {
@@ -36,11 +33,19 @@ struct SettingsView: View {
                 
                 Section("Theme") {
                     ColorPicker("Accent Color", selection: $selectedAccentColor)
+                        .onChange(of: selectedAccentColor, initial: true) { oldValue, newValue in
+                            colorsManager.updateColor(to: newValue, usage: .accent)
+                        }
                     
                     ColorPicker("Background Color", selection: $selectedBackgroundColor)
+                        .onChange(of: selectedBackgroundColor, initial: true) { oldValue, newValue in
+                            colorsManager.updateColor(to: newValue, usage: .background)
+                        }
                     
                     Button("Reset") {
                         colorsManager.reset()
+                        selectedAccentColor = colorsManager.selectedColor(for: .accent)
+                        selectedBackgroundColor = colorsManager.selectedColor(for: .background)
                     }
                     .foregroundStyle(colorsManager.selectedColor(for: .accent))
                 }
@@ -49,17 +54,7 @@ struct SettingsView: View {
             .background(selectedBackgroundColor)
         }
         .customFont()
-        .onChange(of: selectedAccentColor) { oldValue, newValue in
-            colorsManager.updateColor(to: newValue, usage: .accent)
-        }
-        .onChange(of: selectedBackgroundColor) { oldValue, newValue in
-            colorsManager.updateColor(to: newValue, usage: .background)
-        }
         .onAppear {
-            selectedAccentColor = colorsManager.selectedColor(for: .accent)
-            selectedBackgroundColor = colorsManager.selectedColor(for: .background)
-        }
-        .onReceive(colorsManager.objectWillChange) {
             selectedAccentColor = colorsManager.selectedColor(for: .accent)
             selectedBackgroundColor = colorsManager.selectedColor(for: .background)
         }
@@ -73,4 +68,3 @@ struct SettingsView: View {
         .environmentObject(fontManager)
         .environmentObject(colorsManager)
 }
-

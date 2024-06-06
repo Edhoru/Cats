@@ -29,13 +29,15 @@ struct TagsView: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(selectedTags, id: \.self) { tag in
-                        TagView(tag: tag, foregroundColor: .white, backgroundColor: .accentColor)
+                        TagView(tag: tag, foregroundColor: .white, backgroundColor: colorsManager.selectedColor(for: .accent))
                             .matchedGeometryEffect(id: tag, in: animation)
                             .onTapGesture {
                                 withAnimation {
                                     selectedTags.removeAll(where: { $0 == tag })
                                 }
                             }
+                            .environmentObject(colorsManager)
+                            .environmentObject(fontManager)
                     }
                 }
                 .padding(8)
@@ -57,6 +59,8 @@ struct TagsView: View {
                                     selectedTags.sort()
                                 }
                             }
+                            .environmentObject(colorsManager)
+                            .environmentObject(fontManager)
                     }
                 }
                 .padding(.bottom, 10)
@@ -73,6 +77,7 @@ struct TagsView: View {
                     .frame(height: 40)
             }
             .buttonStyle(.borderedProminent)
+            .tint(colorsManager.selectedColor(for: .accent))
             .padding()
         }
     }
@@ -81,4 +86,6 @@ struct TagsView: View {
 #Preview {
     let intArray: [Int] = Array(0...20)
     return TagsView(tags: intArray.map({ "\($0 * 15)"}), selectedTags: .constant(["90"])) {}
+        .environmentObject(FontManager())
+        .environmentObject(ColorsManager())
 }

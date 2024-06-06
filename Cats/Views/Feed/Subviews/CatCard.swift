@@ -81,7 +81,7 @@ struct CatCard: View {
                 }
             }
             .padding(.vertical, 10)
-            .background(Color.customForeground.gradient)
+            .background(colorsManager.selectedColor(for: .accent).gradient)
             .environmentObject(colorsManager)
             .environmentObject(fontManager)
             

@@ -90,17 +90,11 @@ class ColorsManager: ObservableObject {
     }
     
     func updateColor(to color: Color, usage: Usage) {
-        let uiColor = UIColor(color)
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        
-        guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+        guard let components = color.cgColor?.components, components.count >= 4 else {
             return
         }
         
-        let colorObject = ColorObject(red: Double(red), green: Double(green), blue: Double(blue), alpha: Double(alpha))
+        let colorObject = ColorObject(red: Double(components[0]), green: Double(components[1]), blue: Double(components[2]), alpha: Double(components[3]))
         
         switch usage {
         case .accent:
@@ -111,7 +105,9 @@ class ColorsManager: ObservableObject {
     }
     
     func reset() {
-        selectedAccentColorValues = nil
-        selectedBackgroundColorValues = nil
+        withAnimation {
+            selectedAccentColorValues = nil
+            selectedBackgroundColorValues = nil
+        }
     }
 }

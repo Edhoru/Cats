@@ -64,10 +64,13 @@ struct TagsMenu: View {
                             .offset(x: -8, y: -8)
                     }
                 }
+                .tint(colorsManager.selectedColor(for: .accent))
         }
     }
 }
 
 #Preview {
     TagsMenu(tags: ["Tag1", "Tag2"]) { _ in }
+        .environmentObject(ColorsManager())
+        .environmentObject(FontManager())
 }

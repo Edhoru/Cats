@@ -72,7 +72,7 @@ struct FavoritesView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.customBackground.gradient)
+                .fill(colorsManager.selectedColor(for: .background).gradient)
                 .ignoresSafeArea()
             
             VStack {
@@ -91,8 +91,8 @@ struct FavoritesView: View {
                                                 }
                                             }
                                         } label: {
-                                            let tagForeground: Color = selectedTags.contains(tag) ? .white : .customForeground
-                                            let tagBackground: Color = selectedTags.contains(tag) ? .customForeground : .white
+                                            let tagForeground: Color = selectedTags.contains(tag) ? .white : colorsManager.selectedColor(for: .accent)
+                                            let tagBackground: Color = selectedTags.contains(tag) ? colorsManager.selectedColor(for: .accent) : .white
                                             TagView(tag: tag, foregroundColor: tagForeground, backgroundColor: tagBackground)
                                         }
                                     }

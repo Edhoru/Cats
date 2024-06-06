@@ -33,18 +33,13 @@ struct FavoriteCatCard: View {
                     case .failure(_):
                         placeholderImage
                             .overlay(
-                                Image(systemName: "arrow.circlepath")
+                                Image(systemName: "xmark")
                                     .padding()
-                                    .foregroundStyle(Color(UIColor.systemBackground))
+                                    .foregroundStyle(Color.red)
                             )
                             .frame(width: itemWidth, height: itemWidth)
                     case .empty:
                         placeholderImage
-                            .overlay(
-                                Image(systemName: "arrow.circlepath")
-                                    .padding()
-                                    .foregroundStyle(Color(UIColor.systemBackground))
-                            )
                             .frame(width: itemWidth, height: itemWidth)
                     @unknown default:
                         EmptyView()

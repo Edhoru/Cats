@@ -27,7 +27,7 @@ struct CatDetailView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(Color.customBackground.gradient)
+                .fill(colorsManager.selectedColor(for: .background).gradient)
                 .ignoresSafeArea()
             
             ScrollView {

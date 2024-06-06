@@ -60,14 +60,17 @@ struct MainView: View {
                         .environmentObject(colorsManager)
                 }
             }
+            .tint(colorsManager.selectedColor(for: .accent))
         } else {
             NavigationSplitView {
                 SidebarView(selectedTab: $selectedTab)
+                    .tint(colorsManager.selectedColor(for: .accent))
             } detail: {
                 selectedTab.view
                     .environmentObject(colorsManager)
                     .environmentObject(fontManager)
             }
+            .tint(colorsManager.selectedColor(for: .accent))
         }
     }
 }
