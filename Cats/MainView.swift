@@ -15,7 +15,7 @@ struct MainView: View {
         
         case feed
         case favorites
-//        case settings
+        case settings
         
         var icon: String {
             switch self {
@@ -23,8 +23,8 @@ struct MainView: View {
                 "cat"
             case .favorites:
                 "star"
-//            case .settings:
-//                "gear"
+            case .settings:
+                "gear"
             }
         }
         
@@ -35,8 +35,12 @@ struct MainView: View {
                 FeedView()
             case .favorites:
                 FavoritesView()
-//            case .settings:
-//                Text("s")
+            case .settings:
+                VStack {
+                    Text("Prueba")
+                        .customFont()
+                    FontListView()
+                }
             }
         
         }
@@ -44,6 +48,7 @@ struct MainView: View {
     
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
+    @StateObject private var fontManager = FontManager()
     @State private var selectedTab: Tab = .feed
     
     var body: some View {
@@ -53,6 +58,7 @@ struct MainView: View {
                     tab.view
                         .tabItem { Label(tab.rawValue.capitalized,
                                          systemImage: tab.icon) }
+                        .environmentObject(fontManager)
                 }
             }
         } else {

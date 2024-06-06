@@ -70,7 +70,8 @@ struct FeedView: View {
                                 } label: {
                                     CatCard(itemWidth: gridItemWidth(horizontalSafeArea: horizontalSafeArea),
                                             cat: cat) { tag in
-                                        print(tag)
+                                        viewModel.selectedTags.append(tag)
+                                        viewModel.loadCats(replace: true)
                                     }
                                 }
                             }
@@ -120,6 +121,7 @@ struct FeedView: View {
                         switch action {
                         case .removeAll:
                             viewModel.selectedTags = []
+                            viewModel.loadCats(replace: true)
                         case .remove(let tag):
                             viewModel.selectedTags = viewModel.selectedTags.filter({ $0 != tag})
                             viewModel.loadCats(replace: true)
