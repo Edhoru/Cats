@@ -42,6 +42,7 @@ struct CachedAsyncImage<Content>: View where Content: View {
         self.scale = scale
         self.transaction = transaction
         self.content = content
+        loadImage()
     }
     
     var body: some View {

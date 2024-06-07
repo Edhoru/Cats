@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  CatsWatch Watch App
-//
-//  Created by Alberto on 28/05/24.
-//
-
 import SwiftUI
 
 struct WatchView: View {
@@ -18,25 +11,44 @@ struct WatchView: View {
                 ZStack(alignment: .bottomTrailing) {
                     Rectangle()
                         .overlay {
-                            if let imageData = viewModel.data {
-                                Image(uiImage: UIImage(data: imageData) ?? UIImage(named: "waiting")!)
-                                    .resizable()
-                                    .scaledToFill()
-                            } else {
-                                placeholderImage
+                            AsyncImage(url: viewModel.cat?.imageURL()) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .clipped()
+                                case .failure(_):
+                                    placeholderImage
+                                        .overlay(
+                                            ZStack {
+                                                Image(systemName: "arrow.circlepath")
+                                                    .padding()
+                                                    .foregroundStyle(Color.secondary)
+                                                
+                                                Image(systemName: "xmark")
+                                                    .foregroundStyle(Color.red)
+                                            }
+                                        )
+                                case .empty:
+                                    placeholderImage
+                                        .overlay(
+                                            ZStack {
+                                                Image(systemName: "arrow.circlepath")
+                                                    .padding()
+                                                    .foregroundStyle(Color.secondary)
+                                                
+                                                ProgressView()
+                                                    .progressViewStyle(.circular)
+                                            }
+                                        )
+                                @unknown default:
+                                    EmptyView()
+                                }
                             }
                         }
                     
-                    VStack {
-                        HStack {
-                            Spacer()
-                            Text(viewModel.catDateString())
-                                .font(.caption.bold())
-                                .padding(.horizontal, 18)
-                                .padding(.vertical)
-                        }
-                        .background(.ultraThinMaterial)
-                    }
+                    watchTagsView
                 }
                 .ignoresSafeArea()
                 .gesture(
@@ -49,64 +61,63 @@ struct WatchView: View {
                 )
             }
             
-            Group {
-                if showButtons {
-                    ZStack {
-                        Rectangle()
-                            .ignoresSafeArea()
-                            .background(.ultraThinMaterial)
-                            .onTapGesture {
-                                withAnimation {
-                                    showButtons = false
-                                }
+            if showButtons {
+                ZStack {
+                    Rectangle()
+                        .ignoresSafeArea()
+                        .background(.ultraThinMaterial)
+                        .onTapGesture {
+                            withAnimation {
+                                showButtons = false
                             }
-                    }
-                }
-                
-                if showButtons {
-                    ZStack {
-                        Group {
-                            HStack {
-                                Button(action: {
-                                    isLiked.toggle()
-                                }) {
-                                    Image(systemName: isLiked ? "heart.fill" : "heart")
-                                        .foregroundColor(isLiked ? .red : .white)
-                                }
-                                .buttonStyle(.bordered)
-                                
-                                Button(action: {
-                                    viewModel.data = nil
-                                    viewModel.fetchRandomCat(bypassCache: true)
-                                }) {
-                                    Image(systemName: "arrow.clockwise")
-                                        .foregroundColor(.white)
-                                }
-                                .buttonStyle(.bordered)
-                                
-                                Button(action: {
-                                    viewModel.openCatProfile()
-                                }) {
-                                    Image(systemName: "info.circle")
-                                        .foregroundColor(.white)
-                                }
-                                .buttonStyle(.bordered)
+                        }
+                    
+                    HStack {
+                        if viewModel.cat != nil {
+                            Button(action: {
+                                isLiked.toggle()
+                            }) {
+                                Image(systemName: isLiked ? "heart.fill" : "heart")
+                                    .foregroundColor(isLiked ? .red : .white)
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding()
+                            .buttonStyle(.bordered)
+                        }
+                        
+                        Button(action: {
+                            withAnimation {
+                                viewModel.cat = nil
+                                showButtons = false
+                            }
+                            viewModel.fetchRandomCat()
+                        }) {
+                            Image(systemName: "arrow.clockwise")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.bordered)
+                        
+                        if viewModel.cat != nil {
+                            Button(action: {
+                                viewModel.openCatProfile()
+                            }) {
+                                Image(systemName: "info.circle")
+                                    .foregroundColor(.white)
+                            }
+                            .buttonStyle(.bordered)
                         }
                     }
+                    .frame(maxWidth: .infinity)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .padding()
                 }
-            }
-            .gesture(
-                DragGesture(minimumDistance: 20)
-                    .onEnded { value in
-                        withAnimation {
-                            showButtons = false
+                .gesture(
+                    DragGesture(minimumDistance: 20)
+                        .onEnded { value in
+                            withAnimation {
+                                showButtons = false
+                            }
                         }
-                    }
-            )
+                )
+            }
         }
         .onAppear {
             viewModel.fetchRandomCat()
@@ -121,6 +132,29 @@ struct WatchView: View {
             .frame(width: 100, height: 100)
             .foregroundStyle(Color.primary)
             .opacity(0.8)
+    }
+    
+    @ViewBuilder
+    var watchTagsView: some View {
+        if let tags = viewModel.cat?.tags, !tags.isEmpty {
+            VStack {
+                Spacer()
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(tags, id: \.self) { tag in
+                            Text("#\(tag)")
+                                .font(.caption.bold())
+                                .padding(.vertical)
+                                .padding(.horizontal, 4)
+                        }
+                    }
+                    .padding(.horizontal, 18)
+                }
+                .background(.ultraThinMaterial)
+            }
+        } else {
+            EmptyView()
+        }
     }
 }
 

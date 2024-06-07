@@ -10,8 +10,7 @@ import WatchConnectivity
 import Combine
 
 class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
-    @Published var data: Data?
-    private let userDefaults = UserDefaults.standard
+    @Published var cat: Cat?
     
     override init() {
         super.init()
@@ -19,43 +18,19 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
             WCSession.default.delegate = self
             WCSession.default.activate()
         }
-        loadCachedData()
     }
     
-    func fetchRandomCat(bypassCache: Bool = false) {
-        let currentDate = Calendar.current.startOfDay(for: Date())
-        
-        if bypassCache == false, let lastFetchedDate = userDefaults.object(forKey: "lastFetchedDate") as? Date,
-           lastFetchedDate == currentDate,
-           let cachedData = userDefaults.data(forKey: "cachedCatImage") {
-            self.data = cachedData
-        } else {
-            Task {
-                do {
-                    let imageData = try await CatService.fetchRandomCat()
-                    DispatchQueue.main.async {
-                        self.data = imageData
-                        self.cacheData(imageData, for: currentDate)
-                    }
-                } catch {
-                    print("Failed to fetch image data: \(error)")
+    func fetchRandomCat() {
+        Task {
+            do {
+                let fetchedCat = try await CatService.fetchRandomCat()
+                DispatchQueue.main.async {
+                    self.cat = fetchedCat
                 }
+            } catch {
+                print("Failed to fetch cat: \(error)")
             }
         }
-    }
-    
-    private func loadCachedData() {
-        let currentDate = Calendar.current.startOfDay(for: Date())
-        if let lastFetchedDate = userDefaults.object(forKey: "lastFetchedDate") as? Date,
-           lastFetchedDate == currentDate,
-           let cachedData = userDefaults.data(forKey: "cachedCatImage") {
-            self.data = cachedData
-        }
-    }
-    
-    private func cacheData(_ data: Data, for date: Date) {
-        userDefaults.set(data, forKey: "cachedCatImage")
-        userDefaults.set(date, forKey: "lastFetchedDate")
     }
     
     func catDateString() -> String {

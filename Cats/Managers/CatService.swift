@@ -65,7 +65,23 @@ class CatService {
         return try await APIManager.shared.fetchObject(with: request)
     }
     
-    static func fetchRandomCat() async throws -> Data {
+    static func fetchRandomCat() async throws -> Cat {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "cataas.com"
+        components.path = "/cat"
+        
+        guard let url = components.url else {
+            throw APIError.networkError("Invalid URL")
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "accept")
+        
+        return try await APIManager.shared.fetchObject(with: request)
+    }
+    
+    static func fetchRandomCatImage() async throws -> Data {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "cataas.com"
