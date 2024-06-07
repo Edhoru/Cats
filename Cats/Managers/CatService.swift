@@ -34,13 +34,25 @@ class CatService {
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "accept")
         
-        return try await APIManager.shared.fetchData(with: request)
+        // The api may return the same cat twice, we filter here to avoid issues wit hswiftui layoutlet loadedCats: [Cat] = try await APIManager.shared.fetchData(with: request)
+        let loadedCats: [Cat] = try await APIManager.shared.fetchData(with: request)
+        var seenIds = Set<String>()
+        let uniqueCats = loadedCats.filter { cat in
+            if seenIds.contains(cat.id) {
+                return false
+            } else {
+                seenIds.insert(cat.id)
+                return true
+            }
+        }
+        
+        return uniqueCats
     }
     
     static func fetchCat(by id: String) async throws -> Cat {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "catfaas.com"
+        components.host = "cataas.com"
         components.path = "/cat/\(id)"
         
         guard let url = components.url else {

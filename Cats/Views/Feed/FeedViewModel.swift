@@ -19,6 +19,8 @@ class FeedViewModel: ObservableObject {
     @Published var noMoreResults = false
     @Published var shouldLoadMoreCats = true
     @Published var horizontalSafeArea: CGFloat = 0
+    @Published var showAlert = false
+    @Published var alertMessage = ""
     
     private let tagsLastFetchKey = "TagsLastFetchTime"
     private let tagsKey = "CachedTags"
@@ -40,12 +42,14 @@ class FeedViewModel: ObservableObject {
                         self.cats.append(contentsOf: loadedCats)
                     }
                     self.noMoreResults = loadedCats.count < self.limit
+                    self.shouldLoadMoreCats = true
                     self.skip += loadedCats.count
                 }
             } catch {
                 DispatchQueue.main.async {
                     self.isLoadingCats = false
-                    print("Error loading cats: \(error.localizedDescription)")
+                    self.alertMessage = "Error loading cats: \(error.localizedDescription)"
+                    self.showAlert = true
                 }
             }
         }
@@ -72,7 +76,8 @@ class FeedViewModel: ObservableObject {
                 } catch {
                     DispatchQueue.main.async {
                         self.isLoadingTags = false
-                        print("Error loading tags: \(error.localizedDescription)")
+                        self.alertMessage = "Error loading tags: \(error.localizedDescription)"
+                        self.showAlert = true
                     }
                 }
             }

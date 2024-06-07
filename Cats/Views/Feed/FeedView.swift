@@ -84,7 +84,7 @@ struct FeedView: View {
                         }
                     }
                     
-                    if !viewModel.isLoadingCats && !viewModel.noMoreResults {
+                    if !viewModel.cats.isEmpty && !viewModel.isLoadingCats && !viewModel.noMoreResults && viewModel.shouldLoadMoreCats {
                         LazyVStack {
                             Image(systemName: "arrow.circlepath")
                                 .fontWeight(.black)
@@ -100,7 +100,7 @@ struct FeedView: View {
                                     viewModel.shouldLoadMoreCats = false
                                 }
                         }
-                    } else {
+                    } else if viewModel.cats.isEmpty {
                         Color.clear
                             .onAppear {
                                 Task {
@@ -109,6 +109,7 @@ struct FeedView: View {
                             }
                     }
                 }
+                .padding(.bottom)
                 
                 if viewModel.isLoadingCats || viewModel.isLoadingTags {
                     ProgressView()
@@ -119,7 +120,6 @@ struct FeedView: View {
             }
             .padding(.horizontal, horizontalPadding)
             .getSafeAreaInsets($safeAreaInsets)
-            .printSafeAreaInsets(id: "Text")
             .navigationTitle("Cats")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -160,6 +160,13 @@ struct FeedView: View {
                 viewModel.loadTags()
             }
         }
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     @ViewBuilder
@@ -177,38 +184,4 @@ struct FeedView: View {
     FeedView()
         .environmentObject(ColorsManager())
         .environmentObject(FontManager())
-}
-
-struct SafeAreaInsetsKey: PreferenceKey {
-    static var defaultValue = EdgeInsets()
-    static func reduce(value: inout EdgeInsets, nextValue: () -> EdgeInsets) {
-        value = nextValue()
-    }
-}
-
-extension View {
-    func getSafeAreaInsets(_ safeInsets: Binding<EdgeInsets>) -> some View {
-        background(
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
-            }
-                .onPreferenceChange(SafeAreaInsetsKey.self) { value in
-                    safeInsets.wrappedValue = value
-                }
-        )
-    }
-}
-extension View {
-    func printSafeAreaInsets(id: String) -> some View {
-        background(
-            GeometryReader { proxy in
-                Color.clear
-                    .preference(key: SafeAreaInsetsKey.self, value: proxy.safeAreaInsets)
-            }
-                .onPreferenceChange(SafeAreaInsetsKey.self) { value in
-                    print("\(id) insets:\(value)")
-                }
-        )
-    }
 }

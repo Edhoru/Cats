@@ -5,6 +5,7 @@
 //  Created by Alberto on 05/06/24.
 //
 
+import Combine
 import Foundation
 
 class DetailViewModel: ObservableObject {
@@ -23,11 +24,11 @@ class DetailViewModel: ObservableObject {
         Task {
             do {
                 let loadedCat = try await CatService.fetchCat(by: cat.id)
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.cat = loadedCat
                 }
             } catch {
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.alertMessage = "Error fetching cat details: \(error.localizedDescription)"
                     self.showAlert = true
                 }
@@ -43,11 +44,11 @@ class DetailViewModel: ObservableObject {
                 var loadedCats = try await CatService.fetchCats(tags: [tag], skip: skip, limit: limit)
                 loadedCats = loadedCats.filter { $0 != cat }
                 let filteredCats = Array(loadedCats.prefix(4))
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.catsByTag[tag] = filteredCats
                 }
             } catch {
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.alertMessage = "Error loading cats for tag \(tag): \(error.localizedDescription)"
                     self.showAlert = true
                 }
@@ -55,3 +56,4 @@ class DetailViewModel: ObservableObject {
         }
     }
 }
+
