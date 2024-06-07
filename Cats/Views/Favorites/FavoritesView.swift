@@ -188,7 +188,7 @@ struct FavoritesView: View {
         }
         .sheet(isPresented: $showDetailView) {
             if let selectedCat = selectedCat {
-                CatDetailView(cat: selectedCat, catImage: nil)
+                DetailView(cat: selectedCat, catImage: nil)
             }
         }
     }

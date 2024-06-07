@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct CatDetailView: View {
+struct DetailView: View {
     @EnvironmentObject var colorsManager: ColorsManager
     @EnvironmentObject var fontManager: FontManager
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
-    @StateObject private var viewModel: CatDetailViewModel
+    @StateObject private var viewModel: DetailViewModel
     
     @State var selectedCat: Cat?
     
     let catImage: Image?
 
     init(cat: Cat, catImage: Image?) {
-        self._viewModel = StateObject(wrappedValue: CatDetailViewModel(cat: cat))
+        self._viewModel = StateObject(wrappedValue: DetailViewModel(cat: cat))
         self.catImage = catImage
     }
     
@@ -126,7 +126,7 @@ struct CatDetailView: View {
                 viewModel.fetchCatDetails()
             }
             .sheet(item: $selectedCat) { cat in
-                CatDetailView(cat: cat, catImage: nil)
+                DetailView(cat: cat, catImage: nil)
                     .environmentObject(colorsManager)
                     .environmentObject(fontManager)
             }
@@ -243,7 +243,7 @@ struct CatDetailView: View {
 
 #Preview {
     NavigationStack {
-        CatDetailView(
+        DetailView(
             cat: Cat(
                 id: "5llbIzGS52clSUik",
                 size: 1.0,

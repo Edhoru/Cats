@@ -1,5 +1,5 @@
 //
-//  CatDetailViewModel.swift
+//  DetailViewModel.swift
 //  Cats
 //
 //  Created by Alberto on 05/06/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CatDetailViewModel: ObservableObject {
+class DetailViewModel: ObservableObject {
     @Published var cat: Cat
     @Published var catsByTag = [String: [Cat]]()
     @Published var imageIsLoaded = false

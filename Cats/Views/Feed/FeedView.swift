@@ -151,7 +151,7 @@ struct FeedView: View {
             .presentationDetents([.medium, .large])
         })
         .sheet(item: $selectedCat, content: { cat in
-            CatDetailView(cat: cat, catImage: nil)
+            DetailView(cat: cat, catImage: nil)
                 .environmentObject(colorsManager)
                 .environmentObject(fontManager)
         })
