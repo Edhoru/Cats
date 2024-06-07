@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct WatchView: View {
     @StateObject private var viewModel = WatchViewModel()
     @State private var isLiked = false
+    @State private var showButtons = false
     
     var body: some View {
-        TabView {
+        ZStack {
             VStack {
                 ZStack(alignment: .bottomTrailing) {
                     Rectangle()
@@ -40,42 +39,77 @@ struct WatchView: View {
                     }
                 }
                 .ignoresSafeArea()
-            }
-            .onAppear {
-                viewModel.fetchRandomCat()
+                .gesture(
+                    DragGesture(minimumDistance: 20)
+                        .onEnded { value in
+                            withAnimation {
+                                showButtons = true
+                            }
+                        }
+                )
             }
             
-            
-            HStack {
-                Button(action: {
-                    isLiked.toggle()
-                }) {
-                    Image(systemName: isLiked ? "heart.fill" : "heart")
-                        .foregroundColor(isLiked ? .red : .white)
+            Group {
+                if showButtons {
+                    ZStack {
+                        Rectangle()
+                            .ignoresSafeArea()
+                            .background(.ultraThinMaterial)
+                            .onTapGesture {
+                                withAnimation {
+                                    showButtons = false
+                                }
+                            }
+                    }
                 }
-                .buttonStyle(.bordered)
-                .frame(maxWidth: .infinity)
                 
-                Button(action: {
-                    viewModel.data = nil
-                    viewModel.fetchRandomCat(bypassCache: true)
-                }) {
-                    Image(systemName: "arrow.clockwise")
-                        .foregroundColor(.white)
+                if showButtons {
+                    ZStack {
+                        Group {
+                            HStack {
+                                Button(action: {
+                                    isLiked.toggle()
+                                }) {
+                                    Image(systemName: isLiked ? "heart.fill" : "heart")
+                                        .foregroundColor(isLiked ? .red : .white)
+                                }
+                                .buttonStyle(.bordered)
+                                
+                                Button(action: {
+                                    viewModel.data = nil
+                                    viewModel.fetchRandomCat(bypassCache: true)
+                                }) {
+                                    Image(systemName: "arrow.clockwise")
+                                        .foregroundColor(.white)
+                                }
+                                .buttonStyle(.bordered)
+                                
+                                Button(action: {
+                                    viewModel.openCatProfile()
+                                }) {
+                                    Image(systemName: "info.circle")
+                                        .foregroundColor(.white)
+                                }
+                                .buttonStyle(.bordered)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                        }
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-                .buttonStyle(.bordered)
-                .frame(maxWidth: .infinity)
-                
-                Button(action: {
-                    viewModel.openCatProfile()
-                }) {
-                    Image(systemName: "info.circle")
-                        .foregroundColor(.white)
-                }
-                .buttonStyle(.bordered)
-                .frame(maxWidth: .infinity)
             }
-            .padding()
+            .gesture(
+                DragGesture(minimumDistance: 20)
+                    .onEnded { value in
+                        withAnimation {
+                            showButtons = false
+                        }
+                    }
+            )
+        }
+        .onAppear {
+            viewModel.fetchRandomCat()
         }
     }
     
