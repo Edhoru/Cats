@@ -247,7 +247,7 @@ struct DetailView: View {
     }
 }
 
-
+#if os(iOS)
 #Preview {
     NavigationStack {
         DetailView(
@@ -265,3 +265,4 @@ struct DetailView: View {
     .environmentObject(ColorsManager())
     .environmentObject(FontManager())
 }
+#endif

@@ -12,7 +12,7 @@ class APIManager {
     
     private init() {}
     
-    func fetchData<T: Decodable>(with request: URLRequest) async throws -> T {
+    func fetchObject<T: Decodable>(with request: URLRequest) async throws -> T {
         let (data, response) = try await URLSession.shared.data(for: request)
         
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -30,6 +30,16 @@ class APIManager {
         } catch {
             throw APIError.decodingError(error.localizedDescription)
         }
+    }
+    
+    func fetchData(with request: URLRequest) async throws -> Data {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw APIError.invalidResponse
+        }
+        
+        return data
     }
 }
 
