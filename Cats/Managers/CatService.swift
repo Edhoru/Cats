@@ -40,7 +40,7 @@ class CatService {
     static func fetchCat(by id: String) async throws -> Cat {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "cataas.com"
+        components.host = "catfaas.com"
         components.path = "/cat/\(id)"
         
         guard let url = components.url else {

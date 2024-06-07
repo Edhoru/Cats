@@ -12,6 +12,8 @@ class DetailViewModel: ObservableObject {
     @Published var catsByTag = [String: [Cat]]()
     @Published var imageIsLoaded = false
     @Published var trigger = 0
+    @Published var showAlert = false
+    @Published var alertMessage = ""
 
     init(cat: Cat) {
         self.cat = cat
@@ -25,7 +27,10 @@ class DetailViewModel: ObservableObject {
                     self.cat = loadedCat
                 }
             } catch {
-                print("Error fetching cat details: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.alertMessage = "Error fetching cat details: \(error.localizedDescription)"
+                    self.showAlert = true
+                }
             }
         }
     }
@@ -42,7 +47,10 @@ class DetailViewModel: ObservableObject {
                     self.catsByTag[tag] = filteredCats
                 }
             } catch {
-                print("Error loading cats for tag \(tag): \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.alertMessage = "Error loading cats for tag \(tag): \(error.localizedDescription)"
+                    self.showAlert = true
+                }
             }
         }
     }

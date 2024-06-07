@@ -132,6 +132,13 @@ struct DetailView: View {
             }
         }
         .customFont()
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(viewModel.alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
     
     @ViewBuilder
