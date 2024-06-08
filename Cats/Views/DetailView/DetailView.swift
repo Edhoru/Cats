@@ -11,6 +11,7 @@ struct DetailView: View {
     @EnvironmentObject var colorsManager: ColorsManager
     @EnvironmentObject var fontManager: FontManager
     
+    @Environment(\.dismissAction) private var dismissAction
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     @StateObject private var viewModel: DetailViewModel
@@ -105,10 +106,11 @@ struct DetailView: View {
                                 Spacer()
                                 
                                 if !(viewModel.catsByTag[tag]?.isEmpty ?? true) {
-                                    NavigationLink {
-                                        FeedView()
+                                    Button {
+                                        dismissAction?(tag)
                                     } label: {
                                         Text("Show more")
+                                            .customFont(.callout)
                                     }
                                 }
                             }

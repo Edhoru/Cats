@@ -5,8 +5,8 @@
 //  Created by Alberto on 04/06/24.
 //
 
-import Foundation
 import Combine
+import SwiftUI
 
 class FeedViewModel: ObservableObject {
     @Published var allTags: [String] = []
@@ -21,12 +21,27 @@ class FeedViewModel: ObservableObject {
     @Published var horizontalSafeArea: CGFloat = 0
     @Published var showAlert = false
     @Published var alertMessage = ""
+    @Published var firstLoadIsFinished = false
     
     private let tagsLastFetchKey = "TagsLastFetchTime"
     private let tagsKey = "CachedTags"
     private let limit: Int = 10
     private var cancellables: Set<AnyCancellable> = []
     
+    init() {
+        NotificationCenter.default.publisher(for: .dismissToRootWithTag)
+            .compactMap { $0.userInfo?["tag"] as? String }
+            .sink { [weak self] tag in
+                self?.handleDismiss(with: tag)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleDismiss(with tag: String) {
+        selectedTags = [tag]
+        loadCats(replace: true)
+    }
+
     func loadCats(replace: Bool) {
         isLoadingCats = true
         let currentSkip = replace ? 0 : skip
@@ -36,10 +51,13 @@ class FeedViewModel: ObservableObject {
                 let loadedCats = try await CatService.fetchCats(tags: selectedTags, skip: currentSkip, limit: limit)
                 DispatchQueue.main.async {
                     self.isLoadingCats = false
-                    if replace {
-                        self.cats = loadedCats
-                    } else {
-                        self.cats.append(contentsOf: loadedCats)
+                    self.firstLoadIsFinished = true
+                    withAnimation {
+                        if replace {
+                            self.cats = loadedCats
+                        } else {
+                            self.cats.append(contentsOf: loadedCats)
+                        }
                     }
                     self.noMoreResults = loadedCats.count < self.limit
                     self.shouldLoadMoreCats = true
@@ -48,6 +66,7 @@ class FeedViewModel: ObservableObject {
             } catch {
                 DispatchQueue.main.async {
                     self.isLoadingCats = false
+                    self.firstLoadIsFinished = true
                     self.alertMessage = "Error loading cats: \(error.localizedDescription)"
                     self.showAlert = true
                 }
@@ -82,6 +101,19 @@ class FeedViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    public func addSelectedTag(_ tag: String, reload: (Bool) -> Void) {
+        if !selectedTags.contains(tag) {
+            selectedTags.append(tag)
+            reload(true)
+        } else {
+            reload(false)
+        }
+    }
+    
+    public func setSelectedTags(_ tags: [String]) {
+        selectedTags = tags
     }
     
     private func getSavedTags() async -> [String]? {

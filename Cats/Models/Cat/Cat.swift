@@ -9,7 +9,7 @@ import Foundation
 
 struct Cat: Codable, Identifiable, Hashable {
     let id: String
-    let size: Double
+    let size: Double?
     let tags: [String]
     let mimetype: String // We don't use an enum as there is no certainty we know all the possibilities
     let createdAt: Date?

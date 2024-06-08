@@ -49,31 +49,52 @@ struct MainView: View {
     
     @State private var selectedTab: Tab = .feed
     
+    
+    @StateObject private var dismissToRootManager = DismissToRootManager()
+    
     var body: some View {
-        if horizontalSizeClass == .compact {
-            TabView(selection: $selectedTab) {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    tab.view
-                        .tabItem { Label(tab.rawValue.capitalized,
-                                         systemImage: tab.icon) }
-                        .environmentObject(fontManager)
+        Group {
+            if horizontalSizeClass == .compact {
+                TabView(selection: $selectedTab) {
+                    ForEach(Tab.allCases, id: \.self) { tab in
+                        tab.view
+                            .tabItem { Label(tab.rawValue.capitalized,
+                                             systemImage: tab.icon) }
+                            .environmentObject(fontManager)
+                            .environmentObject(colorsManager)
+                    }
+                }
+                .tint(colorsManager.selectedColor(for: .accent))
+            } else {
+                NavigationSplitView {
+                    SidebarView(selectedTab: $selectedTab)
+                        .tint(colorsManager.selectedColor(for: .accent))
+                } detail: {
+                    selectedTab.view
                         .environmentObject(colorsManager)
+                        .environmentObject(fontManager)
+                }
+                .tint(colorsManager.selectedColor(for: .accent))
+            }
+        }
+        .environment(\.dismissAction, dismissToRootManager.dismiss)
+        .onAppear {
+            dismissToRootManager.dismissAction = { tag in
+                NotificationCenter.default.post(name: .dismissToRootWithTag, object: nil, userInfo: ["tag": tag])
+                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    scene.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
                 }
             }
-            .tint(colorsManager.selectedColor(for: .accent))
-        } else {
-            NavigationSplitView {
-                SidebarView(selectedTab: $selectedTab)
-                    .tint(colorsManager.selectedColor(for: .accent))
-            } detail: {
-                selectedTab.view
-                    .environmentObject(colorsManager)
-                    .environmentObject(fontManager)
-            }
-            .tint(colorsManager.selectedColor(for: .accent))
         }
     }
 }
+
+
+
+
+
+
+
 
 #Preview {
     MainView()
@@ -97,4 +118,3 @@ struct SidebarView: View {
         }
     }
 }
-

@@ -74,8 +74,11 @@ struct FeedView: View {
                                 } label: {
                                     CatCard(itemWidth: gridItemWidth(horizontalSafeArea: horizontalSafeArea),
                                             cat: cat) { tag in
-                                        viewModel.selectedTags.append(tag)
-                                        viewModel.loadCats(replace: true)
+                                        viewModel.addSelectedTag(tag) { reload in
+                                            if reload {
+                                                viewModel.loadCats(replace: true)
+                                            }
+                                        }
                                     }
                                             .environmentObject(colorsManager)
                                             .environmentObject(fontManager)
@@ -112,8 +115,14 @@ struct FeedView: View {
                 .padding(.bottom)
                 
                 if viewModel.isLoadingCats || viewModel.isLoadingTags {
-                    ProgressView()
-                } else if viewModel.cats.isEmpty {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 16)
+                            .frame(width: 100, height: 100)
+                            .background(.ultraThickMaterial)
+                        ProgressView()
+                            .tint(.white)
+                    }
+                } else if viewModel.cats.isEmpty && viewModel.firstLoadIsFinished {
                     ContentUnavailableView("There are no cats here", systemImage: "cat", description: Text("Try to use different tags.")
                         .font(.custom(FontManager().selectedFontName ?? "", size: UIFont.systemFontSize)))
                 }
@@ -127,10 +136,10 @@ struct FeedView: View {
                     TagsMenu(tags: viewModel.selectedTags) { action in
                         switch action {
                         case .removeAll:
-                            viewModel.selectedTags = []
+                            viewModel.setSelectedTags([])
                             viewModel.loadCats(replace: true)
                         case .remove(let tag):
-                            viewModel.selectedTags = viewModel.selectedTags.filter({ $0 != tag})
+                            viewModel.setSelectedTags(viewModel.selectedTags.filter({ $0 != tag}))
                             viewModel.loadCats(replace: true)
                         case .showTagsSheet:
                             viewModel.showingTagsSheet = true

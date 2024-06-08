@@ -45,6 +45,8 @@
 		84C7ECE92B910EFC002A8834 /* Cat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D42F2B8F3E3B00A24ABF /* Cat.swift */; };
 		84C7ECEA2B910EFF002A8834 /* Cat+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */; };
 		84C7ECEB2B910F01002A8834 /* CatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* CatService.swift */; };
+		84D8361C2C14927000CBAB51 /* DismissToRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8361B2C14927000CBAB51 /* DismissToRootManager.swift */; };
+		84D8361E2C14962700CBAB51 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8361D2C14962700CBAB51 /* Notification+.swift */; };
 		84E011022C0F371000C08090 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E011012C0F371000C08090 /* FeedViewModel.swift */; };
 		84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4182B89891100A24ABF /* CatsApp.swift */; };
 		84E5D41B2B89891100A24ABF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D41A2B89891100A24ABF /* FeedView.swift */; };
@@ -165,6 +167,8 @@
 		84C7ECDA2B910705002A8834 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		84C7ECE02B910EC2002A8834 /* CatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C7ECE22B910EC2002A8834 /* CatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsTests.swift; sourceTree = "<group>"; };
+		84D8361B2C14927000CBAB51 /* DismissToRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissToRootManager.swift; sourceTree = "<group>"; };
+		84D8361D2C14962700CBAB51 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		84E011012C0F371000C08090 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		84E5D4152B89891100A24ABF /* Cats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E5D4182B89891100A24ABF /* CatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsApp.swift; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 				844FFA6D2C06A34400988F9E /* ErrorManager.swift */,
 				84640BA22C11DE9200DD382A /* FontManager.swift */,
 				84640BA82C12204900DD382A /* ColorsManager.swift */,
+				84D8361B2C14927000CBAB51 /* DismissToRootManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -385,6 +390,14 @@
 			path = CatsTests;
 			sourceTree = "<group>";
 		};
+		84D8361F2C14962E00CBAB51 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84D8361D2C14962700CBAB51 /* Notification+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		84E010FE2C0F36ED00C08090 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -467,6 +480,7 @@
 				84C7ECD92B91030F002A8834 /* Info.plist */,
 				84E5D4182B89891100A24ABF /* CatsApp.swift */,
 				844FFA6F2C06A60400988F9E /* MainView.swift */,
+				84D8361F2C14962E00CBAB51 /* Extensions */,
 				844FFA672C06A10A00988F9E /* Components */,
 				844FFA662C06A10100988F9E /* Managers */,
 				84E5D4362B8F403D00A24ABF /* Views */,
@@ -852,11 +866,13 @@
 				84E5D4292B8AC38D00A24ABF /* ImageCache.swift in Sources */,
 				84640BAD2C12A5AA00DD382A /* View+SafeArea.swift in Sources */,
 				84F405BF2C1096F2006E69DD /* FavoriteCatCard.swift in Sources */,
+				84D8361C2C14927000CBAB51 /* DismissToRootManager.swift in Sources */,
 				84E5D43C2B8F413300A24ABF /* TagView.swift in Sources */,
 				84E5D4382B8F406B00A24ABF /* CatCard.swift in Sources */,
 				84640BA32C11DE9200DD382A /* FontManager.swift in Sources */,
 				84640BA52C11DEEE00DD382A /* CustomFontModifier.swift in Sources */,
 				84E5D43E2B8F423F00A24ABF /* TagsMenu.swift in Sources */,
+				84D8361E2C14962700CBAB51 /* Notification+.swift in Sources */,
 				84640BA72C11FB1100DD382A /* SettingsView.swift in Sources */,
 				84E5D4302B8F3E3B00A24ABF /* Cat.swift in Sources */,
 				84F405BD2C109283006E69DD /* FavoritesView.swift in Sources */,
@@ -933,7 +949,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
@@ -964,7 +980,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
