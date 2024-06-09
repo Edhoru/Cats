@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct FavoritesView: View {
-    @EnvironmentObject var colorsManager: ColorsManager
-    @EnvironmentObject var fontManager: FontManager
-    
     enum TagFilterOption: String, CaseIterable {
         case anyTag = "Any Tag"
         case allTags = "All Tags"
     }
     
+    @EnvironmentObject var colorsManager: ColorsManager
+    @EnvironmentObject var fontManager: FontManager
+    
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    @Environment(\.modelContext) var modelContext
     
     @Namespace private var animation
     
-    @State var favoritedCats: [Cat]?
+    @State private var favoritedCats: [Cat] = []
     @State private var unfavoritedCats = [Cat]()
     @State private var selectedCat: Cat?
     @State private var selectedTags = [String]()
@@ -76,40 +77,40 @@ struct FavoritesView: View {
                 .ignoresSafeArea()
             
             VStack {
-                if let favoritedCats = favoritedCats, !favoritedCats.isEmpty {
-                        VStack {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                let tags = Array(Set(favoritedCats.flatMap({ $0.tags }))).sorted()
-                                HStack {
-                                    ForEach(tags, id: \.self) { tag in
-                                        Button {
-                                            withAnimation {
-                                                if selectedTags.contains(tag) {
-                                                    selectedTags.removeAll(where: { $0 == tag })
-                                                } else {
-                                                    selectedTags.append(tag)
-                                                }
+                if !favoritedCats.isEmpty {
+                    VStack {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            let tags = Array(Set(favoritedCats.flatMap({ $0.tags }))).sorted()
+                            HStack {
+                                ForEach(tags, id: \.self) { tag in
+                                    Button {
+                                        withAnimation {
+                                            if selectedTags.contains(tag) {
+                                                selectedTags.removeAll(where: { $0 == tag })
+                                            } else {
+                                                selectedTags.append(tag)
                                             }
-                                        } label: {
-                                            let tagForeground: Color = selectedTags.contains(tag) ? .white : colorsManager.selectedColor(for: .accent)
-                                            let tagBackground: Color = selectedTags.contains(tag) ? colorsManager.selectedColor(for: .accent) : .white
-                                            TagView(tag: tag, foregroundColor: tagForeground, backgroundColor: tagBackground)
                                         }
+                                    } label: {
+                                        let tagForeground: Color = selectedTags.contains(tag) ? .white : colorsManager.selectedColor(for: .accent)
+                                        let tagBackground: Color = selectedTags.contains(tag) ? colorsManager.selectedColor(for: .accent) : .white
+                                        TagView(tag: tag, foregroundColor: tagForeground, backgroundColor: tagBackground)
                                     }
                                 }
-                                .padding(.horizontal, 12)
                             }
-                            
-                            Picker("Filter Options", selection: $filterOption) {
-                                ForEach(TagFilterOption.allCases, id: \.self) { option in
-                                    Text(option.rawValue).tag(option)
-                                }
-                            }
-                            .customFont()
-                            .pickerStyle(SegmentedPickerStyle())
                             .padding(.horizontal, 12)
                         }
-                        .padding(.vertical, 12)
+                        
+                        Picker("Filter Options", selection: $filterOption) {
+                            ForEach(TagFilterOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
+                        }
+                        .customFont()
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.horizontal, 12)
+                    }
+                    .padding(.vertical, 12)
                     
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: columnSpacing) {
@@ -121,10 +122,11 @@ struct FavoritesView: View {
                                 } label: {
                                     FavoriteCatCard(itemWidth: cardWidth, cat: cat) {
                                         withAnimation {
-                                            self.favoritedCats?.removeAll(where: { $0.id == cat.id })
+                                            self.favoritedCats.removeAll(where: { $0.id == cat.id })
                                             unfavoritedCats.append(cat)
                                         }
                                     }
+                                    .environment(\.modelContext, modelContext)
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -144,7 +146,7 @@ struct FavoritesView: View {
                     Button {
                         if let lastCat = unfavoritedCats.last {
                             withAnimation {
-                                favoritedCats?.append(lastCat)
+                                favoritedCats.append(lastCat)
                                 unfavoritedCats.removeLast()
                             }
                         }
@@ -169,6 +171,7 @@ struct FavoritesView: View {
                         Spacer()
                         FavoriteCatCard(itemWidth: geometry.size.width - 20, cat: selectedCat)
                             .padding(10)
+                            .environment(\.modelContext, modelContext)
                         Button("Open Detail View") {
                             showDetailView.toggle()
                         }
@@ -178,17 +181,16 @@ struct FavoritesView: View {
             }
         }
         .customFont()
-        .onReceive(NotificationCenter.default.publisher(for: Cat.favoritesUpdatedNotification)) { _ in
-            favoritedCats = Cat.getFavoritedCats()
-        }
         .onAppear {
-            if favoritedCats == nil {
-                favoritedCats = Cat.getFavoritedCats()
-            }
+            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
+            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext)
         }
         .sheet(isPresented: $showDetailView) {
             if let selectedCat = selectedCat {
                 DetailView(cat: selectedCat, catImage: nil)
+                    .environment(\.modelContext, modelContext)
             }
         }
     }
@@ -203,7 +205,6 @@ struct FavoritesView: View {
             return selectedTags.isEmpty ? cats : cats.filter { cat in
                 Set(selectedTags).isSubset(of: Set(cat.tags))
             }
-            
         }
     }
 }
@@ -213,5 +214,5 @@ struct FavoritesView: View {
                 Cat(id: "b", size: 1.0, tags: ["tag3", "tag6"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
                 Cat(id: "c", size: 1.0, tags: ["tag4", "tag7"], mimetype: "image/gif", createdAt: nil, editedAt: nil),
                 Cat(id: "d", size: 1.0, tags: ["tag5", "tag8"], mimetype: "image/gif", createdAt: nil, editedAt: nil)]
-    return FavoritesView(favoritedCats: cats)
+    return FavoritesView()
 }

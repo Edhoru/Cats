@@ -13,6 +13,7 @@ struct DetailView: View {
     
     @Environment(\.dismissAction) private var dismissAction
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.modelContext) var modelContext
     
     @StateObject private var viewModel: DetailViewModel
     
@@ -74,21 +75,21 @@ struct DetailView: View {
                         
                         Button(action: {
                             viewModel.trigger += 1
-                            if viewModel.cat.isFavorited() {
-                                viewModel.cat.unfavorite()
+                            if viewModel.cat.isFavorited(modelContext: modelContext) {
+                                viewModel.cat.unfavorite(modelContext: modelContext)
                             } else {
-                                viewModel.cat.favorite()
+                                viewModel.cat.favorite(modelContext: modelContext)
                             }
                         }, label: {
                             Image(systemName: "heart")
                                 .font(.title)
-                                .symbolVariant(viewModel.cat.isFavorited() ? .fill : .circle)
+                                .symbolVariant(viewModel.cat.isFavorited(modelContext: modelContext) ? .fill : .circle)
                                 .symbolEffect(.bounce, value: viewModel.trigger)
-                                .foregroundStyle(viewModel.cat.isFavorited() ? .red : .white)
+                                .foregroundStyle(viewModel.cat.isFavorited(modelContext: modelContext) ? .red : .white)
                                 .shadow(radius: 2)
                         })
-                        .padding(.horizontal, viewModel.cat.isFavorited() ? 3 : 4)
-                        .padding(.vertical, viewModel.cat.isFavorited() ? 6 : 4)
+                        .padding(.horizontal, viewModel.cat.isFavorited(modelContext: modelContext) ? 3 : 4)
+                        .padding(.vertical, viewModel.cat.isFavorited(modelContext: modelContext) ? 6 : 4)
                     }
                     .listRowInsets(EdgeInsets())
                     

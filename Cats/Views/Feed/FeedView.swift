@@ -14,9 +14,9 @@ struct FeedView: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    
     @Environment(\.modelContext) var modelContext
-    @Query var cats: [Cat]
+    
+    @State var cats: [Cat] = []
     
     @StateObject private var viewModel = FeedViewModel()
     
@@ -86,6 +86,7 @@ struct FeedView: View {
                                     }
                                             .environmentObject(colorsManager)
                                             .environmentObject(fontManager)
+                                            .environment(\.modelContext, modelContext)
                                 }
                             }
                         }
@@ -167,6 +168,7 @@ struct FeedView: View {
             DetailView(cat: cat, catImage: nil)
                 .environmentObject(colorsManager)
                 .environmentObject(fontManager)
+                .environment(\.modelContext, modelContext)
         })
         .onAppear {
             Task {

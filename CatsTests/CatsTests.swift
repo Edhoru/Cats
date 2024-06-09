@@ -37,11 +37,11 @@ final class CatsTests: XCTestCase {
 
     func testCatLikeAndDislike() {
         let cat = Cat(id: "testCat", size: 1.0, tags: ["cute"], mimetype: "image/jpeg", createdAt: .now, editedAt: .now)
-        XCTAssertFalse(cat.isFavorited())
+        XCTAssertFalse(cat.isFavorited(modelContext: modelContext))
         cat.favorite()
-        XCTAssertTrue(cat.isFavorited())
-        cat.unfavorite()
-        XCTAssertFalse(cat.isFavorited())
+        XCTAssertTrue(cat.isFavorited(modelContext: modelContext))
+        cat.unfavorite(modelContext: modelContext)
+        XCTAssertFalse(cat.isFavorited(modelContext: modelContext))
     }
 
 }

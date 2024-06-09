@@ -6,55 +6,53 @@
 //
 
 import Foundation
+import SwiftData
+import SwiftUI
 
 extension Cat {
     
-    private static let favoritedCatsKey = "catsFavorited"
-    public static let favoritesUpdatedNotification = Notification.Name("favoritesUpdated")
-    
-    private static func updateFavoritedCats(updateHandler: (inout [Cat]) -> Void) {
-        var favoritedCats = getFavoritedCats()
-        updateHandler(&favoritedCats)
-        
-        if let encoded = try? JSONEncoder().encode(favoritedCats) {
-            UserDefaults.standard.set(encoded, forKey: favoritedCatsKey)
+    static func getFavoritedCats(modelContext: ModelContext) -> [Cat] {
+        let fetchDescriptor = FetchDescriptor<Cat>(sortBy: [SortDescriptor(\Cat.id)])
+        do {
+            let favoritedCats = try modelContext.fetch(fetchDescriptor)
+            return Array(Set(favoritedCats))
+        } catch {
+            print(error)
+            return []
         }
-        
-        NotificationCenter.default.post(name: favoritesUpdatedNotification, object: nil)
     }
     
-    static func getFavoritedCats() -> [Cat] {
-        if let data = UserDefaults.standard.data(forKey: favoritedCatsKey) {
-            do {
-                let cats = try JSONDecoder().decode([Cat].self, from: data)
-                let ordered = Array(Set(cats))
-                return ordered
-            } catch {
-                print(error)
+    func isFavorited(modelContext: ModelContext) -> Bool {
+        return Self.getFavoritedCats(modelContext: modelContext).contains { $0.id == self.id }
+    }
+    
+    func favorite(modelContext: ModelContext) {
+        do {
+            modelContext.insert(self)
+            try modelContext.save()
+            NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func unfavorite(modelContext: ModelContext) {
+        let fetchDescriptor = FetchDescriptor<Cat>(
+            predicate: #Predicate { $0.id == self.id },
+            sortBy: [SortDescriptor(\Cat.id)]
+        )
+        do {
+            if let existingCat = try modelContext.fetch(fetchDescriptor).first {
+                modelContext.delete(existingCat)
+                try modelContext.save()
+                NotificationCenter.default.post(name: .favoritesUpdated, object: nil)
             }
-        }
-        return []
-    }
-    
-    func isFavorited() -> Bool {
-        if Self.getFavoritedCats().map({ $0.id }).contains(self.id) {
-            return true
-        } else {
-            return false
+        } catch {
+            print(error)
         }
     }
-    
-    func favorite() {
-        Self.updateFavoritedCats { favoritedCats in
-            favoritedCats.append(self)
-        }
-    }
-    
-    func unfavorite() {
-        Self.updateFavoritedCats { favoritedCats in
-            favoritedCats.removeAll { $0 == self }
-        }
-    }
-    
 }
 
+extension Notification.Name {
+    static let favoritesUpdated = Notification.Name("favoritesUpdated")
+}
