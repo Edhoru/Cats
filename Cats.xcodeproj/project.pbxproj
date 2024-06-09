@@ -47,6 +47,7 @@
 		84C7ECEB2B910F01002A8834 /* CatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4342B8F3E9000A24ABF /* CatService.swift */; };
 		84D8361C2C14927000CBAB51 /* DismissToRootManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8361B2C14927000CBAB51 /* DismissToRootManager.swift */; };
 		84D8361E2C14962700CBAB51 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D8361D2C14962700CBAB51 /* Notification+.swift */; };
+		84D836202C14AE3700CBAB51 /* Cat+Likes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4312B8F3E5600A24ABF /* Cat+Likes.swift */; };
 		84E011022C0F371000C08090 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E011012C0F371000C08090 /* FeedViewModel.swift */; };
 		84E5D4192B89891100A24ABF /* CatsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D4182B89891100A24ABF /* CatsApp.swift */; };
 		84E5D41B2B89891100A24ABF /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E5D41A2B89891100A24ABF /* FeedView.swift */; };
@@ -169,6 +170,7 @@
 		84C7ECE22B910EC2002A8834 /* CatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsTests.swift; sourceTree = "<group>"; };
 		84D8361B2C14927000CBAB51 /* DismissToRootManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissToRootManager.swift; sourceTree = "<group>"; };
 		84D8361D2C14962700CBAB51 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
+		84D8363C2C155FF800CBAB51 /* CatsWatch Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CatsWatch Watch App.entitlements"; sourceTree = "<group>"; };
 		84E011012C0F371000C08090 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		84E5D4152B89891100A24ABF /* Cats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E5D4182B89891100A24ABF /* CatsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsApp.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 		844FFA762C06A97400988F9E /* CatsWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
+				84D8363C2C155FF800CBAB51 /* CatsWatch Watch App.entitlements */,
 				844FFA772C06A97400988F9E /* CatsWatchApp.swift */,
 				844FFA792C06A97400988F9E /* WatchView.swift */,
 				846A06552C13526C001AAD60 /* WatchViewModel.swift */,
@@ -804,6 +807,7 @@
 				846A06562C13526C001AAD60 /* WatchViewModel.swift in Sources */,
 				846A064F2C13476F001AAD60 /* ImageCache.swift in Sources */,
 				846A06522C134E1F001AAD60 /* Cat.swift in Sources */,
+				84D836202C14AE3700CBAB51 /* Cat+Likes.swift in Sources */,
 				844FFA7A2C06A97400988F9E /* WatchView.swift in Sources */,
 				844FFA782C06A97400988F9E /* CatsWatchApp.swift in Sources */,
 			);
@@ -928,6 +932,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CatsWatch Watch App/CatsWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CatsWatch Watch App/Preview Content\"";
@@ -958,6 +963,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "CatsWatch Watch App/CatsWatch Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CatsWatch Watch App/Preview Content\"";

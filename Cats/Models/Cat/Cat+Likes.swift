@@ -23,8 +23,25 @@ extension Cat {
         NotificationCenter.default.post(name: favoritesUpdatedNotification, object: nil)
     }
     
+    static func getFavoritedCats() -> [Cat] {
+        if let data = UserDefaults.standard.data(forKey: favoritedCatsKey) {
+            do {
+                let cats = try JSONDecoder().decode([Cat].self, from: data)
+                let ordered = Array(Set(cats))
+                return ordered
+            } catch {
+                print(error)
+            }
+        }
+        return []
+    }
+    
     func isFavorited() -> Bool {
-        return Self.getFavoritedCats().contains(self)
+        if Self.getFavoritedCats().map({ $0.id }).contains(self.id) {
+            return true
+        } else {
+            return false
+        }
     }
     
     func favorite() {
@@ -37,14 +54,6 @@ extension Cat {
         Self.updateFavoritedCats { favoritedCats in
             favoritedCats.removeAll { $0 == self }
         }
-    }
-    
-    static func getFavoritedCats() -> [Cat] {
-        if let data = UserDefaults.standard.data(forKey: favoritedCatsKey),
-           let cats = try? JSONDecoder().decode([Cat].self, from: data) {
-            return cats
-        }
-        return []
     }
     
 }

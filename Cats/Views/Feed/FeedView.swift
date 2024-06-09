@@ -5,6 +5,7 @@
 //  Created by Alberto on 23/02/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct FeedView: View {
@@ -13,6 +14,9 @@ struct FeedView: View {
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
+    
+    @Environment(\.modelContext) var modelContext
+    @Query var cats: [Cat]
     
     @StateObject private var viewModel = FeedViewModel()
     

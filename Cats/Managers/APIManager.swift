@@ -29,7 +29,6 @@ class APIManager {
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             decoder.dateDecodingStrategy = .formatted(formatter)
             let decodedData = try decoder.decode(T.self, from: data)
-            print("decodedCat: ", decodedData)
             return decodedData
         } catch {
             print(error)
