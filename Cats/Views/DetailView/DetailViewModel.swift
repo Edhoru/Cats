@@ -23,7 +23,7 @@ class DetailViewModel: ObservableObject {
     func fetchCatDetails() {
         Task {
             do {
-                let loadedCat = try await CatService.fetchCat(by: cat.id)
+                let loadedCat = try await CatService.fetchCat(by: cat.safeId)
                 await MainActor.run {
                     self.cat = loadedCat
                 }

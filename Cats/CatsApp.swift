@@ -13,7 +13,15 @@ struct CatsApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+//            Prueba()
                 .modelContainer(for: Cat.self)
         }
+    }
+}
+
+
+struct Prueba: View {
+    var body: some View {
+        Text("algo")
     }
 }

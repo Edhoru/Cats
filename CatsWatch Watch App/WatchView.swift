@@ -136,7 +136,7 @@ struct WatchView: View {
     
     @ViewBuilder
     var watchTagsView: some View {
-        if let tags = viewModel.cat?.tags, !tags.isEmpty {
+        if let tags = viewModel.cat?.safeTags, !tags.isEmpty {
             VStack {
                 Spacer()
                 ScrollView(.horizontal, showsIndicators: false) {

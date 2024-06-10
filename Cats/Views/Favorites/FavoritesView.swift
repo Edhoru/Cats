@@ -80,7 +80,7 @@ struct FavoritesView: View {
                 if !favoritedCats.isEmpty {
                     VStack {
                         ScrollView(.horizontal, showsIndicators: false) {
-                            let tags = Array(Set(favoritedCats.flatMap({ $0.tags }))).sorted()
+                            let tags = Array(Set(favoritedCats.flatMap({ $0.safeTags }))).sorted()
                             HStack {
                                 ForEach(tags, id: \.self) { tag in
                                     Button {
@@ -199,11 +199,11 @@ struct FavoritesView: View {
         switch filterOption {
         case .anyTag:
             return selectedTags.isEmpty ? cats : cats.filter { cat in
-                !Set(cat.tags).isDisjoint(with: selectedTags)
+                !Set(cat.safeTags).isDisjoint(with: selectedTags)
             }
         case .allTags:
             return selectedTags.isEmpty ? cats : cats.filter { cat in
-                Set(selectedTags).isSubset(of: Set(cat.tags))
+                Set(selectedTags).isSubset(of: Set(cat.safeTags))
             }
         }
     }

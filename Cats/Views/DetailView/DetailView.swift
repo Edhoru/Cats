@@ -95,7 +95,7 @@ struct DetailView: View {
                     
                     datesContainerView
                     
-                    ForEach(viewModel.cat.tags, id: \.self) { tag in
+                    ForEach(viewModel.cat.safeTags, id: \.self) { tag in
                         Section {
                             section(for: tag)
                         } header: {

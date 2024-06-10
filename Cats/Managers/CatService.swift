@@ -38,10 +38,10 @@ class CatService {
         let loadedCats: [Cat] = try await APIManager.shared.fetchObject(with: request)
         var seenIds = Set<String>()
         let uniqueCats = loadedCats.filter { cat in
-            if seenIds.contains(cat.id) {
+            if seenIds.contains(cat.safeId) {
                 return false
             } else {
-                seenIds.insert(cat.id)
+                seenIds.insert(cat.safeId)
                 return true
             }
         }

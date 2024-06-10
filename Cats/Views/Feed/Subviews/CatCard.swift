@@ -75,7 +75,7 @@ struct CatCard: View {
             }
             
             TagLayout(alignment: .center, spacing: 10) {
-                ForEach(cat.tags, id: \.self) { tag in
+                ForEach(cat.safeTags, id: \.self) { tag in
                     TagView(tag: tag)
                         .onTapGesture {
                             onTagSelected(tag)
