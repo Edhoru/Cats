@@ -75,6 +75,7 @@ struct MainView: View {
                         .environmentObject(fontManager)
                 }
                 .tint(colorsManager.selectedColor(for: .accent))
+                .navigationSplitViewStyle(.prominentDetail)
             }
         }
         .environment(\.dismissAction, dismissToRootManager.dismiss)
