@@ -16,6 +16,7 @@ struct CatCard: View {
     
     @State var trigger = 0
     @State var imageIsLoaded = false
+    @State var isFavorited: Bool = false
     
     let itemWidth: CGFloat
     
@@ -62,12 +63,13 @@ struct CatCard: View {
                     } else {
                         cat.favorite(modelContext: modelContext)
                     }
+                    isFavorited = cat.isFavorited(modelContext: modelContext)
                 }, label: {
                     Image(systemName: "heart")
                         .font(.title)
-                        .symbolVariant(cat.isFavorited(modelContext: modelContext) ? .fill : .circle)
+                        .symbolVariant(isFavorited ? .fill : .circle)
                         .symbolEffect(.bounce, value: trigger)
-                        .tint(cat.isFavorited(modelContext: modelContext) ? .red : .white)
+                        .tint(isFavorited ? .red : .white)
                         .shadow(radius: 2)
                 })
                 .padding(.horizontal, cat.isFavorited(modelContext: modelContext) ? 3 : 4)
@@ -94,6 +96,12 @@ struct CatCard: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(radius: 3)
+        .onAppear {
+            isFavorited = cat.isFavorited(modelContext: modelContext) // Initialize state
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .favoriteUpdated(with: cat.safeId))) { _ in
+            isFavorited = cat.isFavorited(modelContext: modelContext)
+        }
     }
     
     // MARK: Subviews

@@ -182,10 +182,10 @@ struct FavoritesView: View {
         }
         .customFont()
         .onAppear {
-            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext)
+            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext, fromNotification: false)
         }
         .onReceive(NotificationCenter.default.publisher(for: .favoritesUpdated)) { _ in
-            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext)
+            favoritedCats = Cat.getFavoritedCats(modelContext: modelContext, fromNotification: true)
         }
         .sheet(isPresented: $showDetailView) {
             if let selectedCat = selectedCat {

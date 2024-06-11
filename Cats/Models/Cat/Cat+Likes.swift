@@ -11,10 +11,24 @@ import SwiftUI
 
 extension Cat {
     
-    static func getFavoritedCats(modelContext: ModelContext) -> [Cat] {
+    static var currentFavorites: [Cat] = []
+    
+    static func getFavoritedCats(modelContext: ModelContext, fromNotification: Bool) -> [Cat] {
         let fetchDescriptor = FetchDescriptor<Cat>(sortBy: [SortDescriptor(\Cat.id)])
         do {
             let favoritedCats = try modelContext.fetch(fetchDescriptor)
+            
+            let differences = favoritedCats.difference(from: currentFavorites)
+                for change in differences {
+                    switch change {
+                    case .remove(_, let cat, _):
+                        NotificationCenter.default.post(name: .favoriteUpdated(with: cat.safeId), object: nil)
+                    case .insert(_, let cat, _):
+                        NotificationCenter.default.post(name: .favoriteUpdated(with: cat.safeId), object: nil)
+                    }
+                }
+            
+            currentFavorites = favoritedCats
             return Array(Set(favoritedCats))
         } catch {
             print(error)
@@ -23,7 +37,7 @@ extension Cat {
     }
     
     func isFavorited(modelContext: ModelContext) -> Bool {
-        return Self.getFavoritedCats(modelContext: modelContext).contains { $0.id == self.id }
+        return Self.getFavoritedCats(modelContext: modelContext, fromNotification: false).contains { $0.id == self.id }
     }
     
     func favorite(modelContext: ModelContext) {
@@ -55,4 +69,7 @@ extension Cat {
 
 extension Notification.Name {
     static let favoritesUpdated = Notification.Name("favoritesUpdated")
+    static func favoriteUpdated(with id: String) -> Notification.Name {
+        return Notification.Name("favoriteUpdated-\(id)")
+    }
 }
