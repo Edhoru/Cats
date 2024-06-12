@@ -22,6 +22,8 @@ struct SettingsView: View {
                 Section("Fonts") {
                     NavigationLink {
                         FontListView()
+                            .environmentObject(fontManager)
+                            .environmentObject(colorsManager)
                     } label: {
                         HStack {
                             Text("Select Font")

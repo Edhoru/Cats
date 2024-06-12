@@ -12,6 +12,7 @@ struct CatsWatch_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
             WatchView()
+                .modelContainer(for: Cat.self)
         }
     }
 }

@@ -8,8 +8,11 @@
 import SwiftUI
 import WatchConnectivity
 import Combine
+import SwiftData
 
 class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
+    @Environment(\.modelContext) var modelContext
+    
     @Published var cat: Cat?
     
     override init() {
@@ -31,14 +34,6 @@ class WatchViewModel: NSObject, ObservableObject, WCSessionDelegate {
                 print("Failed to fetch cat: \(error)")
             }
         }
-    }
-    
-    func catDateString() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d"
-        
-        let date = Date()
-        return "Cat for \(formatter.string(from: date))"
     }
     
     func openCatProfile() {

@@ -1,8 +1,16 @@
+//
+//  WatchViewModel.swift
+//  CatsWatch Watch App
+//
+//  Created by Alberto on 07/06/24.
+//
+
 import SwiftUI
 
 struct WatchView: View {
+    @Environment(\.modelContext) var modelContext
     @StateObject private var viewModel = WatchViewModel()
-    @State private var isLiked = false
+    @State var isFavorited: Bool = false
     @State private var showButtons = false
     
     var body: some View {
@@ -11,40 +19,44 @@ struct WatchView: View {
                 ZStack(alignment: .bottomTrailing) {
                     Rectangle()
                         .overlay {
-                            AsyncImage(url: viewModel.cat?.imageURL()) { phase in
-                                switch phase {
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .clipped()
-                                case .failure(_):
-                                    placeholderImage
-                                        .overlay(
-                                            ZStack {
-                                                Image(systemName: "arrow.circlepath")
-                                                    .padding()
-                                                    .foregroundStyle(Color.secondary)
-                                                
-                                                Image(systemName: "xmark")
-                                                    .foregroundStyle(Color.red)
-                                            }
-                                        )
-                                case .empty:
-                                    placeholderImage
-                                        .overlay(
-                                            ZStack {
-                                                Image(systemName: "arrow.circlepath")
-                                                    .padding()
-                                                    .foregroundStyle(Color.secondary)
-                                                
-                                                ProgressView()
-                                                    .progressViewStyle(.circular)
-                                            }
-                                        )
-                                @unknown default:
-                                    EmptyView()
+                            if let cat = viewModel.cat {
+                                AsyncImage(url: cat.imageURL()) { phase in
+                                    switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fill)
+                                            .clipped()
+                                    case .failure(_):
+                                        placeholderImage
+                                            .overlay(
+                                                ZStack {
+                                                    Image(systemName: "arrow.circlepath")
+                                                        .padding()
+                                                        .foregroundStyle(Color.secondary)
+                                                    
+                                                    Image(systemName: "xmark")
+                                                        .foregroundStyle(Color.red)
+                                                }
+                                            )
+                                    case .empty:
+                                        placeholderImage
+                                            .overlay(
+                                                ZStack {
+                                                    Image(systemName: "arrow.circlepath")
+                                                        .padding()
+                                                        .foregroundStyle(Color.secondary)
+                                                    
+                                                    ProgressView()
+                                                        .progressViewStyle(.circular)
+                                                }
+                                            )
+                                    @unknown default:
+                                        EmptyView()
+                                    }
                                 }
+                            } else {
+                                placeholderImage
                             }
                         }
                     
@@ -73,12 +85,17 @@ struct WatchView: View {
                         }
                     
                     HStack {
-                        if viewModel.cat != nil {
+                        if let cat = viewModel.cat {
                             Button(action: {
-                                isLiked.toggle()
+                                if cat.isFavorited(modelContext: modelContext) {
+                                    cat.unfavorite(modelContext: modelContext)
+                                } else {
+                                    cat.favorite(modelContext: modelContext)
+                                }
+                                isFavorited = cat.isFavorited(modelContext: modelContext)
                             }) {
-                                Image(systemName: isLiked ? "heart.fill" : "heart")
-                                    .foregroundColor(isLiked ? .red : .white)
+                                Image(systemName: isFavorited ? "heart.fill" : "heart")
+                                    .foregroundColor(isFavorited ? .red : .white)
                             }
                             .buttonStyle(.bordered)
                         }
@@ -117,6 +134,11 @@ struct WatchView: View {
                             }
                         }
                 )
+                .onAppear {
+                    if let cat = viewModel.cat {
+                        isFavorited = cat.isFavorited(modelContext: modelContext)
+                    }
+                }
             }
         }
         .onAppear {

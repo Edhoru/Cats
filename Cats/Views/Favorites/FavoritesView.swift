@@ -159,24 +159,28 @@ struct FavoritesView: View {
             
             if let selectedCat = selectedCat {
                 GeometryReader { geometry in
-                    Rectangle()
-                        .fill(.ultraThinMaterial)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation(.spring()) {
-                                self.selectedCat = nil
+                    ZStack {
+                        Rectangle()
+                            .fill(.ultraThinMaterial)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation(.spring()) {
+                                    self.selectedCat = nil
+                                }
                             }
+                        VStack(alignment: .center) {
+                            Spacer()
+                            
+                            let cardSize = min(geometry.size.width, geometry.size.height / 2)
+                            FavoriteCatCard(itemWidth: cardSize - 20, cat: selectedCat)
+                                .padding(10)
+                                .environment(\.modelContext, modelContext)
+                            Button("Open Detail View") {
+                                showDetailView.toggle()
+                            }
+                            Spacer()
                         }
-                    VStack {
-                        Spacer()
-                        FavoriteCatCard(itemWidth: geometry.size.width - 20, cat: selectedCat)
-                            .padding(10)
-                            .environment(\.modelContext, modelContext)
-                        Button("Open Detail View") {
-                            showDetailView.toggle()
-                        }
-                        Spacer()
-                    }
+                    }.frame(width: geometry.size.width, height: geometry.size.height)
                 }
             }
         }

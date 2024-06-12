@@ -19,7 +19,6 @@ struct CatCard: View {
     @State var isFavorited: Bool = false
     
     let itemWidth: CGFloat
-    
     let cat: Cat
     
     var onTagSelected: (String) -> Void
@@ -97,7 +96,7 @@ struct CatCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 15))
         .shadow(radius: 3)
         .onAppear {
-            isFavorited = cat.isFavorited(modelContext: modelContext) // Initialize state
+            isFavorited = cat.isFavorited(modelContext: modelContext)
         }
         .onReceive(NotificationCenter.default.publisher(for: .favoriteUpdated(with: cat.safeId))) { _ in
             isFavorited = cat.isFavorited(modelContext: modelContext)
